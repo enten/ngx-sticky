@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+
+.ngx-sticky {
+  &--normal,
+  &--stucked {
+    z-index: 0;
+  }
+
+  &--sticked {
+    z-index: 1;
+  }
+
+  &--has-spot {
+    transition: transform 0.8s, opacity 0.8s;
+
+    &.ngx-sticky--top {
+      transform: translateY(-200%);
+  
+      &.ngx-sticky--normal {
+        transform: translateY(-100%);
+      }
+  
+      &.ngx-sticky--sticked,
+      &.ngx-sticky--stucked {
+        transform: translateY(0);
+      }
+    }
+
+    &.ngx-sticky--bottom {
+      transform: translateY(200%);
+  
+      &.ngx-sticky--normal {
+        transform: translateY(100%);
+      }
+  
+      &.ngx-sticky--sticked,
+      &.ngx-sticky--stucked {
+        transform: translateY(0);
+      }
+    }
+  }
+}
