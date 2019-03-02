@@ -88,20 +88,18 @@ export class NgxStickyService {
   }
 
   updateAll(fastCheck?: boolean): void {
-    this.updateSome(this.stickies, fastCheck);
+    this.stickies.forEach(_sticky => this.update(_sticky, fastCheck));
   }
 
   updateContainer(container: NgxStickyContainer, fastCheck?: boolean): void {
     const stickies = this.stickies.filter(_sticky => _sticky.container === container);
 
-    this.updateSome(stickies, fastCheck);
+    stickies.forEach(_sticky => this.update(_sticky, fastCheck));
   }
 
   updateSiblings(sticky: NgxSticky, fastCheck?: boolean): void {
-    this.updateSome(this.engine.getStickySiblings(this.stickies, sticky), fastCheck);
-  }
+    const stickies = this.engine.getStickySiblings(this.stickies, sticky);
 
-  updateSome(stickies: NgxSticky[], fastCheck?: boolean) {
     stickies.forEach(_sticky => this.update(_sticky, fastCheck));
   }
 

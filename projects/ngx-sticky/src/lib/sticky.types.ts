@@ -2,7 +2,6 @@
 
 export type NgxStickyPosition = 'top' | 'bottom';
 
-
 export type NgxStickyState = 'normal' | 'sticked' | 'stucked';
 
 
@@ -12,6 +11,7 @@ export interface NgxSticky {
   ghost?: HTMLElement;
   enable: boolean;
   hidden: boolean;
+  orbit: boolean;
   position: NgxStickyPosition;
   spot: HTMLElement | null;
   stack: boolean;

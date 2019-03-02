@@ -41,6 +41,19 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
     }
   }
 
+  orbit$ = new BehaviorSubject<boolean>(false);
+  get orbit() {
+    return this.orbit$.getValue();
+  }
+  @Input()
+  set orbit(value: boolean) {
+    value = coerceBooleanProperty(value);
+
+    if (value !== this.orbit) {
+      this.orbit$.next(value);
+    }
+  }
+
   position$ = new BehaviorSubject<NgxStickyPosition>('top');
   get position() {
     return this.position$.getValue();
@@ -79,13 +92,16 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
   }
 
   @Output()
-  readonly sitkcyState = new EventEmitter<NgxStickyState>();
+  readonly sitkcyChange = new EventEmitter<NgxSticky>();
 
   @HostBinding('class.ngx-sticky')
   get cssClassSticky() { return this.enable; }
 
   @HostBinding('class.ngx-sticky--has-spot')
   get cssClassStickyHasSpot() { return this.enable && !!this.spot; }
+
+  @HostBinding('class.ngx-sticky--is-orbit')
+  get cssClassStickyPreticked() { return this.enable && this.orbit; }
 
   @HostBinding('class.ngx-sticky--top')
   get cssClassStickyTop() { return this.enable && this.position !== 'bottom'; }
@@ -95,6 +111,9 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
 
   @HostBinding('class.ngx-sticky--normal')
   get cssClassStickyNormal() { return this.enable && this.state === 'normal'; }
+
+  // @HostBinding('class.ngx-sticky--presticked')
+  // get cssClassStickyPresticked() { return this.enable && this.state === 'presticked'; }
 
   @HostBinding('class.ngx-sticky--sticked')
   get cssClassStickySticked() { return this.enable && this.state === 'sticked'; }
@@ -137,10 +156,10 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
   ) { }
 
   ngOnInit() {
-    this.state$.subscribe(state => this.ngZone.run(() => {
+    this.state$.subscribe(_state => this.ngZone.run(() => {
       this.changeDetectorRef.detectChanges();
 
-      this.sitkcyState.next(state);
+      this.sitkcyChange.next(this);
     }));
   }
 
@@ -172,6 +191,7 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
     if (!this.monitoring$) {
       this.monitoring$ = merge(
         this.enable$,
+        this.orbit$,
         this.position$,
         this.stack$,
         this.spot$,

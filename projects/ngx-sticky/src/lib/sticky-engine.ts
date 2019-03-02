@@ -53,18 +53,30 @@ export class NgxStickyEngine {
     const viewportSize = getViewportSize(win);
     let state: NgxStickyState = 'normal';
     let sticked = false;
+    let stickedOffset = 0;
 
     if (positionBottom) {
-      if (ghostRect.top + offsets.top - spotHeight > scrollTop + viewportSize.height - ghostRect.height) {
-        state = 'sticked';
-        sticked = true;
-      }
+      stickedOffset = ghostRect.top + offsets.top - scrollTop - viewportSize.height + ghostRect.height - spotHeight;
     } else {
-      if (scrollTop > ghostRect.top - offsets.top + spotHeight) {
-        state = 'sticked';
-        sticked = true;
-      }
+      stickedOffset = scrollTop - ghostRect.top + offsets.top - spotHeight;
     }
+
+    if (stickedOffset > 0) {
+      state = 'sticked';
+      sticked = true;
+    }/* else if (sticky.spot) {
+      const stickyRect = getElementAbsoluteRect(sticky.ghost);
+
+      if (positionBottom) {
+        stickedOffset = stickyRect.top + offsets.top - scrollTop - viewportSize.height;
+      } else {
+        stickedOffset = scrollTop - stickyRect.top + offsets.top - stickyRect.height;
+      }
+
+      if (stickedOffset > 0) {
+        state = 'presticked';
+      }
+    }*/
 
     if (sticked && container) {
       const offset = offsets.top + offsets.bottom;
@@ -168,20 +180,21 @@ export class NgxStickyEngine {
       paddingRight: elementStyle.paddingRight,
     };
 
-    if (sticky.spot) {
-      styles.position = 'absolute';
+    if (sticky.spot || sticky.orbit) {
       styles.width = element.style.width || elementStyle.width;
+    }
+
+    if (sticky.orbit) {
+      styles.position = 'absolute';
     }
 
     return styles;
   }
 
   getStickySiblings(stickies: NgxSticky[], sticky: NgxSticky): NgxSticky[] {
-    stickies = [ ...stickies ];
-
     // reverse stickies when sticky position is bottom
     if (sticky.position !== 'top') {
-      stickies.reverse();
+      stickies = [ ...stickies ].reverse();
     }
 
     return stickies.filter(_sticky => this.isStickySibling(sticky, _sticky));
@@ -249,8 +262,9 @@ export class NgxStickyEngine {
     }
 
     const positionBottom = sticky.position === 'bottom';
+    // const presticked = state === 'presticked';
 
-    if (state === 'normal') {
+    if (state === 'normal'/* || presticked*/) {
       // this.showGhost(sticky);
 
       const ghostRect = getElementRelativeRect(win, sticky.ghost);
@@ -269,8 +283,8 @@ export class NgxStickyEngine {
         margin: '0px',
       };
 
-      if (sticky.spot) {
-        const ghostTop = offsets.top;
+      if (sticky.orbit/* || presticked */) {
+        const ghostTop = offsets.top - ghostRect.height;
         const ghostLeft = getElementAbsoluteRect(sticky.ghost).left;
 
         Object.assign(styles, {
@@ -477,9 +491,31 @@ export class NgxStickyEngine {
     const state = this.determineStickyState(sticky, scrollTop, offsets);
     const stateChanged = state !== previousState;
 
+    // animate sticking when state is sticked and sticky has spot or is an orbit
+    if (state === 'sticked' && (sticky.spot || sticky.orbit)) {
+      const stickyRect = getElementAbsoluteRect(sticky.ghost);
+      const ghostRect = sticky.spot ? getElementAbsoluteRect(sticky.spot) : stickyRect;
+      const spotHeight = sticky.spot ? ghostRect.height : 0;
+      let stickedOffset = 0;
+
+      if (sticky.position === 'bottom') {
+        const viewportSize = getViewportSize(win);
+
+        stickedOffset = ghostRect.top + offsets.top - scrollTop - viewportSize.height + ghostRect.height - spotHeight;
+      } else {
+        stickedOffset = scrollTop - ghostRect.top + offsets.top - spotHeight;
+      }
+
+      if (stickedOffset < stickyRect.height) {
+        offsets.top -= stickyRect.height - stickedOffset;
+      }
+    }
+
     if (
       // refresh sticky when it has spot
       sticky.spot
+      // or refresh sticky when is orbit
+      || sticky.orbit
       // or refresh sticky when state hasn't changed but sticky was refresh to normal state
       || (!stateChanged && setStickyNormal)
       // or refresh sticky when state has changed and state isn't normal
