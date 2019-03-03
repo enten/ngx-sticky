@@ -24,15 +24,26 @@ import { NgxSticky, NgxStickyPosition, NgxStickyState } from './sticky.types';
 import { coerceBooleanProperty, fromImageLoadEvents, getWindowRef } from './sticky.utils';
 
 
+/**
+ * @description
+ * Defines a sticky.
+ *
+ * @ngModule NgxStickyModule
+ * @publicApi
+ */
 @Directive({
   selector: '[ngxSticky], [ngx-sticky], ngx-sticky',
 })
 export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, OnInit {
-  enable$ = new BehaviorSubject<boolean>(true);
+  /**
+   * Enable/disable sticky.
+   *
+   * Default value: `true`
+   */
+  @Input()
   get enable() {
     return this.enable$.getValue();
   }
-  @Input()
   set enable(value: boolean) {
     value = coerceBooleanProperty(value);
 
@@ -40,12 +51,22 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
       this.enable$.next(value);
     }
   }
+  enable$ = new BehaviorSubject<boolean>(true);
 
-  orbit$ = new BehaviorSubject<boolean>(false);
+  /**
+   * Indicate sticky element is an orbit.
+   *
+   * An orbit is a sticky element which isn't visible until
+   * it's sticked.
+   *
+   * Generally an orbit spot on another element to be sticked.
+   *
+   * Default value: `false`
+   */
+  @Input()
   get orbit() {
     return this.orbit$.getValue();
   }
-  @Input()
   set orbit(value: boolean) {
     value = coerceBooleanProperty(value);
 
@@ -53,12 +74,17 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
       this.orbit$.next(value);
     }
   }
+  orbit$ = new BehaviorSubject<boolean>(false);
 
-  position$ = new BehaviorSubject<NgxStickyPosition>('top');
+  /**
+   * Position of the sticky; one of 'top' or 'bottom'.
+   *
+   * Default value: `'top'`
+   */
+  @Input()
   get position() {
     return this.position$.getValue();
   }
-  @Input()
   set position(value: NgxStickyPosition) {
     value = value === 'bottom' ? 'bottom' : 'top';
 
@@ -66,23 +92,36 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
       this.position$.next(value);
     }
   }
+  position$ = new BehaviorSubject<NgxStickyPosition>('top');
 
-  spot$ = new BehaviorSubject<HTMLElement | null>(null);
+  /**
+   * Reference to an element used to determine sticky state.
+   *
+   * The sticky directive will stick element only when spot
+   * isn't visible.
+   *
+   * Default value: `null`
+   */
+  @Input()
   get spot() {
     return this.spot$.getValue();
   }
-  @Input()
   set spot(value: HTMLElement | null) {
     if (value !== this.spot) {
       this.spot$.next(value);
     }
   }
+  spot$ = new BehaviorSubject<HTMLElement | null>(null);
 
-  stack$ = new BehaviorSubject<boolean>(true);
+  /**
+   * Enable/disable sticky element to be stacked with previous sticked elements.
+   *
+   * Default value: `true`
+   */
+  @Input()
   get stack() {
     return this.stack$.getValue();
   }
-  @Input()
   set stack(value: boolean) {
     value = coerceBooleanProperty(value);
 
@@ -90,7 +129,11 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
       this.stack$.next(value);
     }
   }
+  stack$ = new BehaviorSubject<boolean>(true);
 
+  /**
+   * Emit sticky itself when its state changed.
+   */
   @Output()
   readonly sitkcyChange = new EventEmitter<NgxSticky>();
 
@@ -121,21 +164,30 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
   @HostBinding('class.ngx-sticky--stucked')
   get cssClassStickyStucked() { return this.enable && this.state === 'stucked'; }
 
+  /**
+   * Returns HTMLElement of the sticky.
+   */
   get element() {
     return this.elementRef.nativeElement;
   }
 
+  /**
+   * Returns `true` when element isn't visible.
+   */
   get hidden() {
     return !(this.elementRef && this.elementRef.nativeElement && this.elementRef.nativeElement.offsetHeight);
   }
 
-  state$ = new BehaviorSubject<NgxStickyState>(null);
+  /**
+   * State of the sticky.
+   */
   get state() {
     return this.state$.getValue();
   }
   set state(value: NgxStickyState) {
     this.state$.next(value);
   }
+  state$ = new BehaviorSubject<NgxStickyState>(null);
 
   /** Emits when the component is destroyed. */
   readonly destroyed$ = new Subject<void>();

@@ -1,10 +1,24 @@
 
-
+/**
+ * Sticky position.
+ *
+ * @publicApi
+ */
 export type NgxStickyPosition = 'top' | 'bottom';
 
+/**
+ * Sticky state.
+ *
+ * @publicApi
+ */
 export type NgxStickyState = 'normal' | 'sticked' | 'stucked';
 
 
+/**
+ * Interface for a sticky.
+ *
+ * @publicApi
+ */
 export interface NgxSticky {
   container: NgxStickyContainer | null;
   element: HTMLElement;
@@ -20,6 +34,11 @@ export interface NgxSticky {
 }
 
 
+/**
+ * Interface for a sticky container.
+ *
+ * @publicApi
+ */
 export interface NgxStickyContainer {
   element: HTMLElement;
   offsetTop: number;
@@ -27,6 +46,11 @@ export interface NgxStickyContainer {
 }
 
 
+/**
+ * Interface for a sticky ghost styles.
+ *
+ * @publicApi
+ */
 export interface NgxStickyGhostStyle {
   [prop: string]: string;
   position?: string;
@@ -47,12 +71,22 @@ export interface NgxStickyGhostStyle {
 }
 
 
+/**
+ * Sticky offsets.
+ *
+ * @publicApi
+ */
 export interface NgxStickyOffsets {
   top: number;
   bottom: number;
 }
 
 
+/**
+ * Interface for a sticky styles.
+ *
+ * @publicApi
+ */
 export interface NgxStickyStyle {
   [prop: string]: string;
   position: string;

@@ -17,6 +17,12 @@ import {
 } from './sticky.utils';
 
 
+/**
+ * @description
+ * Defines a sticky engine. Implemented in universal way.
+ *
+ * @ngModule NgxStickyModule
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -27,6 +33,11 @@ export class NgxStickyEngine {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
 
+  /**
+   * Destroys a sticky: refresh to state `null` and remove ghost.
+   *
+   * @param sticky Sticky to destroy
+   */
   destroySticky(sticky: NgxSticky): void {
     this.refreshSticky(sticky, null);
     this.removeStickyGhost(sticky);
@@ -34,6 +45,14 @@ export class NgxStickyEngine {
     sticky.styleOriginal = null;
   }
 
+  /**
+   * Determines sticky state.
+   *
+   * @param sticky Sticky
+   * @param scrollTop Scroll top position
+   * @param offsets Top/bottom offsets
+   * @returns Sticky state
+   */
   determineStickyState(sticky: NgxSticky, scrollTop: number, offsets?: NgxStickyOffsets): NgxStickyState {
     const win = getWindowRef();
 
@@ -97,6 +116,14 @@ export class NgxStickyEngine {
     return state;
   }
 
+  /**
+   * Returns offset to an element by considering stickies.
+   *
+   * @param stickies Sticky registry
+   * @param element Target element
+   * @param offsetTop Top offset
+   * @returns Offset top
+   */
   getScrollTopOffset(stickies: NgxSticky[], element: HTMLElement, offsetTop?: number): number {
     const elementRect = getElementAbsoluteRect(element);
     const scrollTopPosition = this.getScrollTopPosition(stickies, element, offsetTop);
@@ -104,6 +131,14 @@ export class NgxStickyEngine {
     return elementRect.top - scrollTopPosition;
   }
 
+  /**
+   * Returns scroll top position to scroll to an element and considering stickies.
+   *
+   * @param stickies Sticky registry
+   * @param element Target element
+   * @param offsetTop Top offset
+   * @returns Scroll top position
+   */
   getScrollTopPosition(stickies: NgxSticky[], element: HTMLElement, offsetTop?: number): number {
     if (!offsetTop) {
       offsetTop = 0;
@@ -145,6 +180,11 @@ export class NgxStickyEngine {
     return scrollTop;
   }
 
+  /**
+   * Returns style of a sticky ghost.
+   *
+   * @param sticky Sticky
+   */
   getStickyGhostStyle(sticky: NgxSticky): NgxStickyGhostStyle {
     const win = getWindowRef();
 
@@ -191,6 +231,12 @@ export class NgxStickyEngine {
     return styles;
   }
 
+  /**
+   * Returns siblings of the given sticky.
+   *
+   * @param stickies Sticky registry
+   * @param sticky Sticky
+   */
   getStickySiblings(stickies: NgxSticky[], sticky: NgxSticky): NgxSticky[] {
     // reverse stickies when sticky position is bottom
     if (sticky.position !== 'top') {
@@ -200,6 +246,13 @@ export class NgxStickyEngine {
     return stickies.filter(_sticky => this.isStickySibling(sticky, _sticky));
   }
 
+  /**
+   * Returns top/bottom offsets for siblings of the given sticky.
+   *
+   * @param stickies Sticky registry
+   * @param sticky Sticky
+   * @returns Top/bottom offsets of sticky siblings
+   */
   getSiblingOffets(stickies: NgxSticky[], sticky: NgxSticky): NgxStickyOffsets {
     const offsets = { top: 0, bottom: 0 };
 
@@ -250,6 +303,14 @@ export class NgxStickyEngine {
     return offsets;
   }
 
+  /**
+   * Returns styles of the given sticky and state.
+   *
+   * @param sticky Sticky
+   * @param state State
+   * @param offsets Top/bottom offsets
+   * @returns Styles of the sticky state
+   */
   getStickyStyle(sticky: NgxSticky, state: NgxStickyState, offsets?: NgxStickyOffsets): Partial<NgxStickyStyle> {
     const win = getWindowRef();
 
@@ -339,6 +400,11 @@ export class NgxStickyEngine {
     return null;
   }
 
+  /**
+   * Hides sticky ghost.
+   *
+   * @param sticky Sticky
+   */
   hideStickyGhost(sticky: NgxSticky): void {
     if (!sticky.ghost) {
       return;
@@ -347,6 +413,11 @@ export class NgxStickyEngine {
     this.renderer.setStyle(sticky.ghost, 'display', 'none');
   }
 
+  /**
+   * Inserts sticky ghost.
+   *
+   * @param sticky Sticky
+   */
   insertStickyGhost(sticky: NgxSticky): void {
     if (!getWindowRef() || sticky.ghost) {
       return;
@@ -359,6 +430,12 @@ export class NgxStickyEngine {
     this.renderer.insertBefore(sticky.element.parentElement, sticky.ghost, sticky.element);
   }
 
+  /**
+   * Returns `true` when given stickies are sibling.
+   *
+   * @param sticky Sticky
+   * @param _sticky Sticky tested for sibling
+   */
   isStickySibling(sticky: NgxSticky, _sticky: NgxSticky) {
     return _sticky !== sticky
       && _sticky.enable
@@ -368,6 +445,13 @@ export class NgxStickyEngine {
       // && _sticky.state !== 'normal';
   }
 
+  /**
+   * Refreshs sticky state.
+   *
+   * @param sticky Sticky
+   * @param state State
+   * @param offsets Top/bottom offsets
+   */
   refreshSticky(sticky: NgxSticky, state: NgxStickyState, offsets?: NgxStickyOffsets): void {
     const win = getWindowRef();
 
@@ -395,12 +479,22 @@ export class NgxStickyEngine {
     setElementStyles(this.renderer, sticky.element, elementStyle);
   }
 
+  /**
+   * Refreshs sticky ghost.
+   *
+   * @param sticky Sticky
+   */
   refreshStickyGhost(sticky: NgxSticky): void {
     const ghostStyle = this.getStickyGhostStyle(sticky);
 
     setElementStyles(this.renderer, sticky.ghost, ghostStyle);
   }
 
+  /**
+   * Removes sticky ghost.
+   *
+   * @param sticky Sticky
+   */
   removeStickyGhost(sticky: NgxSticky): void {
     if (sticky.ghost) {
       // this.renderer.removeChild(sticky.ghost.parentElement, sticky.ghost);
@@ -409,10 +503,20 @@ export class NgxStickyEngine {
     }
   }
 
+  /**
+   * Restore original styles of the given sticky.
+   *
+   * @param sticky Sticky
+   */
   restoreStickyStyleOriginal(sticky: NgxSticky): void {
     setElementStyles(this.renderer, sticky.element, sticky.styleOriginal);
   }
 
+  /**
+   * Saves origin styles of the given sticky.
+   *
+   * @param sticky Sticky
+   */
   saveStickyStyleOriginal(sticky: NgxSticky): void {
     if (!sticky.styleOriginal) {
       sticky.styleOriginal = {
@@ -430,6 +534,11 @@ export class NgxStickyEngine {
     }
   }
 
+  /**
+   * Shows sticky ghost.
+   *
+   * @param sticky Sticky
+   */
   showStickyGhost(sticky: NgxSticky): void {
     if (!sticky.ghost) {
       this.insertStickyGhost(sticky);
@@ -440,6 +549,13 @@ export class NgxStickyEngine {
     }
   }
 
+  /**
+   * Update sticky.
+   *
+   * @param stickies Sticky registry
+   * @param sticky Sticky
+   * @param fastCheck Fast update
+   */
   updateSticky(stickies: NgxSticky[], sticky: NgxSticky, fastCheck?: boolean): void {
     const win = getWindowRef();
 
