@@ -38,6 +38,10 @@ export class NgxStickyService {
       this.monitoringAllSubscription.unsubscribe();
       this.monitoringAllSubscription = null;
     }
+
+    for (const sticky of this.stickies) {
+      this.unregister(sticky);
+    }
   }
 
   determineState(sticky: NgxSticky, scrollTop: number, offsets?: NgxStickyOffsets): NgxStickyState {
@@ -57,6 +61,10 @@ export class NgxStickyService {
   }
 
   register(sticky: NgxSticky): void {
+    if (this.destroyed$.isStopped) {
+      return;
+    }
+
     if (this.stickies.indexOf(sticky) === -1) {
       this.stickies.push(sticky);
     }
