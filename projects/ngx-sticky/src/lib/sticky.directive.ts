@@ -233,6 +233,10 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
     this.ngZone.runOutsideAngular(() => this._initMonitoring());
   }
 
+  update(fastCheck?: boolean) {
+    this.stickyService.update(this, fastCheck);
+  }
+
   _initMonitoring(): void {
     const win = getWindowRef();
 
@@ -261,7 +265,7 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
 
     if (!this.monitoringSubscription) {
       this.monitoringSubscription = this.monitoring$.subscribe(fastCheck => {
-        this.stickyService.update(this, fastCheck);
+        this.update(fastCheck);
       });
     }
   }
