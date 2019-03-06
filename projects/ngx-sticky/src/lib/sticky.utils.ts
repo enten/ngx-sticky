@@ -109,14 +109,19 @@ export function getElementRelativeRect(win: Window, element: HTMLElement) {
   let left = 0;
 
   let currentElement = element;
+  let currentElementStyle: CSSStyleDeclaration;
 
   do {
-    if (currentElement !== element && win.getComputedStyle(currentElement).position === 'relative') {
+    currentElementStyle = currentElement !== element ? win.getComputedStyle(currentElement) : {} as CSSStyleDeclaration;
+
+    if (currentElementStyle.position === 'relative') {
       break;
     }
 
-    top += currentElement.offsetTop || 0;
-    left += currentElement.offsetLeft || 0;
+    if (currentElementStyle.position !== 'absolute') {
+      top += currentElement.offsetTop || 0;
+      left += currentElement.offsetLeft || 0;
+    }
 
     currentElement = currentElement.offsetParent as HTMLElement;
   } while (currentElement);
