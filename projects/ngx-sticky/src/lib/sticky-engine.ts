@@ -345,7 +345,8 @@ export class NgxStickyEngine {
       };
 
       if (sticky.orbit/* || presticked */) {
-        const ghostTop = offsets.top - ghostRect.height;
+        const ghostTop = -ghostRect.height;
+
         const ghostLeft = getElementAbsoluteRect(sticky.ghost).left;
 
         Object.assign(styles, {
