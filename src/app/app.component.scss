@@ -1,0 +1,84 @@
+section {
+  background: #fcfff5;
+  color: #193441;
+  padding: 2em;
+  
+  &.example {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .code {
+    background: #fff;
+    border: 1px solid grey;
+    border-radius: 3px;
+    color: #24292e;
+    max-width: 100%;
+    padding: 0.5em 1em;
+    overflow: auto;
+  }
+
+  .demo {
+    flex-grow: 1;
+    position: relative;
+    background: #f1f1f1;
+    padding: 1em;
+  }
+
+  .demo > div {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    right: 1em;
+
+    &.bottom {
+      top: auto;
+      bottom: 1em;
+    }
+  }
+
+  p {
+    min-height: 1em;
+    padding: 0.5em 1em;
+    background: #3e606f;
+    color: #fcfff5;
+  
+    &[ngx-sticky] {
+      background: #193441;
+    }
+  }
+
+  &:nth-child(2n+0) {
+    background: #d1dbbd;
+  }
+
+  &:nth-child(3n+0) {
+    background: #3e606f;
+    color: #d1dbbd;
+
+    p {
+      background: #fcfff5;
+      color: #3e606f;
+      
+      &[ngx-sticky] {
+        background: #d1dbbd;
+      }
+    }
+  }
+
+  &:nth-child(4n+0) {
+    background: #193441;
+    color: #d1dbbd;
+
+    p {
+      background: #fcfff5;
+      color: #193441;
+
+      &[ngx-sticky] {
+        background: #d1dbbd;
+      }
+    }
+  }
+}

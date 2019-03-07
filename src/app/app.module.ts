@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { NgxStickyModule } from '@enten/ngx-sticky';
+import { NgxStickyModule } from '../../projects/ngx-sticky/src/public_api';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent, HelloComponent } from './app.component';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HelloComponent,
   ],
   imports: [
     BrowserModule,
@@ -17,6 +16,6 @@ import { AppComponent, HelloComponent } from './app.component';
     NgxStickyModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

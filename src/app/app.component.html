@@ -1,171 +1,214 @@
-<!--The content below is only a placeholder and can be replaced.-->
+<section>
+  <h1><a href="https://github.com/enten/ngx-sticky">@enten/ngx-sticky</a> Demo!</h1>
+</section>
 
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-<!--
-<router-outlet></router-outlet>
--->
-<p>{{ loremIpsum() }}</p>
-<p>{{ loremIpsum() }}</p>
-<!--
-<div ngx-sticky-container style="position: relative; background: lightsteelblue">
-  <p style="margin: 0">{{ loremIpsum(1) }}</p>
-  <p>{{ loremIpsum() }}</p>
-  <app-hello></app-hello>
-  <p>{{ loremIpsum(1) }}</p>
-  <p>{{ loremIpsum() }}</p>
-  <div ngx-sticky-container style="position: relative; margin: 50px; background: lightgrey">
-    <p><a href="#foo">foo</a></p>
-    <p ngx-sticky style="background: lightpink">Hello<br>world!</p>
-    <button (click)="foo()">foo()</button>
-    <button (click)="bar()">bar()</button>
-    <div ngx-sticky-container style="background: #fff; padding: 20px; margin: 10px;">
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      <p ngx-sticky id="scroll-target" stack="true" position="bottom" style="display: block; background: burlywood; margin-left: 50px;">{{ loremIpsum() }}</p>
-      <div ngx-sticky-container style="background: cornsilk">
-      <p>{{ loremIpsum(0, 2) }}</p>
-      <p ngx-sticky id="scroll-target" stack="false" position="bottom" style="display: block; background: darkcyan; margin-right: 50px;">{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum(1, 2) }}</p>
-      <p>{{ loremIpsum(0, 1) }}</p>
-      <p ngx-sticky id="scroll-target" stack="false" position="bottom" style="background: chocolate">{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum(1) }}</p>
-      <p #stickyYellow ngx-sticky stack="false" position="bottom" style="background: yellow; margin-right: 50px;">{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum(1) }}</p>
-      <p ngx-sticky enable="true" stack="false" position="bottom" style="background: purple; border: 0px solid red; margin: 0;">Main<br>Main2</p>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      </div>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      <div style="display: block;">
-        <p #sticky1 ngx-sticky
-          [spot]="orbit1"
-          position="bottom"
-          enable="true"
-          stack="true"
-          style="padding: 20px; background: darkblue; color: #fff;"
-          >
-          pppp
-        </p>
-        <p #orbit1 position="bottom" style="background: blue; padding: 10px 40px 20px 30px; margin: 10px 20px;">
-          Main content<br>
-          <img src="https://fakeimg.pl/300x500/" alt="fake image" style="width: 100%">
-        </p>
-      </div>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-    </div>
-    <p>{{ loremIpsum() }}</p>
-    <p ngx-sticky position="bottom" stack="true" style="background:pink;border: 5px solid red; margin:40px; border-right-style: none">Main lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum</p>
-    <p>{{ loremIpsum() }}</p>
-    <p>{{ loremIpsum() }}</p>
-    <p>{{ loremIpsum() }}</p>
-    <p>{{ loremIpsum() }}</p>
-    <p ngx-sticky position="bottom" style="background: purple; border: 5px solid red; margin: 10px;">Main</p>
+<section>
+  <h3>Features:</h3>
+  <ul>
+    <li>Stick all the things!</li>
+    <li>Super smooth!</li>
+    <li>Tested in real world projects</li>
+    <li>Support for <strong>Angular Universal</strong></li>
+    <li>Prevents page-jumping when switching to sticky mode</li>
+    <li>No jQuery or other dependencies - <strong>pure Angular</strong> solution</li>
+    <li>Support for boundaries to make elements stop.</li>
+  </ul>
+  <h3>Usage:</h3>
+  <pre><code>&lt;div ngx-sticky&gt;
+  I am sticky!
+&lt;/div&gt;</code></pre>
+  <h3>More:</h3>
+  <div>
+    For more information see: <a href="https://github.com/enten/ngx-sticky">https://github.com/enten/ngx-sticky</a>.
   </div>
-  <p>{{ loremIpsum() }}</p>
-  <p>{{ loremIpsum() }}</p>
-  <p>{{ loremIpsum() }}</p>
-</div>
--->
-<div ngx-sticky-container style="position: relative; background: lightsteelblue">
-  <p>{{ loremIpsum() }}</p>
-  <p>{{ loremIpsum() }}</p>
-  <p>{{ loremIpsum() }}</p>
-  <app-hello></app-hello>
-  <p>{{ loremIpsum() }}</p>
-  <p>{{ loremIpsum(1) }}</p>
-  <p>{{ loremIpsum() }}</p>
-  <p>{{ loremIpsum() }}</p>
-  <div ngx-sticky-container offsetTop="100" offsetBottom="40" style="position: relative; margin: 50px; background: lightgrey">
-    <p><a href="#foo">foo</a> lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum</p>
-    <p>{{ loremIpsum() }}</p>
+</section>
 
-    <p ngx-sticky style="background: lightpink">Hello<br>world!</p>
-    
-    <div ngx-sticky-container offsetBottom="200" style="background: #fff; padding: 20px; margin: 10px;">
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      <div style="display: block;">
-        <p #sticky1 ngx-sticky
-          [spot]="orbit1"
-          position="top"
-          enable="true"
-          stack="true"
-          style="padding: 20px; background: darkblue; color: #fff;"
-          >
-          pppp
-        </p>
-        <p #orbit1 position="top" style="background: blue; padding: 10px 40px 20px 30px; margin: 10px 20px;">
-          Main content<br>
-          <img src="https://fakeimg.pl/300x500/" alt="fake image" style="width: 100%">
-        </p>
-      </div>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      <p id="scroll-target"><strong>SCROLL TARGET</strong> {{ loremIpsum() }}</p>
-      <p ngx-sticky stack="true" position="top" style="display: block; background: burlywood; margin-left: 50px;">{{ loremIpsum() }}</p>
-      <div ngx-sticky-container offsetBottom="100" style="background: cornsilk">
-        <p>{{ loremIpsum(0, 2) }}</p>
-        <p ngx-sticky stack="false" position="top" style="display: block; background: darkcyan; margin-right: 50px;">{{ loremIpsum() }}</p>
-        <p>{{ loremIpsum(1, 2) }}</p>
-        <p>{{ loremIpsum(0, 1) }}</p>
-        <p ngx-sticky stack="false" position="top" style="background: chocolate">{{ loremIpsum() }}</p>
-        <p>{{ loremIpsum(1) }}</p>
-        <p #stickyYellow ngx-sticky stack="false" position="top" style="background: yellow; margin-right: 50px;">{{ loremIpsum() }}</p>
-        <p>{{ loremIpsum(1) }}</p>
-        <p ngx-sticky enable="true" stack="false" position="top" style="background: purple; border: 0px solid red; margin: 0;">Main<br>Main2</p>
-        <p>{{ loremIpsum() }}</p>
-        <p>{{ loremIpsum() }}</p>
-      </div>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
-      <p>{{ loremIpsum() }}</p>
+<section class="example">
+  <h3>Sticky</h3>
+  <pre class="code"><code>&lt;p ngx-sticky&gt;
+  Sticky
+&lt;/p&gt;</code></pre>
+  <div ngx-sticky-container class="demo">
+    <div>
+      <p ngx-sticky>Sticky</p>
     </div>
-
-    <p>{{ loremIpsum() }}</p>
-    <p>{{ loremIpsum() }}</p>
-    <p ngx-sticky position="bottom" stack="true" style="background:pink;border: 5px solid red; margin:40px; border-right-style: none">Main lorem ipsum  lorem ipsum</p>
-    <p>{{ loremIpsum() }}</p>
-    <p>{{ loremIpsum() }}</p>
-
   </div>
-  <p>{{ loremIpsum() }}</p>
-  <p>{{ loremIpsum() }}</p>
-  <p style="margin: 0">{{ loremIpsum(1) }}</p>
+</section>
 
- 
-  <p>{{ loremIpsum() }}</p>
-  <p ngx-sticky position="bottom" style="background: green">{{ loremIpsum() }}</p>
-  <p>{{ loremIpsum() }}</p>
-  <p>{{ loremIpsum() }}</p>
-</div>
-<p ngx-sticky position="bottom" style="text-align: center; background: purple; border: 5px solid red; margin: 10px;">
-  <button (click)="disableStickyWithSpot()">Disable sticky with spot</button>
-  <button (click)="scrollToAnchor(true)">Scroll to anchor native</button>
-  <button (click)="scrollToAnchor()">Scroll to anchor with StickyService</button>
-</p>
-<p>EOL</p>
+<section class="example">
+  <h3>Sticky inside container</h3>
+  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
+  &lt;p ngx-sticky&gt;
+    Sticky inside container
+  &lt;/p&gt;
+&lt;/div&gt;</code></pre>
+  <div ngx-sticky-container class="demo">
+    <div>
+      <p></p>
+      <p ngx-sticky>Sticky inside container</p>
+      <p></p>
+      <p></p>
+    </div>
+  </div>
+</section>
+
+<section class="example">
+  <h3>Sticky position bottom</h3>
+  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
+  &lt;p ngx-sticky position=&quot;bottom&quot;&gt;
+    Sticky position bottom
+  &lt;/p&gt;
+&lt;/div&gt;</code></pre>
+  <div ngx-sticky-container offsetTop="0" offsetBottom="200" class="demo">
+    <div class="bottom">
+      <p></p>
+      <p></p>
+      <p ngx-sticky position="bottom">Sticky position bottom</p>
+      <p></p>
+    </div>
+  </div>
+</section>
+
+<section class="example">
+  <h3>Sticky stack true</h3>
+  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
+  &lt;p ngx-sticky stack&gt;
+    Sticky 1
+  &lt;/p&gt;
+  &lt;p ngx-sticky stack&gt;
+    Sticky 2
+  &lt;/p&gt;
+  &lt;p ngx-sticky stack&gt;
+    Sticky 3
+  &lt;/p&gt;
+&lt;/div&gt;</code></pre>
+  <div ngx-sticky-container class="demo">
+    <div>
+      <p></p>
+      <p ngx-sticky stack>Sticky 1</p>
+      <p></p>
+      <p></p>
+      <p ngx-sticky stack>Sticky 2</p>
+      <p></p>
+      <p></p>
+      <p ngx-sticky stack>Sticky 3</p>
+      <p></p>
+      <p></p>
+    </div>
+  </div>
+</section>
+
+<section class="example">
+  <h3>Sticky stack false</h3>
+  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
+  &lt;p ngx-sticky stack=&quot;false&quot;&gt;
+    Sticky 1
+  &lt;/p&gt;
+  &lt;p ngx-sticky stack=&quot;false&quot;&gt;
+    Sticky 2
+  &lt;/p&gt;
+  &lt;p ngx-sticky stack=&quot;false&quot;&gt;
+    Sticky 3
+  &lt;/p&gt;
+&lt;/div&gt;</code></pre>
+  <div ngx-sticky-container class="demo">
+    <div>
+      <p></p>
+      <p ngx-sticky stack="false">Sticky 1</p>
+      <p></p>
+      <p></p>
+      <p ngx-sticky stack="false">Sticky 2</p>
+      <p></p>
+      <p></p>
+      <p ngx-sticky stack="false">Sticky 3</p>
+      <p></p>
+      <p></p>
+    </div>
+  </div>
+</section>
+
+<section class="example">
+  <h3>Sticky orbit</h3>
+  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
+  &lt;p ngx-sticky orbit&gt;
+    Sticky orbit
+  &lt;/p&gt;
+&lt;/div&gt;</code></pre>
+  <div ngx-sticky-container class="demo">
+    <div>
+      <p></p>
+      <p ngx-sticky orbit>Sticky orbit</p>
+      <p></p>
+      <p></p>
+    </div>
+  </div>
+</section>
+
+<section class="example">
+  <h3>Sticky spot</h3>
+  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
+  &lt;p ngx-sticky [spot]="spot"&gt;
+    Sticky spot
+  &lt;/p&gt;
+  &lt;p #spot&gt;
+    Spot
+  &lt;/p&gt;
+&lt;/div&gt;</code></pre>
+  <div ngx-sticky-container class="demo">
+    <div>
+      <p></p>
+      <p ngx-sticky [spot]="spot">Sticky spot</p>
+      <p></p>
+      <p #spot style="padding: 5em 1em; text-align: center">
+        Spot<br>
+      </p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+    </div>
+  </div>
+</section>
+
+<section class="example">
+  <h3>Scroll</h3>
+  <pre class="code"><code>constructor(readonly stickyService: NgxStickyService) {{ '{' }} {{ '}' }}
+
+scrollToAnchor() {{ '{' }}
+  this.stickyService.scrollToElement('#scroll-target');
+{{ '}' }}</code></pre>
+  <div ngx-sticky-container class="demo">
+    <div>
+      <p></p>
+      <p ngx-sticky style="text-align: center;">
+        <button (click)="scrollToAnchor('scroll-target', true)">Scroll to anchor natively</button>
+        <button (click)="scrollToAnchor('scroll-target')">Scroll to anchor with StickyService</button>
+      </p>
+      <p></p>
+      <p ngx-sticky>Sticky</p>
+      <p></p>
+      <p ngx-sticky>Sticky</p>
+      <p></p>
+      <p id="scroll-target" style="padding: 0.5em 1em 9.5em; text-align: center">
+        Scroll target<br>
+      </p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+    </div>
+  </div>
+</section>
+
+<section class="example">
+  <p ngx-sticky><strong>fyi:</strong> Boundary is optional - I'll scroll all the way down. </p>
+  <p></p>
+  <p></p>
+  <p></p>
+  <div style="height: 200vh"></div>
+  <p></p>
+</section>
+
+<section>
+  <p>thanks to <a href="https://github.com/w11k/angular-sticky-things">@w11k/angular-sticky-things</a></p>
+</section>
