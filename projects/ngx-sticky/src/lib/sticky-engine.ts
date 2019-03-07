@@ -163,7 +163,7 @@ export class NgxStickyEngine {
       const stickyState = this.determineStickyState(_sticky, scrollTop);
 
       // when sticky has state sticked or stucked
-      if (stickyState && stickyState !== 'normal') {
+      if (stickyState === 'sticked') {
         // substract height from stickies with stack is true
         if (_sticky.stack) {
           scrollTop -= _sticky.element.offsetHeight;
@@ -174,8 +174,7 @@ export class NgxStickyEngine {
       }
     }
 
-    // ??? (I forgot the case where scrollTop is smaller)
-    scrollTop = Math.min(scrollTop, elementRect.top - offsetTop - maxStickyUnstacked);
+    scrollTop -= maxStickyUnstacked;
 
     return scrollTop;
   }
