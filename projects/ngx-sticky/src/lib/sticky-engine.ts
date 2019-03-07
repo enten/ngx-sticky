@@ -103,11 +103,11 @@ export class NgxStickyEngine {
       const elementHeight = getElementAbsoluteRect(sticky.element).height;
 
       if (positionBottom) {
-        if (containerRect.top > scrollTop + viewportSize.height - elementHeight - offset - container.offsetTop) {
+        if (containerRect.top > scrollTop + viewportSize.height - elementHeight - offset) {
           state = 'stucked';
         }
       } else {
-        if (containerRect.top + containerRect.height < scrollTop + elementHeight + offset + container.offsetBottom) {
+        if (containerRect.top + containerRect.height < scrollTop + elementHeight + offset) {
           state = 'stucked';
         }
       }
@@ -300,6 +300,15 @@ export class NgxStickyEngine {
       }
     }
 
+    if (sticky.container) {
+      const win = getWindowRef();
+      const containerStyle = win ? win.getComputedStyle(sticky.container.element) : {} as CSSStyleDeclaration;
+
+      offsets.bottom += positionBottom
+        ? sticky.container.offsetTop + (parseFloat(containerStyle.paddingTop) || 0)
+        : sticky.container.offsetBottom + (parseFloat(containerStyle.paddingBottom) || 0);
+    }
+
     return offsets;
   }
 
@@ -381,8 +390,8 @@ export class NgxStickyEngine {
 
       let elementLeft = ghostRect.left;
       let elementTop = positionBottom
-        ? containerRect.top + offsets.bottom + sticky.container.offsetTop
-        : containerRect.top + containerRect.height - ghostRect.height - offsets.bottom - sticky.container.offsetBottom;
+        ? containerRect.top + offsets.bottom
+        : containerRect.top + containerRect.height - ghostRect.height - offsets.bottom;
 
       if (parentRect) {
         elementTop -= parentRect.top;
