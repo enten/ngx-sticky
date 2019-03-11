@@ -146,6 +146,7 @@ export class NgxStickyEngine {
     }
 
     const elementRect = getElementAbsoluteRect(element);
+    const offsets = { top: 0, bottom: 0 };
     let scrollTop = elementRect.top - offsetTop;
     let maxStickyUnstacked = 0;
 
@@ -161,16 +162,19 @@ export class NgxStickyEngine {
         continue;
       }
 
-      const stickyState = this.determineStickyState(_sticky, scrollTop);
+      const stickyState = this.determineStickyState(_sticky, scrollTop, offsets);
 
       // when sticky has state sticked or stucked
       if (stickyState === 'sticked') {
+        const _elementHeight = _sticky.forceElementHeight || _sticky.element.offsetHeight;
+
         // substract height from stickies with stack is true
         if (_sticky.stack) {
-          scrollTop -= _sticky.element.offsetHeight;
+          scrollTop -= _elementHeight;
+          offsets.top += _elementHeight;
         // update the biggest sticky with stack is false
-        } else if (_sticky.element.offsetHeight > maxStickyUnstacked) {
-          maxStickyUnstacked = _sticky.element.offsetHeight;
+        } else if (_elementHeight > maxStickyUnstacked) {
+          maxStickyUnstacked = _elementHeight;
         }
       }
     }
