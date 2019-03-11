@@ -67,6 +67,7 @@ export class NgxStickyEngine {
     const container = sticky.container;
     const ghost = sticky.spot || sticky.ghost;
     const ghostRect = getElementAbsoluteRect(ghost);
+    const ghostRectHeight = sticky.spot ? ghostRect.height : (sticky.forceElementHeight || ghostRect.height);
     const positionBottom = sticky.position === 'bottom';
     const spotHeight = sticky.spot ? ghostRect.height : 0;
     const viewportSize = getViewportSize(win);
@@ -75,7 +76,7 @@ export class NgxStickyEngine {
     let stickedOffset = 0;
 
     if (positionBottom) {
-      stickedOffset = ghostRect.top + offsets.top - scrollTop - viewportSize.height + ghostRect.height - spotHeight;
+      stickedOffset = ghostRect.top + offsets.top - scrollTop - viewportSize.height + ghostRectHeight - spotHeight;
     } else {
       stickedOffset = scrollTop - ghostRect.top + offsets.top - spotHeight;
     }
@@ -100,7 +101,7 @@ export class NgxStickyEngine {
     if (sticked && container) {
       const offset = offsets.top + offsets.bottom;
       const containerRect = getElementAbsoluteRect(container.element);
-      const elementHeight = getElementAbsoluteRect(sticky.element).height;
+      const elementHeight = sticky.forceElementHeight || getElementAbsoluteRect(sticky.element).height;
 
       if (positionBottom) {
         if (containerRect.top > scrollTop + viewportSize.height - elementHeight - offset) {
@@ -283,7 +284,7 @@ export class NgxStickyEngine {
       }
 
       const _ghostRect = getElementAbsoluteRect(_sticky.spot || _sticky.ghost);
-      const _elementHeight = getElementAbsoluteRect(_sticky.element).height;
+      const _elementHeight = _sticky.forceElementHeight || getElementAbsoluteRect(_sticky.element).height;
 
       // when _sticky is below (or upper for position bottom)
       if (
@@ -383,6 +384,7 @@ export class NgxStickyEngine {
     if (state === 'stucked') {
       const containerRect = getElementAbsoluteRect(sticky.container.element);
       const ghostRect = getElementAbsoluteRect(sticky.ghost);
+      const ghostRectHeight = sticky.forceElementHeight || ghostRect.height;
       const parentRect = sticky.ghost.offsetParent !== sticky.container.element
         ? getElementAbsoluteRect(sticky.ghost.offsetParent as HTMLElement)
         : containerRect;
@@ -390,7 +392,7 @@ export class NgxStickyEngine {
       let elementLeft = ghostRect.left;
       let elementTop = positionBottom
         ? containerRect.top + offsets.bottom
-        : containerRect.top + containerRect.height - ghostRect.height - offsets.bottom;
+        : containerRect.top + containerRect.height - ghostRectHeight - offsets.bottom;
 
       if (parentRect) {
         elementTop -= parentRect.top;

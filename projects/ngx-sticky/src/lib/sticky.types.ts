@@ -22,6 +22,7 @@ export type NgxStickyState = 'normal' | 'sticked' | 'stucked';
 export interface NgxSticky {
   container: NgxStickyContainer | null;
   element: HTMLElement;
+  forceElementHeight?: number;
   ghost?: HTMLElement;
   enable: boolean;
   hidden: boolean;

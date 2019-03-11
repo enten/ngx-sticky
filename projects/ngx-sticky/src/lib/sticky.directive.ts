@@ -21,7 +21,7 @@ import { mapTo, share, takeUntil, throttleTime } from 'rxjs/operators';
 import { NgxStickyContainerDirective } from './sticky-container.directive';
 import { NgxStickyService } from './sticky.service';
 import { NgxSticky, NgxStickyPosition, NgxStickyState } from './sticky.types';
-import { coerceBooleanProperty, fromImageLoadEvents, getWindowRef } from './sticky.utils';
+import { coerceBooleanProperty, coerceNumberProperty, fromImageLoadEvents, getWindowRef } from './sticky.utils';
 
 
 /**
@@ -52,6 +52,22 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
     }
   }
   enable$ = new BehaviorSubject<boolean>(true);
+
+  /**
+   * Force element height when calculate sticky element height.
+   */
+  @Input()
+  get forceElementHeight() {
+    return this.forceElementHeight$.getValue();
+  }
+  set forceElementHeight(value: number) {
+    value = coerceNumberProperty(value);
+
+    if (value !== this.forceElementHeight) {
+      this.forceElementHeight$.next(value);
+    }
+  }
+  forceElementHeight$ = new BehaviorSubject<number>(0);
 
   /**
    * Indicate sticky element is an orbit.
@@ -247,6 +263,7 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
     if (!this.monitoring$) {
       this.monitoring$ = merge(
         this.enable$,
+        this.forceElementHeight$,
         this.orbit$,
         this.position$,
         this.stack$,
