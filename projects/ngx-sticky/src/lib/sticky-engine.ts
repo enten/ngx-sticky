@@ -69,7 +69,7 @@ export class NgxStickyEngine {
     const ghostRect = getElementAbsoluteRect(ghost);
     const ghostRectHeight = sticky.spot ? ghostRect.height : (sticky.forceElementHeight || ghostRect.height);
     const positionBottom = sticky.position === 'bottom';
-    const spotHeight = sticky.spot ? ghostRect.height : 0;
+    const spotHeight = sticky.spot ? sticky.forceSpotHeight || ghostRect.height : 0;
     const viewportSize = getViewportSize(win);
     let state: NgxStickyState = 'normal';
     let sticked = false;
@@ -622,7 +622,7 @@ export class NgxStickyEngine {
     if (state === 'sticked' && (sticky.spot || sticky.orbit)) {
       const stickyRect = getElementAbsoluteRect(sticky.ghost);
       const ghostRect = sticky.spot ? getElementAbsoluteRect(sticky.spot) : stickyRect;
-      const spotHeight = sticky.spot ? ghostRect.height : 0;
+      const spotHeight = sticky.spot ? sticky.forceSpotHeight || ghostRect.height : 0;
       let stickedOffset = 0;
 
       if (sticky.position === 'bottom') {

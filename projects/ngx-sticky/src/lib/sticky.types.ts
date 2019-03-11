@@ -23,6 +23,7 @@ export interface NgxSticky {
   container: NgxStickyContainer | null;
   element: HTMLElement;
   forceElementHeight?: number;
+  forceSpotHeight?: number;
   ghost?: HTMLElement;
   enable: boolean;
   hidden: boolean;

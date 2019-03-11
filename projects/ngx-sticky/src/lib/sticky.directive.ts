@@ -70,6 +70,22 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
   forceElementHeight$ = new BehaviorSubject<number>(0);
 
   /**
+   * Force spot height when calculate sticky spot height.
+   */
+  @Input()
+  get forceSpotHeight() {
+    return this.forceSpotHeight$.getValue();
+  }
+  set forceSpotHeight(value: number) {
+    value = coerceNumberProperty(value);
+
+    if (value !== this.forceSpotHeight) {
+      this.forceSpotHeight$.next(value);
+    }
+  }
+  forceSpotHeight$ = new BehaviorSubject<number>(0);
+
+  /**
    * Indicate sticky element is an orbit.
    *
    * An orbit is a sticky element which isn't visible until
@@ -264,6 +280,7 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
       this.monitoring$ = merge(
         this.enable$,
         this.forceElementHeight$,
+        this.forceSpotHeight$,
         this.orbit$,
         this.position$,
         this.stack$,
