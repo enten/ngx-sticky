@@ -1,5 +1,12 @@
 
 /**
+ * Sticky direction.
+ *
+ * @publicApi
+ */
+export type NgxStickyDirection = 'top' | 'bottom';
+
+/**
  * Sticky position.
  *
  * @publicApi
@@ -22,6 +29,7 @@ export type NgxStickyState = 'normal' | 'sticked' | 'stucked';
 export interface NgxSticky {
   container: NgxStickyContainer | null;
   element: HTMLElement;
+  direction: NgxStickyDirection;
   forceElementHeight?: number;
   forceSpotHeight?: number;
   ghost?: HTMLElement;

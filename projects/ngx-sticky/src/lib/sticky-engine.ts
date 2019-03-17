@@ -2,6 +2,7 @@ import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 
 import {
   NgxSticky,
+  NgxStickyContainer,
   NgxStickyGhostStyle,
   NgxStickyOffsets,
   NgxStickyState,
@@ -10,8 +11,8 @@ import {
 import {
   getElementAbsoluteRect,
   getElementRelativeRect,
-  getViewportScrollPosition,
-  getViewportSize,
+  getViewportScrollPositionTop,
+  getViewportSizeHeight,
   getWindowRef,
   setElementStyles,
 } from './sticky.utils';
@@ -64,51 +65,98 @@ export class NgxStickyEngine {
       offsets = { top: 0, bottom: 0 };
     }
 
-    const container = sticky.container;
-    const ghost = sticky.spot || sticky.ghost;
-    const ghostRect = getElementAbsoluteRect(ghost);
-    const ghostRectHeight = sticky.spot ? ghostRect.height : (sticky.forceElementHeight || ghostRect.height);
-    const positionBottom = sticky.position === 'bottom';
-    const spotHeight = sticky.spot ? sticky.forceSpotHeight || ghostRect.height : 0;
-    const viewportSize = getViewportSize(win);
+    const ghostRect = getElementAbsoluteRect(sticky.ghost);
+    const ghostHeight = sticky.forceElementHeight || ghostRect.height;
+    const positionBottom = sticky.position !== 'top';
+    const directionBottom = sticky.direction !== 'top';
+    const spotRect = sticky.spot ? getElementAbsoluteRect(sticky.spot) : null;
+    const spotHeight = spotRect ? sticky.forceSpotHeight || spotRect.height : 0;
+    const beforeSpot = sticky.spot ? ghostRect.top < spotRect.top : false;
+    const viewportHeight = getViewportSizeHeight(win);
     let state: NgxStickyState = 'normal';
-    let sticked = false;
     let stickedOffset = 0;
 
     if (positionBottom) {
-      stickedOffset = ghostRect.top + offsets.top - scrollTop - viewportSize.height + ghostRectHeight - spotHeight;
+      if (directionBottom) {
+        stickedOffset = scrollTop - offsets.top + viewportHeight - ghostRect.top - ghostHeight;
+      } else {
+        stickedOffset = - scrollTop + offsets.bottom - viewportHeight + ghostRect.top + ghostHeight;
+      }
     } else {
-      stickedOffset = scrollTop - ghostRect.top + offsets.top - spotHeight;
+      if (directionBottom) {
+        stickedOffset = scrollTop + offsets.top - ghostRect.top;
+      } else {
+        stickedOffset = - scrollTop - offsets.bottom + ghostRect.top;
+      }
+    }
+
+    if (spotRect) {
+      let spotStickedOffset = 0;
+
+      if (beforeSpot) {
+        if (directionBottom) {
+          if (spotRect.top - ghostRect.top - ghostHeight > viewportHeight) {
+            spotStickedOffset = - scrollTop + offsets.top - viewportHeight + spotRect.top;
+          }
+        } else {
+          spotStickedOffset = 1;
+        }
+      } else {
+        if (directionBottom) {
+          spotStickedOffset = 1;
+        } else {
+          if (ghostRect.top - spotRect.top - spotHeight > viewportHeight) {
+            spotStickedOffset = scrollTop + offsets.top - spotRect.top - spotHeight;
+          }
+        }
+      }
+
+      if (spotStickedOffset <= 0) {
+        stickedOffset = 0;
+      }
     }
 
     if (stickedOffset > 0) {
       state = 'sticked';
-      sticked = true;
-    }/* else if (sticky.spot) {
-      const stickyRect = getElementAbsoluteRect(sticky.ghost);
 
-      if (positionBottom) {
-        stickedOffset = stickyRect.top + offsets.top - scrollTop - viewportSize.height;
-      } else {
-        stickedOffset = scrollTop - stickyRect.top + offsets.top - stickyRect.height;
-      }
+      if (sticky.container) {
+        const containerRect = getElementAbsoluteRect(sticky.container.element);
+        const containerOffsets = this.getStickyContainerOffsets(sticky.container);
+        let stuckedOffset = 0;
 
-      if (stickedOffset > 0) {
-        state = 'presticked';
-      }
-    }*/
-
-    if (sticked && container) {
-      const offset = offsets.top + offsets.bottom;
-      const containerRect = getElementAbsoluteRect(container.element);
-      const elementHeight = sticky.forceElementHeight || getElementAbsoluteRect(sticky.element).height;
-
-      if (positionBottom) {
-        if (containerRect.top > scrollTop + viewportSize.height - elementHeight - offset) {
-          state = 'stucked';
+        if (positionBottom) {
+          if (directionBottom) {
+            stuckedOffset = scrollTop
+              + viewportHeight
+              - containerRect.top
+              - containerRect.height
+              + containerOffsets.bottom;
+          } else {
+            stuckedOffset = - scrollTop
+              + offsets.top
+              + offsets.bottom
+              - viewportHeight
+              + containerRect.top
+              + containerOffsets.top
+              + ghostHeight;
+          }
+        } else {
+          if (directionBottom) {
+            stuckedOffset = scrollTop
+              + offsets.top
+              + offsets.bottom
+              - containerRect.top
+              - containerRect.height
+              + containerOffsets.bottom
+              + ghostHeight;
+          } else {
+            stuckedOffset = - scrollTop
+              + containerRect.top
+              + containerOffsets.top;
+          }
         }
-      } else {
-        if (containerRect.top + containerRect.height < scrollTop + elementHeight + offset) {
+
+        if (stuckedOffset > 0) {
           state = 'stucked';
         }
       }
@@ -125,11 +173,11 @@ export class NgxStickyEngine {
    * @param offsetTop Top offset
    * @returns Offset top
    */
-  getScrollTopOffset(stickies: NgxSticky[], element: HTMLElement, offsetTop?: number): number {
+  getScrollOffsetTop(stickies: NgxSticky[], element: HTMLElement, offsetTop?: number): number {
     const elementRect = getElementAbsoluteRect(element);
-    const scrollTopPosition = this.getScrollTopPosition(stickies, element, offsetTop);
+    const scrollTop = this.getScrollPositionTop(stickies, element, offsetTop);
 
-    return elementRect.top - scrollTopPosition;
+    return elementRect.top - scrollTop;
   }
 
   /**
@@ -140,7 +188,7 @@ export class NgxStickyEngine {
    * @param offsetTop Top offset
    * @returns Scroll top position
    */
-  getScrollTopPosition(stickies: NgxSticky[], element: HTMLElement, offsetTop?: number): number {
+  getScrollPositionTop(stickies: NgxSticky[], element: HTMLElement, offsetTop?: number): number {
     if (!offsetTop) {
       offsetTop = 0;
     }
@@ -182,6 +230,23 @@ export class NgxStickyEngine {
     scrollTop -= maxStickyUnstacked;
 
     return scrollTop;
+  }
+
+  /**
+   * Returns sticky container offets.
+   *
+   * @param container Sticky container
+   */
+  getStickyContainerOffsets(container: NgxStickyContainer): NgxStickyOffsets {
+    const win = getWindowRef();
+    const containerStyle = win && container.element
+      ? win.getComputedStyle(container.element)
+      : {} as CSSStyleDeclaration;
+
+    return {
+      top: container.offsetTop + (parseFloat(containerStyle.paddingTop) || 0),
+      bottom: container.offsetBottom + (parseFloat(containerStyle.paddingBottom) || 0),
+    };
   }
 
   /**
@@ -243,7 +308,8 @@ export class NgxStickyEngine {
    */
   getStickySiblings(stickies: NgxSticky[], sticky: NgxSticky): NgxSticky[] {
     // reverse stickies when sticky position is bottom
-    if (sticky.position !== 'top') {
+    // if (sticky.position !== 'top') {
+    if (sticky.direction !== 'top') {
       stickies = [ ...stickies ].reverse();
     }
 
@@ -264,8 +330,7 @@ export class NgxStickyEngine {
       return offsets;
     }
 
-    const ghostRect = getElementAbsoluteRect(sticky.spot || sticky.ghost);
-    const positionBottom = sticky.position === 'bottom';
+    const ghostRect = getElementAbsoluteRect(sticky.ghost);
 
     for (const _sticky of stickies) {
       if (
@@ -287,30 +352,14 @@ export class NgxStickyEngine {
         continue;
       }
 
-      const _ghostRect = getElementAbsoluteRect(_sticky.spot || _sticky.ghost);
-      const _elementHeight = _sticky.forceElementHeight || getElementAbsoluteRect(_sticky.element).height;
+      const _ghostRect = getElementAbsoluteRect(_sticky.ghost);
+      const _elementHeight = _sticky.forceElementHeight || _ghostRect.height;
 
-      // when _sticky is below (or upper for position bottom)
-      if (
-        (!positionBottom && _ghostRect.top > ghostRect.top)
-        || (positionBottom && _ghostRect.top < ghostRect.top)
-      ) {
-        // add offset bottom when stickies are in the same container
-        if (_sticky.container === sticky.container) {
-          offsets.bottom += _elementHeight;
-        }
+      if (ghostRect.top < _ghostRect.top) {
+        offsets.bottom += _elementHeight;
       } else {
         offsets.top += _elementHeight;
       }
-    }
-
-    if (sticky.container) {
-      const win = getWindowRef();
-      const containerStyle = win ? win.getComputedStyle(sticky.container.element) : {} as CSSStyleDeclaration;
-
-      offsets.bottom += positionBottom
-        ? sticky.container.offsetTop + (parseFloat(containerStyle.paddingTop) || 0)
-        : sticky.container.offsetBottom + (parseFloat(containerStyle.paddingBottom) || 0);
     }
 
     return offsets;
@@ -336,6 +385,7 @@ export class NgxStickyEngine {
     }
 
     const positionBottom = sticky.position === 'bottom';
+    const directionBottom = sticky.direction !== 'top';
     // const presticked = state === 'presticked';
 
     if (state === 'normal'/* || presticked*/) {
@@ -375,7 +425,7 @@ export class NgxStickyEngine {
 
     if (state === 'sticked') {
       const ghostRect = getElementAbsoluteRect(sticky.ghost);
-      const ghostTop = offsets.top;
+      const ghostTop = directionBottom ? offsets.top : offsets.bottom;
 
       return {
         position: 'fixed',
@@ -386,17 +436,19 @@ export class NgxStickyEngine {
     }
 
     if (state === 'stucked') {
+      const containerOffsets = this.getStickyContainerOffsets(sticky.container);
       const containerRect = getElementAbsoluteRect(sticky.container.element);
       const ghostRect = getElementAbsoluteRect(sticky.ghost);
       const ghostRectHeight = sticky.forceElementHeight || ghostRect.height;
+      const offset = positionBottom ? offsets.top : offsets.bottom;
       const parentRect = sticky.ghost.offsetParent !== sticky.container.element
         ? getElementAbsoluteRect(sticky.ghost.offsetParent as HTMLElement)
         : containerRect;
 
       let elementLeft = ghostRect.left;
-      let elementTop = positionBottom
-        ? containerRect.top + offsets.bottom
-        : containerRect.top + containerRect.height - ghostRectHeight - offsets.bottom;
+      let elementTop = directionBottom
+        ? containerRect.top + containerRect.height - containerOffsets.bottom - ghostRectHeight - offset
+        : containerRect.top + containerOffsets.top + offset;
 
       if (parentRect) {
         elementTop -= parentRect.top;
@@ -618,35 +670,51 @@ export class NgxStickyEngine {
 
     const previousState = sticky.state;
     const offsets = this.getSiblingOffets(stickies, sticky);
-    const scrollTop = getViewportScrollPosition(win).top;
+    const scrollTop = getViewportScrollPositionTop(win);
     const state = this.determineStickyState(sticky, scrollTop, offsets);
     const stateChanged = state !== previousState;
 
     // animate sticking when state is sticked and sticky has spot or is an orbit
+    /*
     if (state === 'sticked' && (sticky.spot || sticky.orbit)) {
       const stickyRect = getElementAbsoluteRect(sticky.ghost);
       const ghostRect = sticky.spot ? getElementAbsoluteRect(sticky.spot) : stickyRect;
       const spotHeight = sticky.spot ? sticky.forceSpotHeight || ghostRect.height : 0;
       let stickedOffset = 0;
 
-      if (sticky.position === 'bottom') {
-        const viewportSize = getViewportSize(win);
+      if (sticky.reverseDirection) {
+        if (sticky.position === 'bottom') {
+        } else {
+          // stickedOffset = scrollTop - ghostRect.top + offsets.top;
+          stickedOffset = scrollTop - ghostRect.top + offsets.top - spotHeight;
+        }
 
-        stickedOffset = ghostRect.top + offsets.top - scrollTop - viewportSize.height + ghostRect.height - spotHeight;
+        if (stickedOffset < stickyRect.height) {
+          offsets.top -= stickyRect.height - stickedOffset;
+          // offsets.top -= stickyRect.height + stickedOffset;
+        }
       } else {
-        stickedOffset = scrollTop - ghostRect.top + offsets.top - spotHeight;
-      }
+        if (sticky.position === 'bottom') {
+          const viewportSize = getViewportSize(win);
 
-      if (stickedOffset < stickyRect.height) {
-        offsets.top -= stickyRect.height - stickedOffset;
+          stickedOffset = ghostRect.top + offsets.top - scrollTop - viewportSize.height + ghostRect.height - spotHeight;
+        } else {
+          stickedOffset = scrollTop - ghostRect.top + offsets.top - spotHeight;
+        }
+
+        if (stickedOffset < stickyRect.height) {
+          offsets.top -= stickyRect.height - stickedOffset;
+        }
       }
     }
+    */
 
     if (
       // refresh sticky when it has spot
       sticky.spot
       // or refresh sticky when is orbit
       || sticky.orbit
+      // || sticky.reverseDirection
       // or refresh sticky when state hasn't changed but sticky was refresh to normal state
       || (!stateChanged && setStickyNormal)
       // or refresh sticky when state has changed and state isn't normal
@@ -659,13 +727,10 @@ export class NgxStickyEngine {
     // update sticky state when changed
     if (stateChanged) {
       sticky.state = state;
-    }
 
-    // update siblings when sticky has previous state and no state
-    // or when sticky has state and no previous state
-    if ((previousState && !state) || (!previousState && state)) {
+      // update siblings
       this.getStickySiblings(stickies, sticky).forEach(_sticky => {
-        this.updateSticky(stickies, _sticky, fastCheck);
+        this.updateSticky(stickies, _sticky, false);
       });
     }
   }

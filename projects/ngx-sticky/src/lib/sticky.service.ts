@@ -5,7 +5,7 @@ import { mapTo, share, takeUntil, throttleTime } from 'rxjs/operators';
 import { NgxStickyEngine } from './sticky-engine';
 import { NGX_STICKY_REGISTRY } from './sticky.providers';
 import { NgxSticky, NgxStickyContainer, NgxStickyOffsets, NgxStickyState } from './sticky.types';
-import { getViewportScrollPosition, getWindowRef, queryElementSelector } from './sticky.utils';
+import { getViewportScrollPositionLeft, getWindowRef, queryElementSelector } from './sticky.utils';
 
 /**
  * @description
@@ -76,8 +76,8 @@ export class NgxStickyService {
    * @param offsetTop Top offset
    * @returns Offset top
    */
-  getScrollTopOffset(element: HTMLElement, offsetTop?: number): number {
-    return this.engine.getScrollTopOffset(this.stickies, element, offsetTop);
+  getScrollOffsetTop(element: HTMLElement, offsetTop?: number): number {
+    return this.engine.getScrollOffsetTop(this.stickies, element, offsetTop);
   }
 
   /**
@@ -88,8 +88,8 @@ export class NgxStickyService {
    * @param offsetTop Top offset
    * @returns Scroll top position
    */
-  getScrollTopPosition(element: HTMLElement, offsetTop?: number): number {
-    return this.engine.getScrollTopPosition(this.stickies, element, offsetTop);
+  getScrollPositionTop(element: HTMLElement, offsetTop?: number): number {
+    return this.engine.getScrollPositionTop(this.stickies, element, offsetTop);
   }
 
   /**
@@ -139,10 +139,10 @@ export class NgxStickyService {
       return;
     }
 
-    const scrollPosition = getViewportScrollPosition(win);
-    const scrollTop = this.engine.getScrollTopPosition(this.stickies, element, offsetTop);
+    const scrollLeft = getViewportScrollPositionLeft(win);
+    const scrollTop = this.engine.getScrollPositionTop(this.stickies, element, offsetTop);
 
-    win.scrollTo(scrollPosition.left, scrollTop);
+    win.scrollTo(scrollLeft, scrollTop);
   }
 
   /**

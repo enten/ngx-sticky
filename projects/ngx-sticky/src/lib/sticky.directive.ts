@@ -20,7 +20,7 @@ import { mapTo, share, takeUntil, throttleTime } from 'rxjs/operators';
 
 import { NgxStickyContainerDirective } from './sticky-container.directive';
 import { NgxStickyService } from './sticky.service';
-import { NgxSticky, NgxStickyPosition, NgxStickyState } from './sticky.types';
+import { NgxSticky, NgxStickyDirection, NgxStickyPosition, NgxStickyState } from './sticky.types';
 import { coerceBooleanProperty, coerceNumberProperty, fromImageLoadEvents, getWindowRef } from './sticky.utils';
 
 
@@ -52,6 +52,24 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
     }
   }
   enable$ = new BehaviorSubject<boolean>(true);
+
+  /**
+   * Direction of the sticky; one of 'top' or 'bottom'.
+   *
+   * Default value: `'bottom'`
+   */
+  @Input()
+  get direction() {
+    return this.direction$.getValue();
+  }
+  set direction(value: NgxStickyDirection) {
+    value = value === 'top' ? 'top' : 'bottom';
+
+    if (value !== this.direction) {
+      this.direction$.next(value);
+    }
+  }
+  direction$ = new BehaviorSubject<NgxStickyDirection>('bottom');
 
   /**
    * Force element height when calculate sticky element height.
@@ -279,6 +297,7 @@ export class NgxStickyDirective implements NgxSticky, AfterViewInit, OnDestroy, 
     if (!this.monitoring$) {
       this.monitoring$ = merge(
         this.enable$,
+        this.direction$,
         this.forceElementHeight$,
         this.forceSpotHeight$,
         this.orbit$,

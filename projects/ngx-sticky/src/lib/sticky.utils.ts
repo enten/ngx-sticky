@@ -135,46 +135,42 @@ export function getElementRelativeRect(win: Window, element: HTMLElement) {
 }
 
 
-export function getViewportScrollPosition(win: Window): { top: number; left: number } {
-  // While we can get a reference to the fake document
-  // during SSR, it doesn't have getBoundingClientRect.
-  if (!win) {
-    return { top: 0, left: 0 };
-  }
-
+export function getViewportScrollPositionLeft(win: Window): number {
   // The top-left-corner of the viewport is determined by the scroll position of the document
   // body, normally just (scrollLeft, scrollTop). However, Chrome and Firefox disagree about
   // whether `document.body` or `document.documentElement` is the scrolled element, so reading
   // `scrollTop` and `scrollLeft` is inconsistent. However, using the bounding rect of
   // `document.documentElement` works consistently, where the `top` and `left` values will
   // equal negative the scroll position.
-  const documentElement = win.document.documentElement;
-  const documentRect = documentElement.getBoundingClientRect();
+  const documentRect = win.document.documentElement.getBoundingClientRect();
 
-  const top = -documentRect.top
-    || win.document.body.scrollTop
-    || win.scrollY
-    || documentElement.scrollTop
-    || 0;
-
-  const left = -documentRect.left
-    || win.document.body.scrollLeft
-    || win.scrollX
-    || documentElement.scrollLeft
-    || 0;
-
-  return { top, left };
+  return -documentRect.left
+  || win.document.body.scrollLeft
+  || win.scrollX
+  || win.document.documentElement.scrollLeft
+  || 0;
 }
 
-export function getViewportSize(win: Window): { width: number; height: number } {
-  if (!win) {
-    return { width: 0, height: 0 };
-  }
 
-  return {
-    width: win.innerWidth,
-    height: win.innerHeight,
-  };
+export function getViewportScrollPositionTop(win: Window): number {
+  // The top-left-corner of the viewport is determined by the scroll position of the document
+  // body, normally just (scrollLeft, scrollTop). However, Chrome and Firefox disagree about
+  // whether `document.body` or `document.documentElement` is the scrolled element, so reading
+  // `scrollTop` and `scrollLeft` is inconsistent. However, using the bounding rect of
+  // `document.documentElement` works consistently, where the `top` and `left` values will
+  // equal negative the scroll position.
+  const documentRect = win.document.documentElement.getBoundingClientRect();
+
+  return - documentRect.top
+    || win.document.body.scrollTop
+    || win.scrollY
+    || win.document.documentElement.scrollTop
+    || 0;
+}
+
+
+export function getViewportSizeHeight(win: Window): number {
+  return win.innerHeight || 0;
 }
 
 
@@ -187,29 +183,6 @@ export function queryElementSelector<E extends Element = Element>(doc: Document,
 
   return nodeList.item(0);
 }
-
-
-// export function setElementClasses(
-//   renderer: Renderer2,
-//   element: HTMLElement,
-//   classes: { [prop: string]: boolean },
-// ): void {
-//   if (!element || !classes) {
-//     return;
-//   }
-
-//   const classNames = Object.keys(classes);
-
-//   for (const className of classNames) {
-//     const value = classes[className];
-
-//     if (value) {
-//       renderer.addClass(element, className);
-//     } else {
-//       renderer.removeClass(element, className);
-//     }
-//   }
-// }
 
 
 export function setElementStyles(
