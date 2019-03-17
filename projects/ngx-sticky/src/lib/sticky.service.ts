@@ -100,7 +100,7 @@ export class NgxStickyService {
    * @returns Top/bottom offsets of sticky siblings
    */
   getSiblingOffets(sticky: NgxSticky): NgxStickyOffsets {
-    return this.engine.getSiblingOffets(this.stickies, sticky);
+    return this.engine.getStickySiblingsOffets(this.stickies, sticky);
   }
 
   /**

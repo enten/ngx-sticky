@@ -29,6 +29,7 @@ export type NgxStickyState = 'normal' | 'sticked' | 'stucked';
 export interface NgxSticky {
   container: NgxStickyContainer | null;
   element: HTMLElement;
+  elementStyle?: NgxStickyElementStyle;
   direction: NgxStickyDirection;
   forceElementHeight?: number;
   forceSpotHeight?: number;
@@ -40,7 +41,6 @@ export interface NgxSticky {
   spot: HTMLElement | null;
   stack: boolean;
   state: NgxStickyState;
-  styleOriginal?: NgxStickyStyle;
 }
 
 
@@ -53,6 +53,26 @@ export interface NgxStickyContainer {
   element: HTMLElement;
   offsetTop: number;
   offsetBottom: number;
+}
+
+
+/**
+ * Interface for a sticky styles.
+ *
+ * @publicApi
+ */
+export interface NgxStickyElementStyle {
+  [prop: string]: string;
+  position: string;
+  width: string;
+  top: string;
+  bottom: string;
+  left: string;
+  margin: string;
+  marginTop: string;
+  marginRight: string;
+  marginBottom: string;
+  marginLeft: string;
 }
 
 
@@ -89,24 +109,4 @@ export interface NgxStickyGhostStyle {
 export interface NgxStickyOffsets {
   top: number;
   bottom: number;
-}
-
-
-/**
- * Interface for a sticky styles.
- *
- * @publicApi
- */
-export interface NgxStickyStyle {
-  [prop: string]: string;
-  position: string;
-  width: string;
-  top: string;
-  bottom: string;
-  left: string;
-  margin: string;
-  marginTop: string;
-  marginRight: string;
-  marginBottom: string;
-  marginLeft: string;
 }

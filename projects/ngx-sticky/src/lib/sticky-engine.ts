@@ -3,10 +3,10 @@ import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import {
   NgxSticky,
   NgxStickyContainer,
+  NgxStickyElementStyle,
   NgxStickyGhostStyle,
   NgxStickyOffsets,
   NgxStickyState,
-  NgxStickyStyle,
 } from './sticky.types';
 import {
   getElementAbsoluteRect,
@@ -43,7 +43,7 @@ export class NgxStickyEngine {
     this.refreshSticky(sticky, null);
     this.removeStickyGhost(sticky);
 
-    sticky.styleOriginal = null;
+    sticky.elementStyle = null;
   }
 
   /**
@@ -233,6 +233,111 @@ export class NgxStickyEngine {
   }
 
   /**
+   * Returns styles of the given sticky and state.
+   *
+   * @param sticky Sticky
+   * @param state State
+   * @param offsets Top/bottom offsets
+   * @returns Styles of the sticky state
+   */
+  getStickyElementStyle(
+    sticky: NgxSticky,
+    state: NgxStickyState,
+    offsets?: NgxStickyOffsets,
+  ): Partial<NgxStickyElementStyle> {
+    const win = getWindowRef();
+
+    if (!win || !state) {
+      return null;
+    }
+
+    if (!offsets) {
+      offsets = { top: 0, bottom: 0 };
+    }
+
+    const positionBottom = sticky.position === 'bottom';
+    const directionBottom = sticky.direction !== 'top';
+
+    if (state === 'normal'/* || presticked*/) {
+      // this.showGhost(sticky);
+
+      const ghostRect = getElementRelativeRect(win, sticky.ghost);
+      const ghostStyle = win.getComputedStyle(sticky.ghost);
+
+      const elementWidth = ghostRect.width
+        - ((parseFloat(ghostStyle.borderLeft) || 0) + (parseFloat(ghostStyle.borderRight) || 0))
+        - ((parseFloat(ghostStyle.paddingLeft) || 0) + (parseFloat(ghostStyle.paddingRight) || 0));
+
+      const styles = {
+        position: 'absolute',
+        width: `${elementWidth}px`,
+        top: `${ghostRect.top}px`,
+        bottom: '',
+        left: `${ghostRect.left}px`,
+        margin: '0px',
+      };
+
+      if (sticky.orbit/* || presticked */) {
+        const ghostTop = -ghostRect.height;
+
+        const ghostLeft = getElementAbsoluteRect(sticky.ghost).left;
+
+        Object.assign(styles, {
+          position: 'fixed',
+          top: !positionBottom ? `${ghostTop}px` : '',
+          bottom: positionBottom ? `${ghostTop}px` : '',
+          left: `${ghostLeft}px`,
+        });
+      }
+
+      return styles;
+    }
+
+    if (state === 'sticked') {
+      const ghostRect = getElementAbsoluteRect(sticky.ghost);
+      const ghostTop = directionBottom ? offsets.top : offsets.bottom;
+
+      return {
+        position: 'fixed',
+        top: !positionBottom ? `${ghostTop}px` : '',
+        bottom: positionBottom ? `${ghostTop}px` : '',
+        left: `${ghostRect.left}px`,
+      };
+    }
+
+    if (state === 'stucked') {
+      const containerOffsets = this.getStickyContainerOffsets(sticky.container);
+      const containerRect = getElementAbsoluteRect(sticky.container.element);
+      const ghostRect = getElementAbsoluteRect(sticky.ghost);
+      const ghostRectHeight = sticky.forceElementHeight || ghostRect.height;
+      const offset = positionBottom ? offsets.top : offsets.bottom;
+      const parentRect = sticky.ghost.offsetParent !== sticky.container.element
+        ? getElementAbsoluteRect(sticky.ghost.offsetParent as HTMLElement)
+        : containerRect;
+
+      let elementLeft = ghostRect.left;
+      let elementTop = directionBottom
+        ? containerRect.top + containerRect.height - containerOffsets.bottom - ghostRectHeight - offset
+        : containerRect.top + containerOffsets.top + offset;
+
+      if (parentRect) {
+        elementTop -= parentRect.top;
+        elementLeft -= parentRect.left;
+      }
+
+      return {
+        position: 'absolute',
+        top: `${elementTop}px`,
+        bottom: '',
+        left: `${elementLeft}px`,
+      };
+    }
+
+    // throw new Error(`Invalid state: ${state}`);
+    return null;
+  }
+
+  /**
    * Returns sticky container offets.
    *
    * @param container Sticky container
@@ -323,7 +428,7 @@ export class NgxStickyEngine {
    * @param sticky Sticky
    * @returns Top/bottom offsets of sticky siblings
    */
-  getSiblingOffets(stickies: NgxSticky[], sticky: NgxSticky): NgxStickyOffsets {
+  getStickySiblingsOffets(stickies: NgxSticky[], sticky: NgxSticky): NgxStickyOffsets {
     const offsets = { top: 0, bottom: 0 };
 
     if (!sticky.enable) {
@@ -363,108 +468,6 @@ export class NgxStickyEngine {
     }
 
     return offsets;
-  }
-
-  /**
-   * Returns styles of the given sticky and state.
-   *
-   * @param sticky Sticky
-   * @param state State
-   * @param offsets Top/bottom offsets
-   * @returns Styles of the sticky state
-   */
-  getStickyStyle(sticky: NgxSticky, state: NgxStickyState, offsets?: NgxStickyOffsets): Partial<NgxStickyStyle> {
-    const win = getWindowRef();
-
-    if (!win || !state) {
-      return null;
-    }
-
-    if (!offsets) {
-      offsets = { top: 0, bottom: 0 };
-    }
-
-    const positionBottom = sticky.position === 'bottom';
-    const directionBottom = sticky.direction !== 'top';
-    // const presticked = state === 'presticked';
-
-    if (state === 'normal'/* || presticked*/) {
-      // this.showGhost(sticky);
-
-      const ghostRect = getElementRelativeRect(win, sticky.ghost);
-      const ghostStyle = win.getComputedStyle(sticky.ghost);
-
-      const elementWidth = ghostRect.width
-        - ((parseFloat(ghostStyle.borderLeft) || 0) + (parseFloat(ghostStyle.borderRight) || 0))
-        - ((parseFloat(ghostStyle.paddingLeft) || 0) + (parseFloat(ghostStyle.paddingRight) || 0));
-
-      const styles = {
-        position: 'absolute',
-        width: `${elementWidth}px`,
-        top: `${ghostRect.top}px`,
-        bottom: '',
-        left: `${ghostRect.left}px`,
-        margin: '0px',
-      };
-
-      if (sticky.orbit/* || presticked */) {
-        const ghostTop = -ghostRect.height;
-
-        const ghostLeft = getElementAbsoluteRect(sticky.ghost).left;
-
-        Object.assign(styles, {
-          position: 'fixed',
-          top: !positionBottom ? `${ghostTop}px` : '',
-          bottom: positionBottom ? `${ghostTop}px` : '',
-          left: `${ghostLeft}px`,
-        });
-      }
-
-      return styles;
-    }
-
-    if (state === 'sticked') {
-      const ghostRect = getElementAbsoluteRect(sticky.ghost);
-      const ghostTop = directionBottom ? offsets.top : offsets.bottom;
-
-      return {
-        position: 'fixed',
-        top: !positionBottom ? `${ghostTop}px` : '',
-        bottom: positionBottom ? `${ghostTop}px` : '',
-        left: `${ghostRect.left}px`,
-      };
-    }
-
-    if (state === 'stucked') {
-      const containerOffsets = this.getStickyContainerOffsets(sticky.container);
-      const containerRect = getElementAbsoluteRect(sticky.container.element);
-      const ghostRect = getElementAbsoluteRect(sticky.ghost);
-      const ghostRectHeight = sticky.forceElementHeight || ghostRect.height;
-      const offset = positionBottom ? offsets.top : offsets.bottom;
-      const parentRect = sticky.ghost.offsetParent !== sticky.container.element
-        ? getElementAbsoluteRect(sticky.ghost.offsetParent as HTMLElement)
-        : containerRect;
-
-      let elementLeft = ghostRect.left;
-      let elementTop = directionBottom
-        ? containerRect.top + containerRect.height - containerOffsets.bottom - ghostRectHeight - offset
-        : containerRect.top + containerOffsets.top + offset;
-
-      if (parentRect) {
-        elementTop -= parentRect.top;
-        elementLeft -= parentRect.left;
-      }
-
-      return {
-        position: 'absolute',
-        top: `${elementTop}px`,
-        bottom: '',
-        left: `${elementLeft}px`,
-      };
-    }
-
-    // throw new Error(`Invalid state: ${state}`);
-    return null;
   }
 
   /**
@@ -529,19 +532,19 @@ export class NgxStickyEngine {
     // hide ghost and refresh original style when state is null
     if (!state) {
       this.hideStickyGhost(sticky);
-      this.restoreStickyStyleOriginal(sticky);
+      this.restoreStickyElementStyle(sticky);
 
       return;
     }
 
-    this.saveStickyStyleOriginal(sticky);
+    this.saveStickyElementStyle(sticky);
 
     // show sticky ghost when state is normal
     if (state === 'normal') {
       this.showStickyGhost(sticky);
     }
 
-    const elementStyle = this.getStickyStyle(sticky, state, offsets);
+    const elementStyle = this.getStickyElementStyle(sticky, state, offsets);
 
     setElementStyles(this.renderer, sticky.element, elementStyle);
   }
@@ -575,8 +578,8 @@ export class NgxStickyEngine {
    *
    * @param sticky Sticky
    */
-  restoreStickyStyleOriginal(sticky: NgxSticky): void {
-    setElementStyles(this.renderer, sticky.element, sticky.styleOriginal);
+  restoreStickyElementStyle(sticky: NgxSticky): void {
+    setElementStyles(this.renderer, sticky.element, sticky.elementStyle);
   }
 
   /**
@@ -584,9 +587,9 @@ export class NgxStickyEngine {
    *
    * @param sticky Sticky
    */
-  saveStickyStyleOriginal(sticky: NgxSticky): void {
-    if (!sticky.styleOriginal) {
-      sticky.styleOriginal = {
+  saveStickyElementStyle(sticky: NgxSticky): void {
+    if (!sticky.elementStyle) {
+      sticky.elementStyle = {
         position: sticky.element.style.position,
         width: sticky.element.style.width,
         top: sticky.element.style.top,
@@ -669,7 +672,7 @@ export class NgxStickyEngine {
     }
 
     const previousState = sticky.state;
-    const offsets = this.getSiblingOffets(stickies, sticky);
+    const offsets = this.getStickySiblingsOffets(stickies, sticky);
     const scrollTop = getViewportScrollPositionTop(win);
     const state = this.determineStickyState(sticky, scrollTop, offsets);
     const stateChanged = state !== previousState;
