@@ -258,7 +258,7 @@ export class NgxStickyEngine {
     const positionBottom = sticky.position === 'bottom';
     const directionBottom = sticky.direction !== 'top';
 
-    if (state === 'normal'/* || presticked*/) {
+    if (state === 'normal') {
       // this.showGhost(sticky);
 
       const ghostRect = getElementRelativeRect(win, sticky.ghost);
@@ -274,6 +274,7 @@ export class NgxStickyEngine {
         top: `${ghostRect.top}px`,
         bottom: '',
         left: `${ghostRect.left}px`,
+        float: '',
         margin: '0px',
       };
 
@@ -384,6 +385,7 @@ export class NgxStickyEngine {
       borderBottomWidth: elementStyle.borderBottomWidth,
       borderLeftWidth: elementStyle.borderLeftWidth,
       borderRightWidth: elementStyle.borderRightWidth,
+      cssFloat: elementStyle.cssFloat,
       marginTop: elementStyle.marginTop,
       marginBottom: elementStyle.marginBottom,
       marginLeft: elementStyle.marginLeft,
@@ -595,6 +597,7 @@ export class NgxStickyEngine {
         top: sticky.element.style.top,
         bottom: sticky.element.style.bottom,
         left: sticky.element.style.left,
+        cssFloat: sticky.element.style.cssFloat,
         margin: sticky.element.style.margin,
         marginTop: sticky.element.style.marginTop,
         marginRight: sticky.element.style.marginRight,

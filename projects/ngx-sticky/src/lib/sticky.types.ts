@@ -68,6 +68,7 @@ export interface NgxStickyElementStyle {
   top: string;
   bottom: string;
   left: string;
+  cssFloat: string;
   margin: string;
   marginTop: string;
   marginRight: string;
@@ -90,6 +91,7 @@ export interface NgxStickyGhostStyle {
   borderBottomWidth: string;
   borderLeftWidth: string;
   borderRightWidth: string;
+  cssFloat: string;
   marginTop: string;
   marginBottom: string;
   marginLeft: string;
