@@ -1,37 +1,40 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { NgxInViewportDirective } from './in-viewport.directive';
+import { NgxStickyBoundaryDirective } from './sticky-boundary.directive';
 import { NgxStickyContainerDirective } from './sticky-container.directive';
 import { NgxStickyDirective } from './sticky.directive';
 
 /**
- * @description
  * Adds sticky directives and providers.
  *
  * Managing sticky elements is one of the hardest parts of building web applications.
  *
- * The NgxStickyDirective try to solve problems when maning sticky elements.
+ * The NgxStickyModule allows to manage sticky elements in the best way.
  *
- * @usageNotes
+ * @example
  * NgxStickyModule can be imported multiple times: once per lazily-loaded bundle.
  *
  * ```
  * @NgModule({
- *   imports: [NgxStickyModule]
+ *   imports: [ NgxStickyModule ]
  * })
  * class MyNgModule {}
  * ```
- *
- * @publicApi
  */
 @NgModule({
   declarations: [
-    NgxStickyDirective,
+    NgxInViewportDirective,
+    NgxStickyBoundaryDirective,
     NgxStickyContainerDirective,
+    NgxStickyDirective,
   ],
   exports: [
-    NgxStickyDirective,
+    NgxInViewportDirective,
+    NgxStickyBoundaryDirective,
     NgxStickyContainerDirective,
+    NgxStickyDirective,
   ],
   imports: [ CommonModule ],
 })

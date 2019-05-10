@@ -1,75 +1,50 @@
-import { Directive, ElementRef, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Directive, ElementRef, Inject, NgZone, Optional, SkipSelf, forwardRef } from '@angular/core';
 
-import { NgxStickyService } from './sticky.service';
-import { NgxStickyContainer } from './sticky.types';
-import { coerceNumberProperty } from './sticky.utils';
+import { NgxStickyBaseContainerDirective } from './sticky-base-container.directive';
+import { NgxStickyEngine } from './sticky-engine';
+import { NgxStickyRootContainerController } from './sticky-root-container.controller';
+import { NGX_STICKY_WINDOW } from './sticky.tokens';
+import { NgxStickyContainerController } from './sticky.types';
 
 
 /**
- * @description
  * Defines a sticky container.
- *
- * @ngModule NgxStickyModule
- * @publicApi
  */
 @Directive({
   selector: '[ngxStickyContainer], [ngx-sticky-container], ngx-sticky-container',
+  exportAs: 'ngxStickyContainer',
 })
-export class NgxStickyContainerDirective implements NgxStickyContainer {
-
+export class NgxStickyContainerDirective extends NgxStickyBaseContainerDirective {
   /**
-   * Defines offset top inside the sticky container.
-   */
-  @Input()
-  get offsetTop() {
-    return this.offsetTop$.getValue();
-  }
-  set offsetTop(value: number) {
-    value = coerceNumberProperty(value);
-
-    if (value !== this.offsetTop) {
-      this.offsetTop$.next(value);
-      this.update(true);
-    }
-  }
-  offsetTop$ = new BehaviorSubject<number>(0);
-
-  /**
-   * Defines offset bottom inside the sticky container.
-   */
-  @Input()
-  get offsetBottom() {
-    return this.offsetBottom$.getValue();
-  }
-  set offsetBottom(value: number) {
-    value = coerceNumberProperty(value);
-
-    if (value !== this.offsetBottom) {
-      this.offsetBottom$.next(value);
-      this.update(true);
-    }
-  }
-  offsetBottom$ = new BehaviorSubject<number>(0);
-
-  /**
-   * Returns HTMLElement of the sticky container.
+   * Returns HTMLElement of the container.
    */
   get element(): HTMLElement {
     return this.elementRef.nativeElement;
   }
 
   constructor(
-    readonly stickyService: NgxStickyService,
+    readonly rootContainer: NgxStickyRootContainerController,
+    @SkipSelf() @Optional() @Inject(forwardRef(() => NgxStickyContainerDirective))
+    readonly stickyContainerParent: NgxStickyContainerController,
+    readonly stickyEngine: NgxStickyEngine,
+    readonly ngZone: NgZone,
     readonly elementRef: ElementRef<HTMLElement>,
-  ) { }
+    @Inject(NGX_STICKY_WINDOW)
+    readonly _win: Window,
+  ) {
+    // use root container when boundary isn't in container
+    super(stickyContainerParent || rootContainer, stickyEngine, ngZone, _win);
+  }
 
-  /**
-   * Updates stickies of the sticky container.
-   *
-   * @param fastCheck Fast update.
-   */
-  update(fastCheck?: boolean) {
-    this.stickyService.updateContainer(this, fastCheck);
+  getViewportHeight(): number {
+    return this.element.offsetHeight;
+  }
+
+  getViewportLeft(): number {
+    return this.element.scrollLeft;
+  }
+
+  getViewportTop(): number {
+    return this.element.scrollTop;
   }
 }
