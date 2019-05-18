@@ -2,6 +2,8 @@
 
 [![NPM Version](https://img.shields.io/npm/v/@enten/ngx-sticky.svg)](https://npmjs.com/package/@enten/ngx-sticky)
 [![NPM Dependencies](https://img.shields.io/david/enten/ngx-sticky.svg)](https://david-dm.org/enten/ngx-sticky)
+[![Build Status](https://travis-ci.org/enten/ngx-sticky.svg?branch=master)](https://travis-ci.org/enten/ngx-sticky)
+[![Coverage Status](https://coveralls.io/repos/github/enten/ngx-sticky/badge.svg)](https://coveralls.io/github/enten/ngx-sticky)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 :warning: WIP
