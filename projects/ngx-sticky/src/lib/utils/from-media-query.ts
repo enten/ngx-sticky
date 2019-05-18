@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
  * @returns Observable on media query events
  */
 export function fromMediaQuery(win: Window, query: string): Observable<MediaQueryListEvent> {
-  if (!win) {
+  if (!win || !win.matchMedia) {
     return of();
   }
 
