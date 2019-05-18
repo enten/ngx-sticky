@@ -7,11 +7,9 @@
       "node"
     ]
   },
-  "files": [
-    "src/test.ts"
-  ],
   "include": [
     "**/*.spec.ts",
+    "**/*_spec.ts",
     "**/*.d.ts"
   ]
 }
