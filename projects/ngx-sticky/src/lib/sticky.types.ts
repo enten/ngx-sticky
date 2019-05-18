@@ -25,13 +25,20 @@ export type NgxStickyState = 'normal' | 'sticked' | 'stucked';
 
 
 /**
- * Interface for a sticky line.
+ * Interface for a line.
  */
 export interface NgxStickyLine {
   height: number;
   top: number;
 }
 
+/**
+ * Interface for a rect.
+ */
+export interface NgxStickyRect extends NgxStickyLine {
+  width: number;
+  left: number;
+}
 
 /**
  * Interface for a sticky.
@@ -47,14 +54,14 @@ export interface NgxSticky extends NgxStickyLine {
 /**
  * Interface for a sticky boundary.
  */
-export interface NgxStickyBoundary extends NgxStickyLine {
+export interface NgxStickyBoundary extends NgxStickyRect {
   unstacked?: boolean;
 }
 
 /**
  * Interface for a sticky container.
  */
-export interface NgxStickyContainer extends NgxStickyLine {
+export interface NgxStickyContainer extends NgxStickyRect {
   disabled?: boolean;
   offsetTop?: number;
   offsetBottom?: number;

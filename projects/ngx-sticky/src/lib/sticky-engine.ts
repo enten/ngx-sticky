@@ -56,10 +56,14 @@ export class NgxStickyEngine {
     let {
       height: boundaryHeight,
       top: boundaryTop,
+      left: boundaryLeft,
+      width: boundaryWidth,
     } = boundary || container;
 
     boundaryHeight = boundaryHeight || 0;
     boundaryTop = boundaryTop || 0;
+    boundaryWidth = boundaryWidth || 0;
+    boundaryLeft = boundaryLeft || 0;
 
     if (spot && spot.height) {
       const beforeSpot = sticky.top < spot.top;
@@ -99,6 +103,8 @@ export class NgxStickyEngine {
     return {
       height: boundaryHeight,
       top: boundaryTop,
+      width: boundaryWidth,
+      left: boundaryLeft,
       unstacked: boundary && boundary.unstacked || container.unstacked || false,
       offsetBottom: 0,
       offsetTop: 0,
@@ -406,6 +412,8 @@ export class NgxStickyEngine {
       boundary: {
         top: intersection.top - 1,
         height: intersection.height,
+        left: container.left,
+        width: container.width,
       },
       disabled,
       top: intersection.top - 1,
@@ -419,6 +427,8 @@ export class NgxStickyEngine {
       boundary: {
         top: intersection.top,
         height: intersection.height - 1,
+        left: container.left,
+        width: container.width,
       },
       disabled,
       top: intersection.top,
@@ -540,16 +550,21 @@ export class NgxStickyEngine {
       stickies = [ offsetSpacer, ...stickies ];
     }
 
+    // remove 1px to fix round sizes (offsetLeft and offsetWidth)
+    const stickyComputedBoundaryRight = stickyComputed.boundary.left + stickyComputed.boundary.width - 1;
+
     for (let _stickyIndex = 0; _stickyIndex < stickies.length; ++_stickyIndex) {
       const _sticky = stickies[_stickyIndex];
       let _directionDown: boolean;
       let _positionBottom: boolean;
       let _stickyComputed: NgxStickyComputed;
+      let _stickyComputedBoundaryRight: number;
 
       if (_sticky === sticky) {
         _directionDown = stickyComputed.directionDown;
         _positionBottom = stickyComputed.positionBottom;
         _stickyComputed = stickyComputed;
+        _stickyComputedBoundaryRight = stickyComputedBoundaryRight;
       } else {
         _directionDown = isStickyDirectionDown(_sticky.direction);
         _positionBottom = isStickyPositionBottom(_sticky.position);
@@ -572,11 +587,18 @@ export class NgxStickyEngine {
           top: _sticky.top,
         };
 
+        // remove 1px to fix round sizes (offsetLeft and offsetWidth)
+        _stickyComputedBoundaryRight = _stickyComputed.boundary.left + _stickyComputed.boundary.width - 1;
+
         if (
           _sticky.disabled
           || !_sticky.height
+          // skip sticky which isn't in its boundary
           || _sticky.top < _stickyComputed.boundary.top
           || _sticky.top > _stickyComputed.boundary.top + _stickyComputed.boundary.height
+          // skip sticky sibling when its boundary isn't align horizontaly
+          || stickyComputedBoundaryRight <= _stickyComputed.boundary.left
+          || stickyComputed.boundary.left >= _stickyComputedBoundaryRight
         ) {
           _stickyComputed.disabled = true;
           _stickyComputed.sticked = { height: 0, top: 0 };

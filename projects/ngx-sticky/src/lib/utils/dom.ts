@@ -38,6 +38,42 @@ export function getDocumentHeightFactory(win: Window): () => number {
 
 
 /**
+ * Returns getter for document width.
+ *
+ * @param win Window reference
+ * @returns Getter for document width.
+ */
+export function getDocumentWidthFactory(win: Window): () => number {
+  if (!win) {
+    return () => 0;
+  }
+
+  const documentWidthGetters = [
+    () => win.document.body.scrollWidth,
+    () => win.document.documentElement.scrollWidth,
+    () => win.document.body.offsetWidth,
+    () => win.document.documentElement.offsetWidth,
+    () => win.document.body.clientWidth,
+    () => win.document.documentElement.clientWidth,
+  ];
+
+  let documentWidthGetter = documentWidthGetters[0];
+  let documentWidth = 0;
+
+  for (const _documentWidthGetter of documentWidthGetters) {
+    const _documentWidth = _documentWidthGetter();
+
+    if (_documentWidth > documentWidth) {
+      documentWidthGetter = _documentWidthGetter;
+      documentWidth = _documentWidth;
+    }
+  }
+
+  return documentWidthGetter;
+}
+
+
+/**
  * Returns element absolute rect.
  *
  * @param element Element

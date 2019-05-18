@@ -9,6 +9,7 @@ import { coerceBooleanProperty, coerceNumberProperty } from './utils/coercion';
 import { ConfigSubject, ConfigSubjectSchema } from './utils/config-subject';
 import {
   getDocumentHeightFactory,
+  getDocumentWidthFactory,
   getElementAbsoluteRect,
   getWindowViewportHeight,
   getWindowViewportLeft,
@@ -112,6 +113,8 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
 
   /** Getter for document height */
   readonly _getDocumentHeight: () => number;
+  /** Getter for document width */
+  readonly _getDocumentWidth: () => number;
 
   constructor(
     readonly containerParent: NgxStickyContainerController,
@@ -126,6 +129,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     }
 
     this._getDocumentHeight = getDocumentHeightFactory(this._win);
+    this._getDocumentWidth = getDocumentWidthFactory(this._win);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -304,10 +308,12 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     return {
       disabled: this.disabled,
       height: containerRect ? this.element.scrollHeight : this._getDocumentHeight(),
+      left: containerRect ? containerRect.left : 0,
       offsetBottom: config.offsetBottom,
       offsetTop: config.offsetTop,
       top: containerRect ? containerRect.top : 0,
       unstacked: config.unstacked,
+      width: containerRect ? this.element.scrollWidth : this._getDocumentWidth(),
     };
   }
 
