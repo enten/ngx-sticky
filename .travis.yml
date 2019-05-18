@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "10.9.0"
+cache:
+  directories:
+    - "node_modules"
+scripts: 
+  - echo "Running tests against $(node -v)..."
+  - ng test ngx-sticky --watch=false
