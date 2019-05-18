@@ -533,48 +533,48 @@ describe('_createMonitoringScrollObservable', () => {
 });
 
 
-describe('_createMonitoringWindowObservable', () => {
-  it('should returns observable which emit when window load or resize', done => {
-    const addEventListener = jest.fn();
-    const removeEventListener = jest.fn();
+// describe('_createMonitoringWindowObservable', () => {
+//   it('should returns observable which emit when window load or resize', done => {
+//     const addEventListener = jest.fn();
+//     const removeEventListener = jest.fn();
 
-    setup({
-      win: {
-        document: {
-          body: { scrollHeight: 2000 },
-          documentElement: {},
-        },
-        addEventListener,
-        removeEventListener,
-      },
-    });
+//     setup({
+//       win: {
+//         document: {
+//           body: { scrollHeight: 2000 },
+//           documentElement: {},
+//         },
+//         addEventListener,
+//         removeEventListener,
+//       },
+//     });
 
-    const monitoringSubscriber = jest.fn();
-    const monitoringInputs$ = container._createMonitoringWindowObservable();
+//     const monitoringSubscriber = jest.fn();
+//     const monitoringInputs$ = container._createMonitoringWindowObservable();
 
-    monitoringInputs$.subscribe(monitoringSubscriber);
+//     monitoringInputs$.subscribe(monitoringSubscriber);
 
-    expect(addEventListener).toBeCalledTimes(3);
+//     expect(addEventListener).toBeCalledTimes(3);
 
-    const loadHandler = addEventListener.mock.calls[0][1];
-    const orientationchangeHandler = addEventListener.mock.calls[1][1];
-    const resizeHandler = addEventListener.mock.calls[2][1];
+//     const loadHandler = addEventListener.mock.calls[0][1];
+//     const orientationchangeHandler = addEventListener.mock.calls[1][1];
+//     const resizeHandler = addEventListener.mock.calls[2][1];
 
-    expect(addEventListener).toBeCalledWith('load', loadHandler, { passive: true });
-    expect(addEventListener).toBeCalledWith('orientationchange', orientationchangeHandler, { passive: true });
-    expect(addEventListener).toBeCalledWith('resize', resizeHandler, { passive: true });
+//     expect(addEventListener).toBeCalledWith('load', loadHandler, { passive: true });
+//     expect(addEventListener).toBeCalledWith('orientationchange', orientationchangeHandler, { passive: true });
+//     expect(addEventListener).toBeCalledWith('resize', resizeHandler, { passive: true });
 
-    loadHandler();
-    orientationchangeHandler();
-    resizeHandler();
+//     loadHandler();
+//     orientationchangeHandler();
+//     resizeHandler();
 
-    asyncScheduler.schedule(() => {
-      expect(monitoringSubscriber).toBeCalledTimes(1);
-      expect(monitoringSubscriber).toBeCalledWith(false);
-      done();
-    });
-  });
-});
+//     asyncScheduler.schedule(() => {
+//       expect(monitoringSubscriber).toBeCalledTimes(1);
+//       expect(monitoringSubscriber).toBeCalledWith(false);
+//       done();
+//     });
+//   });
+// });
 
 
 describe('_destroyMonitoring', () => {

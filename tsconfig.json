@@ -5,12 +5,12 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es5",
+    "target": "es2015",
     "types": [
       "jest"
     ],
@@ -23,7 +23,7 @@
     ],
     "paths": {
       "@enten/ngx-sticky": [
-        "projects/ngx-sticky/src/public_api.ts"
+        "projects/ngx-sticky/src/public-api.ts"
       ],
       "@enten/ngx-sticky/*": [
         "projects/ngx-sticky/src/*"

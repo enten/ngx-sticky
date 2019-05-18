@@ -553,6 +553,7 @@ export class NgxStickyEngine {
     // remove 1px to fix round sizes (offsetLeft and offsetWidth)
     const stickyComputedBoundaryRight = stickyComputed.boundary.left + stickyComputed.boundary.width - 1;
 
+    // tslint:disable-next-line: prefer-for-of
     for (let _stickyIndex = 0; _stickyIndex < stickies.length; ++_stickyIndex) {
       const _sticky = stickies[_stickyIndex];
       let _directionDown: boolean;

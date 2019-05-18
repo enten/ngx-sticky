@@ -96,8 +96,10 @@ describe('getElementRelativeRect', () => {
     } as {} as HTMLElement)).toEqual({
       width: 10,
       height: 5,
-      top: 40,
-      left: 20,
+      // top: 40,
+      // left: 20,
+      top: 80,
+      left: 40,
     });
   });
 });

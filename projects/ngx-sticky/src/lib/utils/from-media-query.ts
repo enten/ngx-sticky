@@ -28,7 +28,7 @@ export function fromMediaQuery(win: Window, query: string): Observable<MediaQuer
   const onQueryChange = (mqlEvent: MediaQueryListEvent) => mql$.next(mqlEvent);
   const complete = mql$.complete;
 
-  mql$.complete = function () {
+  mql$.complete = function() { // tslint:disable-line: only-arrow-functions
     complete.call(mql$);
     mql.removeListener(onQueryChange); // tslint:disable-line: deprecation
   };

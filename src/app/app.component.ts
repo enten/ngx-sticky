@@ -6,7 +6,7 @@ import {
   NgxStickyDirection,
   NgxStickyPosition,
   fromMediaQuery,
-} from '../../projects/ngx-sticky/src/public_api';
+} from '../../projects/ngx-sticky/src/public-api';
 
 
 @Component({
