@@ -6,6 +6,7 @@ import { NgxStickyModule } from '../../projects/ngx-sticky/src/public-api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,6 +17,6 @@ import { AppComponent } from './app.component';
     NgxStickyModule,
   ],
   providers: [],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
 })
 export class AppModule { }
