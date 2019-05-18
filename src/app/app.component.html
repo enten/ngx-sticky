@@ -1,214 +1,810 @@
-<section>
-  <h1><a href="https://github.com/enten/ngx-sticky">@enten/ngx-sticky</a> Demo!</h1>
-</section>
+<nav ngx-sticky class="navigation">
+  <section class="container">
+    <a href="https://github.com/enten/ngx-sticky">
+      <h1>ngx-sticky</h1>
+    </a>
+  </section>
+</nav>
 
-<section>
-  <h3>Features:</h3>
-  <ul>
-    <li>Stick all the things!</li>
-    <li>Super smooth!</li>
-    <li>Tested in real world projects</li>
-    <li>Support for <strong>Angular Universal</strong></li>
-    <li>Prevents page-jumping when switching to sticky mode</li>
-    <li>No jQuery or other dependencies - <strong>pure Angular</strong> solution</li>
-    <li>Support for boundaries to make elements stop.</li>
-  </ul>
-  <h3>Usage:</h3>
-  <pre><code>&lt;div ngx-sticky&gt;
+<header class="header">
+  <section class="features container text">
+    <h2>Features</h2>
+    <ul>
+      <li>Stick all the things!</li>
+      <li>Super smooth!</li>
+      <li>Tested in real world projects</li>
+      <li>Support for <strong>Angular Universal</strong></li>
+      <li>Prevents page-jumping when switching to sticky mode</li>
+      <li>No jQuery or other dependencies - <strong>pure Angular</strong> solution</li>
+      <li>Support for boundaries to make elements stop.</li>
+    </ul>
+  </section>
+  <section class="installation container text">
+    <h2>Installation</h2>
+    <p>with npm:</p>
+    <pre data-header="shell" class="code"><code>npm install @enten/ngx-sticky</code></pre>
+    <p>with yarn:</p>
+    <pre data-header="shell" class="code"><code>yarn add @enten/ngx-sticky</code></pre>
+    <p>Now import the <code>NgxStickyModule</code> in the corresponding Module</p>
+    <pre data-header="ts" class="code"><code><span class="ts-keyword">import</span> <span class="ts-sign">{{ '{' }}</span> <span class="ts-user-declaration">NgxStickyModule</span> <span class="ts-sign">{{ '}' }}</span> <span class="ts-keyword">from</span> <span class="ts-sign">'</span><span class="ts-string">@enten/ngx-sticky</span><span class="ts-sign">';</span>
+
+<span class="ts-decorator">@NgModule</span><span class="ts-sign">({{ '{' }}</span>
+  imports<span class="ts-sign">: [</span>
+    <span class="ts-user-declaration">NgxStickyModule</span><span class="ts-sign">,</span> 
+  <span class="ts-sign">],</span> 
+  declarations<span class="ts-sign">: [],</span>
+  providers<span class="ts-sign">: [],</span>
+<span class="ts-sign">{{ '}' }})</span>
+<span class="ts-keyword">export</span> <span class="ts-keyword">class</span> <span class="ts-user-declaration">SomeModule</span> <span class="ts-sign">{{ '{ }' }}</span></code></pre>
+  </section>
+  <section class="usage container text">
+    <h2>Usage</h2>
+    <pre data-header="html" class="code"><code><span class="html-tag">&lt;div</span> <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>
   I am sticky!
-&lt;/div&gt;</code></pre>
-  <h3>More:</h3>
-  <div>
-    For more information see: <a href="https://github.com/enten/ngx-sticky">https://github.com/enten/ngx-sticky</a>.
-  </div>
-</section>
-
-<section class="example">
-  <h3>Sticky</h3>
-  <pre class="code"><code>&lt;p ngx-sticky&gt;
-  Sticky
-&lt;/p&gt;</code></pre>
-  <div ngx-sticky-container class="demo">
+<span class="html-tag">&lt;/div&gt;</span></code></pre>
+  </section>
+  <section class="more container text">
+    <h2>More</h2>
     <div>
-      <p ngx-sticky>Sticky</p>
+      For more information see: <a href="https://github.com/enten/ngx-sticky">https://github.com/enten/ngx-sticky</a>.
     </div>
+  </section>
+</header>
+
+<section class="examples">
+  <div class="container">
+    <h2>Examples</h2>
+
+    <div class="example">
+      <h3>Sticky</h3>
+      <div class="sidepanes">
+        <div ngx-sticky-boundary class="controls">
+          <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span> <span class="html-attr">stickyDisabled</span><span class="html-sign">=&quot;</span><input type="checkbox" [value]="exampleSticky1.disabled" (change)="exampleSticky1.config$.nextKeyValue('disabled', $event.target.checked)"><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
+  I am sticky!
+<span class="html-tag">&lt;/p&gt;</span></code></pre>
+        </div>
+        <div ngx-sticky-boundary class="preview">
+          <p ngx-sticky #exampleSticky1="ngxSticky">
+            I am sticky!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>Sticky inside boundary</h3>
+      <div class="sidepanes">
+        <div ngx-sticky-boundary class="controls">
+          <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span><span class="html-attr">stickyDisabled</span><span class="html-sign">=&quot;</span><input type="checkbox" [value]="exampleStickyOutsideBoundary.disabled" (change)="exampleStickyOutsideBoundary.config$.nextKeyValue('disabled', $event.target.checked)"><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
+  I am sticky!
+<span class="html-tag">&lt;/p&gt;</span>
+
+<span class="html-tag">&lt;div</span> <span class="html-attr">ngx-sticky-boundary</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>
+    Sticky inside boundary
+  <span class="html-tag">&lt;/p&gt;</span>
+<span class="html-tag">&lt;/div&gt;</span></code></pre>
+        </div>
+        <div ngx-sticky-boundary class="preview">
+          <p #exampleStickyOutsideBoundary="ngxSticky" ngx-sticky>I am sticky!</p>
+          <div ngx-sticky-boundary style="margin: 5rem auto; height: 30rem; width: 80%;">
+            <p ngx-sticky>Sticky inside boundary</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>Sticky boundary unstacked</h3>
+      <div class="sidepanes">
+        <div ngx-sticky-boundary class="controls">
+          <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;div</span>
+  <span class="html-attr">ngx-sticky-boundary</span>
+  <span class="html-attr">stickyUnstacked</span><span class="html-sign">=&quot;</span><input type="checkbox" [checked]="exampleBoundaryUnstacked.config.unstacked" (change)="exampleBoundaryUnstacked.config$.nextKeyValue('unstacked', $event.target.checked)"><span class="html-sign">&quot;</span>
+<span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span>&gt;Sticky 1<span class="html-tag">&lt;/p&gt;</span>
+  <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span>&gt;Sticky 2<span class="html-tag">&lt;/p&gt;</span>
+  <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span>&gt;Sticky 3<span class="html-tag">&lt;/p&gt;</span>
+<span class="html-tag">&lt;/div&gt;</span></code></pre>
+        </div>
+        <div class="preview">
+          <div #exampleBoundaryUnstacked="ngxStickyBoundary" ngx-sticky-boundary stickyUnstacked style="margin: 5rem auto; width: 80%;">
+            <div style="height: 5rem"></div>
+            <p ngx-sticky stickyPosition="top" stickyDirection="down">Sticky 1</p>
+            <div style="height: 5rem"></div>
+            <p ngx-sticky stickyPosition="top" stickyDirection="down">Sticky 2</p>
+            <div style="height: 5rem"></div>
+            <p ngx-sticky stickyPosition="top" stickyDirection="down">Sticky 3</p>
+            <div style="height: 5rem"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>Sticky position bottom</h3>
+      <div class="sidepanes">
+        <div ngx-sticky-boundary class="controls">
+          <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;div</span> <span class="html-attr">ngx-sticky-boundary</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span>
+    <span class="html-attr">stickyPosition</span><span class="html-sign">=&quot;</span><span class="html-attr-value">bottom</span><span class="html-sign">&quot;</span>
+    <span class="html-attr">stickyDirection</span><span class="html-sign">=&quot;</span><span class="html-attr-value">up</span><span class="html-sign">&quot;</span>
+  <span class="html-tag">&gt;</span>Sticky bottom direction up<span class="html-tag">&lt;/p&gt;</span>
+  <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span>
+    <span class="html-attr">stickyPosition</span><span class="html-sign">=&quot;</span><span class="html-attr-value">bottom</span><span class="html-sign">&quot;</span>
+    <span class="html-attr">stickyDirection</span><span class="html-sign">=&quot;</span><span class="html-attr-value">down</span><span class="html-sign">&quot;</span>
+  <span class="html-tag">&gt;</span>Sticky bottom direction down<span class="html-tag">&lt;/p&gt;</span>
+<span class="html-tag">&lt;/div&gt;</span></code></pre>
+        </div>
+        <div ngx-sticky-boundary offsetTop="0" offsetBottom="200" class="preview">
+          <div style="height: 800px;"></div>
+          <p ngx-sticky stickyPosition="bottom" stickyDirection="up">
+            Sticky bottom direction up
+          </p>
+          <p ngx-sticky stickyPosition="bottom" stickyDirection="down">
+            Sticky bottom direction down
+          </p>
+          <div style="height: 800px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>Sticky container</h3>
+      <div class="sidepanes">
+        <div ngx-sticky-boundary class="controls">
+          <pre data-header="html" class="code"><code><span class="html-tag">&lt;div</span> <span class="html-attr">ngx-sticky-container</span>
+  <span class="html-attr">style</span><span class="html-sign">=&quot;</span><span class="html-attr-value">height: 400px; overflow: auto;</span><span class="html-sign">&quot;</span>
+&gt;
+  <span class="html-tag">&lt;header</span> <span class="html-attr">ngx-sticky</span>
+    <span class="html-attr">stickyPosition</span><span class="html-sign">=&quot;</span><span class="html-attr-value">top</span><span class="html-sign">&quot;</span>
+    <span class="html-attr">stickyDirection</span><span class="html-sign">=&quot;</span><span class="html-attr-value">down</span><span class="html-sign">&quot;</span>
+  <span class="html-tag">&gt;</span>Header<span class="html-tag">&lt;/header&gt;</span>
+  <span class="html-tag">&lt;section</span> <span class="html-attr">ngx-sticky-boundary</span><span class="html-tag">&gt;</span>
+    <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>Sticky 1<span class="html-tag">&lt;/p&gt;</span>
+    <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>Sticky 2<span class="html-tag">&lt;/p&gt;</span>
+    <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>Sticky 3<span class="html-tag">&lt;/p&gt;</span>
+  <span class="html-tag">&lt;/section&gt;</span>
+  <span class="html-tag">&lt;footer</span> <span class="html-attr">ngx-sticky</span>
+    <span class="html-attr">stickyPosition</span><span class="html-sign">=&quot;</span><span class="html-attr-value">bottom</span><span class="html-sign">&quot;</span>
+    <span class="html-attr">stickyDirection</span><span class="html-sign">=&quot;</span><span class="html-attr-value">up</span><span class="html-sign">&quot;</span>
+  <span class="html-tag">&gt;</span>Footer<span class="html-tag">&lt;/div&gt;</span>
+<span class="html-tag">&lt;/footer&gt;</span></code></pre>
+        </div>
+        <div ngx-sticky-container class="preview" style="position: relative; overflow: auto; height: 40rem">
+          <header ngx-sticky>Header</header>
+          <div style="height: 12rem"></div>
+          <section ngx-sticky-boundary style="position: relative;">
+            <!-- <p ngx-sticky style="position: absolute; top: 50px; right: 50px; width: 50px; height: 50px; padding: 0; background: lightsteelblue;">
+              Sticky
+            </p> -->
+            <div style="height: 10rem;"></div>
+            <p ngx-sticky>Sticky 1</p>
+            <div style="height: 5rem;"></div>
+            <p ngx-sticky>Sticky 2</p>
+            <div style="height: 5rem;"></div>
+            <p ngx-sticky stickyPosition="bottom">Sticky 3</p>
+            <div style="height: 10rem;"></div>
+          </section>
+          <div style="height: 36rem"></div>
+          <footer ngx-sticky stickyPosition="bottom" stickyDirection="up">Footer</footer>
+        </div>
+      </div>
+    </div>
+
+    <div class="example sticky-classes">
+      <h3>Sticky classes</h3>
+      <div class="sidepanes">
+        <div ngx-sticky-boundary class="controls">
+          <pre data-header="html" class="code"><code><span class="html-tag">&lt;div</span> <span class="html-attr">class</span><span class="html-sign">=&quot;</span><span class="html-attr-value">container</span><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;header</span> <span class="html-attr">class</span><span class="html-sign">=&quot;</span><span class="html-attr-value">header</span><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>Header<span class="html-tag">&lt;/header&gt;</span>
+  <span class="html-tag">&lt;div</span> <span class="html-attr">#headerSticky</span>
+    <span class="html-attr">ngx-sticky</span>
+    <span class="html-attr">stickyClasses</span>
+    <span class="html-attr">class</span><span class="html-sign">=&quot;</span><span class="html-attr-value">header-sticky</span><span class="html-sign">&quot;</span>
+  <span class="html-tag">&gt;</span>
+    {{ '{{' }} headerSticky.className {{ '\}\}' }}
+  <span class="html-tag">&lt;/div&gt;</span>
+  <span class="html-tag">&lt;p&gt;&lt;/p&gt;</span>
+  <span class="html-tag">&lt;p&gt;&lt;/p&gt;</span>
+  <span class="html-tag">&lt;p&gt;&lt;/p&gt;</span>
+<span class="html-tag">&lt;/div&gt;</span>
+
+<span class="html-tag">&lt;style&gt;</span>
+.container {{ '{' }}
+  <span class="css-prop">position</span>: <span class="css-value">relative</span>;
+{{ '\}' }}
+.header {{ '{' }}
+  <span class="css-prop">position</span>: <span class="css-value">relative</span>;
+  <span class="css-prop">z-index</span>: <span class="css-user-value">2</span>;
+{{ '\}' }}
+.header-sticky {{ '{' }}
+  <span class="css-prop">display</span>: <span class="css-value">none</span>;
+  <span class="css-prop">position</span>: <span class="css-value">absolute</span>;
+  <span class="css-prop">transform</span>: <span class="css-user-value">translateY(-100%)</span>;
+  <span class="css-prop">transition</span>: <span class="css-user-value">transform 0.3s</span>;
+  <span class="css-prop">width</span>: <span class="css-user-value">100%</span>;
+  <span class="css-prop">z-index</span>: <span class="css-user-value">1</span>;
+{{ '\}' }}
+.header-sticky:not(.ngx-sticky--disabled) {{ '{' }}
+  <span class="css-prop">display</span>: <span class="css-value">block</span>;
+{{ '\}' }}
+.header-sticky:not(.ngx-sticky--normal) {{ '{' }}
+  <span class="css-prop">transform</span>: <span class="css-user-value">translateY(0%)</span>;
+{{ '\}' }}
+<span class="html-tag">&lt;/style&gt;</span>
+</code></pre>
+        </div>
+        <div ngx-sticky-boundary class="preview">
+          <header style="padding: 2rem 1rem">Header</header>
+          <div #exampleStickyClasses="ngxSticky" ngx-sticky stickyClasses stickyDisabled="false" class="header-sticky">.ngx-sticky--{{ exampleStickyClasses.state }}</div>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>Sticky with spot</h3>
+      <div class="sidepanes">
+        <div ngx-sticky-boundary class="controls">
+          <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;div</span> <span class="html-attr">ngx-sticky-boundary</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span> <span class="html-attr">[stickySpot]</span><span class="html-sign">=&quot;</span><span class="html-attr-value">spot</span><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
+    Sticky with spot
+  <span class="html-tag">&lt;/p&gt;</span>
+  <span class="html-tag">&lt;div</span> <span class="html-attr">[style.height.px]</span><span class="html-sign">=&quot;</span><input #stickyWithSpotBlankHeight type="number" value="1500" class="html-attr-value" style="width: 5rem;" (change)="changeDetectorRef.detectChanges(); exampleStickyWithSpot.update()"><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;/div&gt;</span>
+  <span class="html-tag">&lt;p</span> <span class="html-attr">#spot</span><span class="html-tag">&gt;</span>Spot<span class="html-tag">&lt;/p&gt;</span>
+<span class="html-tag">&lt;/div&gt;</span></code></pre>
+        </div>
+        <div ngx-sticky-boundary class="preview">
+          <p #exampleStickyWithSpot="ngxSticky" ngx-sticky [stickySpot]="spot">Sticky with spot</p>
+          <div [style.height.px]="stickyWithSpotBlankHeight.value"></div>
+          <div #spot style="padding: 2em 1em; background: lightblue;">
+            Spot<br>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<section class="example">
-  <h3>Sticky inside container</h3>
-  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
-  &lt;p ngx-sticky&gt;
-    Sticky inside container
-  &lt;/p&gt;
-&lt;/div&gt;</code></pre>
-  <div ngx-sticky-container class="demo">
+<section class="api">
+  <div class="container">
+    <h2>API</h2>
+
     <div>
-      <p></p>
-      <p ngx-sticky>Sticky inside container</p>
-      <p></p>
-      <p></p>
+      <h3>NgxStickyDirective</h3>
+      <div class="sidepanes">
+        <div class="controls" ngx-sticky-boundary>
+          <div ngx-sticky [stickyDisabled]="_isSmallScreen">
+            <div class="controls-header">
+              ngx-sticky
+            </div>
+            <div class="controls-group">
+              <div class="controls-group-header">
+                inputs
+              </div>
+              <div>
+                <label>stickyDisabled</label>
+                <input type="checkbox"
+                  [checked]="apiSticky.disabled"
+                  (change)="apiSticky.config$.nextKeyValue('disabled', $event.target.checked)"
+                >
+              </div>
+              <div>
+                <label>stickyPosition</label>
+                <select
+                  [value]="apiSticky.config.position"
+                  (change)="apiSticky.config$.nextKeyValue('position', $event.target.value)"
+                >
+                  <option value="top">top</option>
+                  <option value="bottom">bottom</option>
+                </select>
+              </div>
+              <div>
+                <label>stickyDirection</label>
+                <select
+                  [value]="apiSticky.config.direction"
+                  (change)="apiSticky.config$.nextKeyValue('direction', $event.target.value)"
+                >
+                  <option value="up">up</option>
+                  <option value="down">down</option>
+                </select>
+              </div>
+              <!--
+              <div>
+                <label>stickyOrbit</label>
+                <input type="checkbox"
+                  [checked]="apiSticky.config.orbit"
+                  (change)="apiSticky.config$.nextKeyValue('orbit', $event.target.checked)"
+                >
+              </div>
+              -->
+            </div>
+            <div class="controls-group">
+              <div class="controls-group-header">
+                outputs
+              </div>
+              <div>
+                <label>stickyState</label>
+                {{ apiSticky.state }}
+              </div>
+            </div>
+            <div class="controls-group">
+              <div class="controls-group-header">
+                methods
+              </div>
+              <div>
+                <label>enableSticky</label>
+                <button (click)="apiSticky.enableSticky()">call</button>
+              </div>
+              <div>
+                <label>disableSticky</label>
+                <button (click)="apiSticky.disableSticky()">call</button>
+              </div>
+              <!--
+              <div>
+                <label>update</label>
+                <button (click)="apiSticky.update()">call</button>
+              </div>
+              -->
+            </div>
+          </div>
+        </div>
+  
+        <div ngx-sticky-boundary class="preview">
+          <div style="height: 15rem;"></div>
+          <p #apiSticky="ngxSticky" ngx-sticky>
+            I am sticky!
+          </p>
+          <div style="height: 15rem;"></div>
+        </div>
+      </div>
+  
+      <pre data-header="html" class="code"><code><span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span><span *ngIf="apiSticky.disabled" class="html-attr"> stickyDisabled</span><!--<span *ngIf="apiSticky.config.orbit" class="html-attr"> stickyOrbit</span>--><ng-container *ngIf="apiSticky.config.position === 'bottom'"><span class="html-attr"> stickyPosition</span><span class="html-sign">=&quot;</span><span class="html-attr-value">bottom</span><span class="html-sign">&quot;</span></ng-container><ng-container *ngIf="apiSticky.config.direction === 'up'"><span class="html-attr"> stickyDirection</span><span class="html-sign">=&quot;</span><span class="html-attr-value">up</span><span class="html-sign">&quot;</span></ng-container><span class="html-tag">&gt;</span>
+  I am sticky!
+<span class="html-tag">&lt;/p&gt;</span></code></pre>
     </div>
-  </div>
-</section>
 
-<section class="example">
-  <h3>Sticky position bottom</h3>
-  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
-  &lt;p ngx-sticky position=&quot;bottom&quot;&gt;
-    Sticky position bottom
-  &lt;/p&gt;
-&lt;/div&gt;</code></pre>
-  <div ngx-sticky-container offsetTop="0" offsetBottom="200" class="demo">
-    <div class="bottom">
-      <p></p>
-      <p></p>
-      <p ngx-sticky position="bottom">Sticky position bottom</p>
-      <p></p>
-    </div>
-  </div>
-</section>
-
-<section class="example">
-  <h3>Sticky stack true</h3>
-  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
-  &lt;p ngx-sticky stack&gt;
-    Sticky 1
-  &lt;/p&gt;
-  &lt;p ngx-sticky stack&gt;
-    Sticky 2
-  &lt;/p&gt;
-  &lt;p ngx-sticky stack&gt;
-    Sticky 3
-  &lt;/p&gt;
-&lt;/div&gt;</code></pre>
-  <div ngx-sticky-container class="demo">
     <div>
-      <p></p>
-      <p ngx-sticky stack>Sticky 1</p>
-      <p></p>
-      <p></p>
-      <p ngx-sticky stack>Sticky 2</p>
-      <p></p>
-      <p></p>
-      <p ngx-sticky stack>Sticky 3</p>
-      <p></p>
-      <p></p>
+      <h3>NgxStickyBoundaryDirective</h3>
+      <div class="sidepanes">
+        <div class="controls" ngx-sticky-boundary>
+          <div ngx-sticky [stickyDisabled]="_isSmallScreen">
+            <div class="controls-header">
+              ngx-sticky-boundary
+            </div>
+            <div class="controls-group">
+              <div class="controls-group-header">
+                inputs
+              </div>
+              <div>
+                <label>stickyUnstacked</label>
+                <input type="checkbox"
+                  [checked]="apiBoundary.config.unstacked"
+                  (change)="apiBoundary.config$.nextKeyValue('unstacked', $event.target.checked)"
+                >
+              </div>
+            </div>
+            <!--
+            <div class="controls-group">
+              <div class="controls-group-header">
+                methods
+              </div>
+              <div>
+                <label>updateStickies</label>
+                <button (click)="apiBoundary.updateStickies()">call</button>
+              </div>
+            </div>
+            -->
+            <div class="controls-header">
+              ngx-sticky
+            </div>
+            <div class="controls-group">
+              <div>
+                <label>stickyDisabled</label>
+                <input type="checkbox"
+                  [checked]="apiBoundaryStickyDisabled"
+                  (change)="apiBoundaryStickyDisabled = !apiBoundaryStickyDisabled"
+                >
+              </div>
+              <div>
+                <label>stickyPosition</label>
+                <select
+                  [value]="apiBoundaryStickyPosition"
+                  (change)="apiBoundaryStickyPosition = $event.target.value"
+                >
+                  <option value="top">top</option>
+                  <option value="bottom">bottom</option>
+                </select>
+              </div>
+              <div>
+                <label>stickyDirection</label>
+                <select
+                  [value]="apiBoundaryStickyDirection"
+                  (change)="apiBoundaryStickyDirection = $event.target.value"
+                >
+                  <option value="up">up</option>
+                  <option value="down">down</option>
+                </select>
+              </div>
+              <!--
+              <div>
+                <label>stickyOrbit</label>
+                <input type="checkbox"
+                  [checked]="stickyOrbit"
+                  (change)="stickyOrbit = !stickyOrbit"
+                >
+              </div>
+              -->
+            </div>
+          </div>
+        </div>
+  
+        <div class="preview">
+          <div style="height: 5rem;"></div>
+          <div #apiBoundary="ngxStickyBoundary" ngx-sticky-boundary>
+            <div style="height: 10rem;"></div>
+            <p ngx-sticky
+              [stickyDisabled]="apiBoundaryStickyDisabled"
+              [stickyPosition]="apiBoundaryStickyPosition"
+              [stickyDirection]="apiBoundaryStickyDirection"
+            >
+              Sticky 1
+            </p>
+            <div style="height: 5rem"></div>
+            <p ngx-sticky
+              [stickyDisabled]="apiBoundaryStickyDisabled"
+              [stickyPosition]="apiBoundaryStickyPosition"
+              [stickyDirection]="apiBoundaryStickyDirection"
+            >
+              Sticky 2
+            </p>
+            <div style="height: 5rem"></div>
+            <p ngx-sticky
+              [stickyDisabled]="apiBoundaryStickyDisabled"
+              [stickyPosition]="apiBoundaryStickyPosition"
+              [stickyDirection]="apiBoundaryStickyDirection"
+            >
+              Sticky 3
+            </p>
+            <div style="height: 10rem;"></div>
+          </div>
+          <div style="height: 5rem;"></div>
+        </div>
+      </div>
+      <pre data-header="html" class="code"><code><span class="html-tag">&lt;div</span> <span class="html-attr">ngx-sticky-boundary</span><span *ngIf="apiBoundary.config.unstacked" class="html-attr"> stickyUnstacked</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;p</span>  <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>Sticky 1<span class="html-tag">&lt;/p&gt;</span>
+  <span class="html-tag">&lt;p</span>  <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>Sticky 2<span class="html-tag">&lt;/p&gt;</span>
+  <span class="html-tag">&lt;p</span>  <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>Sticky 3<span class="html-tag">&lt;/p&gt;</span>
+<span class="html-tag">&lt;/div&gt;</span></code></pre>
     </div>
-  </div>
-</section>
 
-<section class="example">
-  <h3>Sticky stack false</h3>
-  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
-  &lt;p ngx-sticky stack=&quot;false&quot;&gt;
-    Sticky 1
-  &lt;/p&gt;
-  &lt;p ngx-sticky stack=&quot;false&quot;&gt;
-    Sticky 2
-  &lt;/p&gt;
-  &lt;p ngx-sticky stack=&quot;false&quot;&gt;
-    Sticky 3
-  &lt;/p&gt;
-&lt;/div&gt;</code></pre>
-  <div ngx-sticky-container class="demo">
     <div>
-      <p></p>
-      <p ngx-sticky stack="false">Sticky 1</p>
-      <p></p>
-      <p></p>
-      <p ngx-sticky stack="false">Sticky 2</p>
-      <p></p>
-      <p></p>
-      <p ngx-sticky stack="false">Sticky 3</p>
-      <p></p>
-      <p></p>
+      <h3>NgxStickyContainerDirective</h3>
+      <div class="sidepanes">
+        <div class="controls">
+          <div>
+            <div class="controls-header">
+              ngx-sticky-container
+            </div>
+            <div class="controls-group">
+              <div class="controls-group-header">
+                inputs
+              </div>
+              <div>
+                <label>stickyDisabled</label>
+                <input type="checkbox"
+                  [checked]="apiContainer.disabled"
+                  (change)="apiContainer.config$.nextKeyValue('disabled', $event.target.checked)"
+                >
+              </div>
+              <div>
+                <label>stickyOffsetTop</label>
+                <input type="number"
+                  [value]="apiContainerStickyOffsetTop"
+                  (change)="apiContainerStickyOffsetTop = +$event.target.value"
+                >
+              </div>
+              <div>
+                <label>stickyOffsetBottom</label>
+                <input type="number"
+                  [value]="apiContainerStickyOffsetBottom"
+                  (change)="apiContainerStickyOffsetBottom = +$event.target.value"
+                >
+              </div>
+              <div>
+                <label>stickyUnstacked</label>
+                <input type="checkbox"
+                  [checked]="apiContainer.config.unstacked"
+                  (change)="apiContainer.config$.nextKeyValue('unstacked', $event.target.checked)"
+                >
+              </div>
+            </div>
+            <div class="controls-group">
+              <div class="controls-group-header">
+                methods
+              </div>
+              <div>
+                <label>enableStickies</label>
+                <button (click)="apiContainer.enableStickies()">call</button>
+              </div>
+              <div>
+                <label>disableStickies</label>
+                <button (click)="apiContainer.disableStickies()">call</button>
+              </div>
+              <div>
+                <label>scrollToTop</label>
+                <button (click)="apiContainer.scrollToTop('#apiContainerScrollTarget')">call</button>
+              </div>
+              <!--
+              <div>
+                <label>updateStickies</label>
+                <button (click)="apiContainer.updateStickies()">call</button>
+              </div>
+              -->
+            </div>
+            <div class="controls-header">
+              ngx-sticky
+            </div>
+            <div class="controls-group">
+              <div>
+                <label>stickyDisabled</label>
+                <input type="checkbox"
+                  [checked]="apiContainerStickyDisabled"
+                  (change)="apiContainerStickyDisabled = !apiContainerStickyDisabled"
+                >
+              </div>
+              <div>
+                <label>stickyPosition</label>
+                <select
+                  [value]="apiContainerStickyPosition"
+                  (change)="apiContainerStickyPosition = $event.target.value"
+                >
+                  <option value="top">top</option>
+                  <option value="bottom">bottom</option>
+                </select>
+              </div>
+              <div>
+                <label>stickyDirection</label>
+                <select
+                  [value]="apiContainerStickyDirection"
+                  (change)="apiContainerStickyDirection = $event.target.value"
+                >
+                  <option value="up">up</option>
+                  <option value="down">down</option>
+                </select>
+              </div>
+              <!--
+              <div>
+                <label>stickyOrbit</label>
+                <input type="checkbox"
+                  [checked]="stickyOrbit"
+                  (change)="stickyOrbit = !stickyOrbit"
+                >
+              </div>
+              -->
+            </div>
+          </div>
+        </div>
+  
+        <div #apiContainer="ngxStickyContainer" ngx-sticky-container
+          [stickyOffsetTop]="apiContainerStickyOffsetTop"
+          [stickyOffsetBottom]="apiContainerStickyOffsetBottom"
+          class="preview"
+          style="position: relative; height: 40rem; overflow: auto;"
+        >
+          <header ngx-sticky>
+            Header
+          </header>
+          <div style="height: 30rem;"></div>
+          <p ngx-sticky
+            [stickyDisabled]="apiContainerStickyDisabled"
+            [stickyPosition]="apiContainerStickyPosition"
+            [stickyDirection]="apiContainerStickyDirection"
+          >
+            Sticky 1
+          </p>
+          <div style="height: 5rem;"></div>
+          <p ngx-sticky
+            [stickyDisabled]="apiContainerStickyDisabled"
+            [stickyPosition]="apiContainerStickyPosition"
+            [stickyDirection]="apiContainerStickyDirection"
+          >
+            Sticky 2
+          </p>
+          <div style="height: 5rem;"></div>
+          <p ngx-sticky
+            [stickyDisabled]="apiContainerStickyDisabled"
+            [stickyPosition]="apiContainerStickyPosition"
+            [stickyDirection]="apiContainerStickyDirection"
+          >
+            Sticky 3
+          </p>
+          <div style="height: 5rem;"></div>
+          <p id="apiContainerScrollTarget" style="background: lightblue; opacity: 1;">Scroll target</p>
+          <div style="height: 40rem;"></div>
+          <footer ngx-sticky stickyPosition="bottom" stickyDirection="up">
+            Footer
+          </footer>
+        </div>
+      </div>
+      <pre data-header="html" class="code"><code><span class="html-tag">&lt;div</span> <span class="html-attr">ngx-sticky-container</span><span *ngIf="apiContainer.disabled" class="html-attr"> stickyDisabled</span><span *ngIf="apiContainer.config.unstacked" class="html-attr"> stickyUnstacked</span><ng-container *ngIf="apiContainerStickyOffsetTop" ><span class="html-attr"> stickyOffsetTop</span><span class="html-sign">=&quot;</span><span class="html-attr-value">{{ apiContainerStickyOffsetTop }}</span><span class="html-sign">&quot;</span></ng-container><ng-container *ngIf="apiContainerStickyOffsetBottom"><span class="html-attr"> stickyOffsetBottom</span><span class="html-sign">=&quot;</span><span class="html-attr-value">{{ apiContainerStickyOffsetBottom }}</span><span class="html-sign">&quot;</span></ng-container><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;header</span> <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>
+    Header
+  <span class="html-tag">&lt;/header&gt;</span>
+  <span class="html-tag">&lt;p</span>  <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>Sticky 1<span class="html-tag">&lt;/p&gt;</span>
+  <span class="html-tag">&lt;p</span>  <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>Sticky 2<span class="html-tag">&lt;/p&gt;</span>
+  <span class="html-tag">&lt;p</span>  <span class="html-attr">ngx-sticky</span><span class="html-tag">&gt;</span>Sticky 3<span class="html-tag">&lt;/p&gt;</span>
+  <span class="html-tag">&lt;footer</span> <span class="html-attr">ngx-sticky</span> <span class="html-attr">stickyPosition</span><span class="html-sign">=&quot;</span><span class="html-attr-value">bottom</span><span class="html-sign">&quot;</span> <span class="html-attr">stickyDirection</span><span class="html-sign">=&quot;</span><span class="html-attr-value">up</span><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
+    Footer
+  <span class="html-tag">&lt;/footer&gt;</span>
+<span class="html-tag">&lt;/div&gt;</span></code></pre>
     </div>
-  </div>
-</section>
 
-<section class="example">
-  <h3>Sticky orbit</h3>
-  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
-  &lt;p ngx-sticky orbit&gt;
-    Sticky orbit
-  &lt;/p&gt;
-&lt;/div&gt;</code></pre>
-  <div ngx-sticky-container class="demo">
     <div>
-      <p></p>
-      <p ngx-sticky orbit>Sticky orbit</p>
-      <p></p>
-      <p></p>
+      <h3>NgxInViewportDirective</h3>
+      <div class="sidepanes">
+        <div class="controls">
+          <div>
+            <div class="controls-header">
+              ngx-in-viewport
+            </div>
+            <div class="controls-group">
+              <div class="controls-group-header">
+                inputs
+              </div>
+              <div>
+                <label>intersectionDisabled</label>
+                <input type="checkbox"
+                  [checked]="apiInViewport.disabled"
+                  (change)="apiInViewport.config$.nextKeyValue('disabled', $event.target.checked)"
+                >
+              </div>
+              <div>
+                <label>intersectionThresholds</label>
+                <input type="text"
+                  [value]="apiInViewport.config.thresholds.join(',')"
+                  (change)="apiInViewport.config$.nextKeyValue('thresholds', $event.target.value)"
+                >
+              </div>
+            </div>
+            <div class="controls-group">
+              <div class="controls-group-header">
+                methods
+              </div>
+              <div>
+                <label>enableIntersection</label>
+                <button (click)="apiInViewport.enableIntersection()">call</button>
+              </div>
+              <div>
+                <label>disableIntersection</label>
+                <button (click)="apiInViewport.disableIntersection()">call</button>
+              </div>
+              <!--
+              <div>
+                <label>update</label>
+                <button (click)="apiInViewport.update()">call</button>
+              </div>
+              -->
+            </div>
+            <div class="controls-group">
+              <div class="controls-group-header">
+                outputs
+              </div>
+              <div>
+                <label>intersectionState</label>
+                {{ apiInViewport.state || 'null' }}
+              </div>
+              <div>
+                <label>intersectionThreshold</label>
+                {{ apiInViewport._intersectionThreshold }}
+              </div>
+              <!--
+              <div>
+                <label>intersectionComputation</label>
+                <pre class="code" style="margin: 0"><code>{{ getIntersectionComputationAsText() }}</code></pre>
+              </div>
+              -->
+            </div>
+            <div class="controls-header">
+              ngx-sticky
+            </div>
+            <div class="controls-group">
+              <div>
+                <label>stickyDisabled</label>
+                <input type="checkbox"
+                  [checked]="apiInViewportStickyDisabled"
+                  (change)="apiInViewportStickyDisabled = !apiInViewportStickyDisabled"
+                >
+              </div>
+              <div>
+                <label>stickyPosition</label>
+                <select
+                  [value]="apiInViewportStickyPosition"
+                  (change)="apiInViewportStickyPosition = $event.target.value"
+                >
+                  <option value="top">top</option>
+                  <option value="bottom">bottom</option>
+                </select>
+              </div>
+              <div>
+                <label>stickyDirection</label>
+                <select
+                  [value]="apiInViewportStickyDirection"
+                  (change)="apiInViewportStickyDirection = $event.target.value"
+                >
+                  <option value="up">up</option>
+                  <option value="down">down</option>
+                </select>
+              </div>
+              <!--
+              <div>
+                <label>stickyOrbit</label>
+                <input type="checkbox"
+                  [checked]="apiInViewportStickyOrbit"
+                  (change)="apiInViewportStickyOrbit = !apiInViewportStickyOrbit"
+                >
+              </div>
+              -->
+            </div>
+          </div>
+        </div>
+  
+        <div #container="ngxStickyContainer" ngx-sticky-container class="preview" style="position: relative; height: 40rem; overflow: auto;">
+          <header ngx-sticky>
+            Header
+          </header>
+          <div style="height: 30rem;"></div>
+          <p ngx-sticky
+            [stickyDisabled]="apiInViewportStickyDisabled"
+            [stickyPosition]="apiInViewportStickyPosition"
+            [stickyDirection]="apiInViewportStickyDirection"
+          >
+            Sticky 1
+          </p>
+          <div style="height: 5rem;"></div>
+          <p ngx-sticky
+            [stickyDisabled]="apiInViewportStickyDisabled"
+            [stickyPosition]="apiInViewportStickyPosition"
+            [stickyDirection]="apiInViewportStickyDirection"
+          >
+            Sticky 2
+          </p>
+          <div style="height: 5rem;"></div>
+          <p #apiInViewport="ngxInViewport" ngx-in-viewport style="opacity: 1; padding: 8rem 1rem; background: lightblue; text-align: center">
+            In viewport element
+          </p>
+          <div style="height: 5rem;"></div>
+          <p ngx-sticky
+            [stickyDisabled]="apiInViewportStickyDisabled"
+            [stickyPosition]="apiInViewportStickyPosition"
+            [stickyDirection]="apiInViewportStickyDirection"
+          >
+            Sticky 3
+          </p>
+          <div style="height: 40rem;"></div>
+          <footer ngx-sticky
+            stickyPosition="bottom"
+            stickyDirection="up"
+            style="margin-bottom: 0;"
+          >
+            Footer
+          </footer>
+        </div>
+      </div>
+      <pre data-header="html" class="code"><code><span class="html-tag">&lt;div</span> <span class="html-attr">ngx-in-viewport</span><span *ngIf="apiInViewport.disabled" class="html-attr"> intersectionDisabled</span><span class="html-attr"> intersectionThresholds</span><span class="html-sign">=&quot;</span><span class="html-attr-value">{{ apiInViewport.config.thresholds.join(',') }}</span><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
+  in viewport element
+<span class="html-tag">&lt;/div&gt;</span></code></pre>
     </div>
   </div>
 </section>
 
-<section class="example">
-  <h3>Sticky spot</h3>
-  <pre class="code"><code>&lt;div ngx-sticky-container&gt;
-  &lt;p ngx-sticky [spot]="spot"&gt;
-    Sticky spot
-  &lt;/p&gt;
-  &lt;p #spot&gt;
-    Spot
-  &lt;/p&gt;
-&lt;/div&gt;</code></pre>
-  <div ngx-sticky-container class="demo">
-    <div>
-      <p></p>
-      <p ngx-sticky [spot]="spot">Sticky spot</p>
-      <p></p>
-      <p #spot style="padding: 5em 1em; text-align: center">
-        Spot<br>
-      </p>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
-    </div>
-  </div>
-</section>
-
-<section class="example">
-  <h3>Scroll</h3>
-  <pre class="code"><code>constructor(readonly stickyService: NgxStickyService) {{ '{' }} {{ '}' }}
-
-scrollToAnchor() {{ '{' }}
-  this.stickyService.scrollToElement('#scroll-target');
-{{ '}' }}</code></pre>
-  <div ngx-sticky-container class="demo">
-    <div>
-      <p></p>
-      <p ngx-sticky style="text-align: center;">
-        <button (click)="scrollToAnchor('scroll-target', true)">Scroll to anchor natively</button>
-        <button (click)="scrollToAnchor('scroll-target')">Scroll to anchor with StickyService</button>
-      </p>
-      <p></p>
-      <p ngx-sticky>Sticky</p>
-      <p></p>
-      <p ngx-sticky>Sticky</p>
-      <p></p>
-      <p id="scroll-target" style="padding: 0.5em 1em 9.5em; text-align: center">
-        Scroll target<br>
-      </p>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
-    </div>
-  </div>
-</section>
-
-<section class="example">
-  <p ngx-sticky><strong>fyi:</strong> Boundary is optional - I'll scroll all the way down. </p>
-  <p></p>
-  <p></p>
-  <p></p>
-  <div style="height: 200vh"></div>
-  <p></p>
-</section>
-
-<section>
-  <p>thanks to <a href="https://github.com/w11k/angular-sticky-things">@w11k/angular-sticky-things</a></p>
-</section>
+<footer class="footer">
+  <p class="container">made with ☕ by <a href="http://enten.fr">enten</a></p>
+</footer>
+  
+  

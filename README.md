@@ -21,6 +21,7 @@ An Angular directive for making things sticky when the user scrolls (for Angular
 * Support for Angular Universal
 * Prevents page-jumping when switching to sticky mode
 * No jQuery or other dependencies - pure Angular solution
+* Support for boundaries to make elements stop
 
 ## Installation
 

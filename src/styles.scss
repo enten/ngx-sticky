@@ -1,13 +1,108 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~normalize.css/normalize.css';
 
-html, body {
-  margin: 0;
-  padding: 0;
+$bp-tablet: 70rem;
+$bp-desktop: 90rem;
+
+
+html {
+  font-size: 62.5%;
 }
 
-.ngx-sticky-ghost {
-  // visibility: hidden;
-  // z-index: -1;
-  background: cyan;
-  opacity: 0.3;
+body {
+  background: #fafafa;
+  color: #242a31;
+  font-family: sans-serif;
+  font-size: 1.6rem;
+}
+
+
+a {
+  text-decoration: underline;
+  color: #3884ff;
+}
+a:hover {
+  text-decoration: none;
+  color: #3434ac;
+}
+
+
+.container {
+  margin: auto;
+  max-width: $bp-desktop;
+}
+
+
+.sidepanes {
+  display: flex;
+  flex-flow: column;
+
+  @media (min-width: 640px) {
+    flex-flow: row;
+
+    > :nth-child(1),
+    > :nth-child(2) {
+      width: 50%;
+    }
+
+    > :nth-child(1) {
+      padding-right: 2rem;
+    }
+  }
+}
+
+
+.code {
+  background: #fff;
+
+  font-size: 0.8em;
+  line-height: 1.5em;
+  
+  > code {
+    display: block;
+    border: 1px solid #dbdbdb;
+    // border-radius: 5px;
+    color: #333;
+    padding: 1rem;
+    // overflow: auto;
+    white-space: pre-wrap;
+
+    .css-prop { color: firebrick; }
+    .css-value { color: cadetblue; }
+    .css-user-value { color: blue; }
+
+    .html-tag { color: purple; }
+    .html-attr { color: darkgoldenrod; }
+    .html-attr-value { color: darkblue; }
+    .html-sign { color: grey; }
+    
+    .ts-decorator { color: darkgoldenrod; }
+    .ts-keyword { color: purple; }
+    .ts-sign { color: #333; }
+    .ts-string { color: firebrick; }
+    .ts-user-declaration { color: blue; }
+  }
+
+  &[data-header] {
+    &:before {
+      content: attr(data-header);
+      display: block;
+      background: #dbdbdb;
+      border: 1px solid #dbdbdb;
+      // border-top-left-radius: 5px;
+      // border-top-right-radius: 5px;
+      padding: 0.2rem 1rem;
+    }
+
+    code {
+      margin-top: 0;
+      border-top: 0;
+      // border-top-left-radius: 0px;
+      // border-top-right-radius: 0px;
+    }
+  }
+}
+
+
+.text {
+  line-height: 1.5em;
 }

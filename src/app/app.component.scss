@@ -1,84 +1,147 @@
-section {
-  background: #fcfff5;
-  color: #193441;
-  padding: 2em;
-  
-  &.example {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+:host {
+  display: block;
+}
+
+.container {
+  padding: 2rem;
+}
+
+.navigation {
+  background: #cfd8dc;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
+  font-size: 2.4rem;
+  z-index: 2;
+
+  h1 {
+    display: inline;
+    font-size: inherit;
+    margin: 0;
+  }
+}
+
+
+.header,
+.api,
+.footer {
+  background: #eceff1;
+}
+
+.header {
+  z-index: 3;
+}
+
+.footer {
+  background: #9da6a9;
+  color: #eceff1;
+}
+
+
+.examples,
+.api {
+  .container > div {
+    margin-bottom: 12rem;
+  }
+}
+
+
+.sidepanes {
+  .controls {
+    &-header {
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+
+    &-group {
+      padding: 0;
+      line-height: 1.6em;
+      margin-bottom: 1.6rem;
+
+      &-header {
+        font-style: italic;
+      }
+
+      div > label {
+        display: inline-block;
+        margin-right: 2rem;
+        min-width: 18rem;
+      }
+
+      div > input[type=number],
+      div > input[type=text] {
+        width: 5rem;
+      }
+    }
+
+    .code {
+      margin-top: 0;
+    }
   }
 
-  .code {
+  .preview {
+    // width: 50%;
+    margin: 0;
+    min-height: 40rem;
+    padding: 1rem;
     background: #fff;
-    border: 1px solid grey;
-    border-radius: 3px;
-    color: #24292e;
-    max-width: 100%;
-    padding: 0.5em 1em;
-    overflow: auto;
-  }
 
-  .demo {
-    flex-grow: 1;
+    header,
+    footer,
+    p {
+      min-height: 1rem;
+      padding: 0.5rem 1rem;
+    }
+
+    header,
+    footer {
+      background: #cfd8dc;
+      z-index: 2;
+    }
+
+    [ngx-sticky-boundary] {
+      background: #eceff1;
+      padding: 1rem;
+    }
+
+    p {
+      min-height: 1rem;
+      padding: 0.5rem 1rem;
+      background: #cfd8dc;
+      opacity: 0.5;
+
+      &[ngx-sticky] {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+
+.example.sticky-classes {
+  .preview {
     position: relative;
-    background: #f1f1f1;
-    padding: 1em;
+    // padding-top: 6rem;
   }
-
-  .demo > div {
+  header {
+    position: relative;
+    z-index: 2;
+  }
+  .header-sticky {
+    display: none;
     position: absolute;
-    top: 1em;
-    left: 1em;
-    right: 1em;
+    background: lightblue;
+    padding: 1rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 1;
+    transition: transform 0.3s;
+    transform: translateY(-100%);
 
-    &.bottom {
-      top: auto;
-      bottom: 1em;
+    &:not(.ngx-sticky--disabled) {
+      display: block;
     }
-  }
 
-  p {
-    min-height: 1em;
-    padding: 0.5em 1em;
-    background: #3e606f;
-    color: #fcfff5;
-  
-    &[ngx-sticky] {
-      background: #193441;
-    }
-  }
-
-  &:nth-child(2n+0) {
-    background: #d1dbbd;
-  }
-
-  &:nth-child(3n+0) {
-    background: #3e606f;
-    color: #d1dbbd;
-
-    p {
-      background: #fcfff5;
-      color: #3e606f;
-      
-      &[ngx-sticky] {
-        background: #d1dbbd;
-      }
-    }
-  }
-
-  &:nth-child(4n+0) {
-    background: #193441;
-    color: #d1dbbd;
-
-    p {
-      background: #fcfff5;
-      color: #193441;
-
-      &[ngx-sticky] {
-        background: #d1dbbd;
-      }
+    &:not(.ngx-sticky--normal) {
+      transform: translateY(0%);
     }
   }
 }
