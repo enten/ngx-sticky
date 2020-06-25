@@ -187,7 +187,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
    * Force element height when calculate sticky element height.
    */
   @Input()
-  stickyHeight: (element: HTMLElement) => number;
+  stickyHeight: number;
 
   // /**
   //  * Indicate sticky element is an orbit.
@@ -233,7 +233,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
    * Force spot height when calculate sticky spot height.
    */
   @Input()
-  stickySpotHeight: (element: HTMLElement) => number;
+  stickySpotHeight: number;
 
   /**
    * Emit sticky computation.
