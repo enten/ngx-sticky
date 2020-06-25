@@ -11,6 +11,7 @@ export * from './lib/sticky-boundary.directive';
 export * from './lib/sticky-container.directive';
 export * from './lib/sticky-engine';
 export * from './lib/sticky-root-container.controller';
+export * from './lib/sticky-spot.directive';
 export * from './lib/sticky.directive';
 export * from './lib/sticky.helpers';
 export * from './lib/sticky.module';

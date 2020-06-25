@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { NgxInViewportDirective } from './in-viewport.directive';
 import { NgxStickyBoundaryDirective } from './sticky-boundary.directive';
 import { NgxStickyContainerDirective } from './sticky-container.directive';
+import { NgxStickySpotDirective } from './sticky-spot.directive';
 import { NgxStickyDirective } from './sticky.directive';
 
 /**
@@ -29,12 +30,14 @@ import { NgxStickyDirective } from './sticky.directive';
     NgxStickyBoundaryDirective,
     NgxStickyContainerDirective,
     NgxStickyDirective,
+    NgxStickySpotDirective,
   ],
   exports: [
     NgxInViewportDirective,
     NgxStickyBoundaryDirective,
     NgxStickyContainerDirective,
     NgxStickyDirective,
+    NgxStickySpotDirective,
   ],
   imports: [ CommonModule ],
 })
