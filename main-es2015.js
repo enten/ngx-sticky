@@ -46,7 +46,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NGX_BASE_INTERSECTION_CONFIG_SCHEMA", function() { return NGX_BASE_INTERSECTION_CONFIG_SCHEMA; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxInViewportDirective", function() { return NgxInViewportDirective; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
 /* harmony import */ var _sticky_container_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sticky-container.directive */ "./projects/ngx-sticky/src/lib/sticky-container.directive.ts");
@@ -250,38 +250,38 @@ let NgxInViewportDirective = class NgxInViewportDirective {
         });
     }
 };
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Boolean)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Boolean)
 ], NgxInViewportDirective.prototype, "intersectionDisabled", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Array)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Array)
 ], NgxInViewportDirective.prototype, "intersectionThresholds", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object)
 ], NgxInViewportDirective.prototype, "intersection", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object)
 ], NgxInViewportDirective.prototype, "intersectionComputation", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object)
 ], NgxInViewportDirective.prototype, "intersectionState", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object)
 ], NgxInViewportDirective.prototype, "intersectionThreshold", void 0);
-NgxInViewportDirective = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+NgxInViewportDirective = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
         selector: '[ngxInViewport], [ngx-in-viewport], ngx-in-viewport',
         exportAs: 'ngxInViewport',
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => _sticky_container_directive__WEBPACK_IMPORTED_MODULE_4__["NgxStickyContainerDirective"]))),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](4, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_sticky_tokens__WEBPACK_IMPORTED_MODULE_6__["NGX_STICKY_WINDOW"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_sticky_root_container_controller__WEBPACK_IMPORTED_MODULE_5__["NgxStickyRootContainerController"],
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => _sticky_container_directive__WEBPACK_IMPORTED_MODULE_4__["NgxStickyContainerDirective"]))),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(4, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_sticky_tokens__WEBPACK_IMPORTED_MODULE_6__["NGX_STICKY_WINDOW"])),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_sticky_root_container_controller__WEBPACK_IMPORTED_MODULE_5__["NgxStickyRootContainerController"],
         _sticky_container_directive__WEBPACK_IMPORTED_MODULE_4__["NgxStickyContainerDirective"],
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"],
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
@@ -511,7 +511,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NGX_STICKY_BASE_CONTAINER_CONFIG_SCHEMA", function() { return NGX_STICKY_BASE_CONTAINER_CONFIG_SCHEMA; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxStickyBaseContainerDirective", function() { return NgxStickyBaseContainerDirective; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
 /* harmony import */ var _sticky_base_container_controller__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sticky-base-container.controller */ "./projects/ngx-sticky/src/lib/sticky-base-container.controller.ts");
@@ -769,21 +769,21 @@ class NgxStickyBaseContainerDirective extends _sticky_base_container_controller_
         super.updateStickies(fastUpdate);
     }
 }
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Boolean)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Boolean)
 ], NgxStickyBaseContainerDirective.prototype, "stickyDisabled", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Function)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function)
 ], NgxStickyBaseContainerDirective.prototype, "stickyOffsetBottom", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Function)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function)
 ], NgxStickyBaseContainerDirective.prototype, "stickyOffsetTop", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Boolean)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Boolean)
 ], NgxStickyBaseContainerDirective.prototype, "stickyUnstacked", void 0);
 
 
@@ -824,7 +824,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NGX_STICKY_BASE_BOUNDARY_CONFIG_SCHEMA", function() { return NGX_STICKY_BASE_BOUNDARY_CONFIG_SCHEMA; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxStickyBoundaryDirective", function() { return NgxStickyBoundaryDirective; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
 /* harmony import */ var _sticky_base_boundary_controller__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sticky-base-boundary.controller */ "./projects/ngx-sticky/src/lib/sticky-base-boundary.controller.ts");
@@ -942,20 +942,20 @@ class NgxStickyBoundaryDirective extends _sticky_base_boundary_controller__WEBPA
         });
     }
 };
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Boolean)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Boolean)
 ], NgxStickyBoundaryDirective.prototype, "stickyUnstacked", void 0);
-NgxStickyBoundaryDirective = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+NgxStickyBoundaryDirective = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
         selector: '[ngxStickyBoundary], [ngx-sticky-boundary], ngx-sticky-boundary',
         exportAs: 'ngxStickyBoundary',
     })
     // tslint:disable-next-line: max-line-length
     ,
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => _sticky_container_directive__WEBPACK_IMPORTED_MODULE_5__["NgxStickyContainerDirective"]))),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](4, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_sticky_tokens__WEBPACK_IMPORTED_MODULE_7__["NGX_STICKY_WINDOW"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_sticky_root_container_controller__WEBPACK_IMPORTED_MODULE_6__["NgxStickyRootContainerController"], Object, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"],
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => _sticky_container_directive__WEBPACK_IMPORTED_MODULE_5__["NgxStickyContainerDirective"]))),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(4, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_sticky_tokens__WEBPACK_IMPORTED_MODULE_7__["NGX_STICKY_WINDOW"])),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_sticky_root_container_controller__WEBPACK_IMPORTED_MODULE_6__["NgxStickyRootContainerController"], Object, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"],
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
         Window])
 ], NgxStickyBoundaryDirective);
@@ -975,13 +975,13 @@ NgxStickyBoundaryDirective = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxStickyContainerDirective", function() { return NgxStickyContainerDirective; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _sticky_base_container_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sticky-base-container.directive */ "./projects/ngx-sticky/src/lib/sticky-base-container.directive.ts");
 /* harmony import */ var _sticky_engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sticky-engine */ "./projects/ngx-sticky/src/lib/sticky-engine.ts");
 /* harmony import */ var _sticky_root_container_controller__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sticky-root-container.controller */ "./projects/ngx-sticky/src/lib/sticky-root-container.controller.ts");
 /* harmony import */ var _sticky_tokens__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./sticky.tokens */ "./projects/ngx-sticky/src/lib/sticky.tokens.ts");
-
 var NgxStickyContainerDirective_1;
+
 
 
 
@@ -1017,14 +1017,14 @@ let NgxStickyContainerDirective = NgxStickyContainerDirective_1 = class NgxStick
         return this.element.scrollTop;
     }
 };
-NgxStickyContainerDirective = NgxStickyContainerDirective_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+NgxStickyContainerDirective = NgxStickyContainerDirective_1 = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
         selector: '[ngxStickyContainer], [ngx-sticky-container], ngx-sticky-container',
         exportAs: 'ngxStickyContainer',
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["SkipSelf"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => NgxStickyContainerDirective_1))),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](5, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_sticky_tokens__WEBPACK_IMPORTED_MODULE_5__["NGX_STICKY_WINDOW"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_sticky_root_container_controller__WEBPACK_IMPORTED_MODULE_4__["NgxStickyRootContainerController"], Object, _sticky_engine__WEBPACK_IMPORTED_MODULE_3__["NgxStickyEngine"],
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["SkipSelf"])()), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => NgxStickyContainerDirective_1))),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(5, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_sticky_tokens__WEBPACK_IMPORTED_MODULE_5__["NGX_STICKY_WINDOW"])),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_sticky_root_container_controller__WEBPACK_IMPORTED_MODULE_4__["NgxStickyRootContainerController"], Object, _sticky_engine__WEBPACK_IMPORTED_MODULE_3__["NgxStickyEngine"],
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"],
         Window])
@@ -1046,7 +1046,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP", function() { return NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxStickyEngine", function() { return NgxStickyEngine; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _sticky_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sticky.helpers */ "./projects/ngx-sticky/src/lib/sticky.helpers.ts");
 
 
@@ -1600,7 +1600,7 @@ let NgxStickyEngine = class NgxStickyEngine {
         };
     }
 };
-NgxStickyEngine = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+NgxStickyEngine = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root',
     })
@@ -1621,7 +1621,7 @@ NgxStickyEngine = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxStickyRootContainerController", function() { return NgxStickyRootContainerController; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _sticky_base_container_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sticky-base-container.directive */ "./projects/ngx-sticky/src/lib/sticky-base-container.directive.ts");
 /* harmony import */ var _sticky_engine__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sticky-engine */ "./projects/ngx-sticky/src/lib/sticky-engine.ts");
 /* harmony import */ var _sticky_tokens__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sticky.tokens */ "./projects/ngx-sticky/src/lib/sticky.tokens.ts");
@@ -1645,15 +1645,65 @@ let NgxStickyRootContainerController = class NgxStickyRootContainerController ex
         this.element = null;
     }
 };
-NgxStickyRootContainerController = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+NgxStickyRootContainerController = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root',
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_sticky_tokens__WEBPACK_IMPORTED_MODULE_4__["NGX_STICKY_WINDOW"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_sticky_engine__WEBPACK_IMPORTED_MODULE_3__["NgxStickyEngine"],
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_sticky_tokens__WEBPACK_IMPORTED_MODULE_4__["NGX_STICKY_WINDOW"])),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_sticky_engine__WEBPACK_IMPORTED_MODULE_3__["NgxStickyEngine"],
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
         Window])
 ], NgxStickyRootContainerController);
+
+
+
+/***/ }),
+
+/***/ "./projects/ngx-sticky/src/lib/sticky-spot.directive.ts":
+/*!**************************************************************!*\
+  !*** ./projects/ngx-sticky/src/lib/sticky-spot.directive.ts ***!
+  \**************************************************************/
+/*! exports provided: NgxStickySpotDirective */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxStickySpotDirective", function() { return NgxStickySpotDirective; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils */ "./projects/ngx-sticky/src/lib/utils/index.ts");
+
+
+
+let NgxStickySpotDirective = class NgxStickySpotDirective {
+    constructor() {
+        this.cssClassStickySpot = true;
+        this.cssStylePosition = 'absolute';
+        this._stickySpotHeight = 1;
+    }
+    get stickySpotHeight() { return this._stickySpotHeight; }
+    set stickySpotHeight(value) { this._stickySpotHeight = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["coerceNumberProperty"])(value); }
+};
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('class.ngx-sticky-spot'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object)
+], NgxStickySpotDirective.prototype, "cssClassStickySpot", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('style.position'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object)
+], NgxStickySpotDirective.prototype, "cssStylePosition", void 0);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('style.height.px'),
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [Number])
+], NgxStickySpotDirective.prototype, "stickySpotHeight", null);
+NgxStickySpotDirective = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
+        selector: '[ngxStickySpot], [ngx-sticky-spot], ngx-sticky-spot',
+        exportAs: 'ngxStickySpot',
+    })
+], NgxStickySpotDirective);
 
 
 
@@ -1671,7 +1721,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NGX_STICKY_BASE_CONFIG_SCHEMA", function() { return NGX_STICKY_BASE_CONFIG_SCHEMA; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxStickyDirective", function() { return NgxStickyDirective; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
 /* harmony import */ var _sticky_base_controller__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sticky-base.controller */ "./projects/ngx-sticky/src/lib/sticky-base.controller.ts");
@@ -1684,8 +1734,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_config_subject__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utils/config-subject */ "./projects/ngx-sticky/src/lib/utils/config-subject.ts");
 /* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./utils/dom */ "./projects/ngx-sticky/src/lib/utils/dom.ts");
 /* harmony import */ var _utils_from_image_events__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./utils/from-image-events */ "./projects/ngx-sticky/src/lib/utils/from-image-events.ts");
-
 var NgxStickyDirective_1;
+
 
 
 
@@ -2249,86 +2299,86 @@ let NgxStickyDirective = NgxStickyDirective_1 = class NgxStickyDirective extends
         }
     }
 };
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Boolean)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Boolean)
 ], NgxStickyDirective.prototype, "stickyClasses", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", String)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
 ], NgxStickyDirective.prototype, "stickyDirection", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Boolean)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Boolean)
 ], NgxStickyDirective.prototype, "stickyDisabled", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Function)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
 ], NgxStickyDirective.prototype, "stickyHeight", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", String)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", String)
 ], NgxStickyDirective.prototype, "stickyPosition", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", HTMLElement)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", HTMLElement)
 ], NgxStickyDirective.prototype, "stickySpacer", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", HTMLElement)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", HTMLElement)
 ], NgxStickyDirective.prototype, "stickySpot", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Function)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Number)
 ], NgxStickyDirective.prototype, "stickySpotHeight", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object)
 ], NgxStickyDirective.prototype, "stickyComputation", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object)
 ], NgxStickyDirective.prototype, "stickyState", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('attr.data-sticky-state'),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [])
 ], NgxStickyDirective.prototype, "attrDataStickyState", null);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('class.ngx-sticky'),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [])
 ], NgxStickyDirective.prototype, "cssClassSticky", null);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('class.ngx-sticky--normal'),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [])
 ], NgxStickyDirective.prototype, "cssClassStickyNormal", null);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('class.ngx-sticky--sticked'),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [])
 ], NgxStickyDirective.prototype, "cssClassStickySticked", null);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('class.ngx-sticky--stucked'),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [])
 ], NgxStickyDirective.prototype, "cssClassStickyStucked", null);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('class.ngx-sticky--disabled'),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Object),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [])
 ], NgxStickyDirective.prototype, "cssClassStickyDisabled", null);
-NgxStickyDirective = NgxStickyDirective_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+NgxStickyDirective = NgxStickyDirective_1 = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
         selector: '[ngxSticky], [ngx-sticky], ngx-sticky',
         exportAs: 'ngxSticky',
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => _sticky_container_directive__WEBPACK_IMPORTED_MODULE_6__["NgxStickyContainerDirective"]))),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => _sticky_boundary_directive__WEBPACK_IMPORTED_MODULE_5__["NgxStickyBoundaryDirective"]))),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["SkipSelf"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => NgxStickyDirective_1))),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](7, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_sticky_tokens__WEBPACK_IMPORTED_MODULE_9__["NGX_STICKY_WINDOW"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_sticky_root_container_controller__WEBPACK_IMPORTED_MODULE_7__["NgxStickyRootContainerController"], Object, Object, Object, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"],
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => _sticky_container_directive__WEBPACK_IMPORTED_MODULE_6__["NgxStickyContainerDirective"]))),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => _sticky_boundary_directive__WEBPACK_IMPORTED_MODULE_5__["NgxStickyBoundaryDirective"]))),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["SkipSelf"])()), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"])()), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => NgxStickyDirective_1))),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(7, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_sticky_tokens__WEBPACK_IMPORTED_MODULE_9__["NGX_STICKY_WINDOW"])),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_sticky_root_container_controller__WEBPACK_IMPORTED_MODULE_7__["NgxStickyRootContainerController"], Object, Object, Object, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"],
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"],
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
         Window])
@@ -2392,12 +2442,14 @@ function isStickyDirectionDown(direction) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxStickyModule", function() { return NgxStickyModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _in_viewport_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./in-viewport.directive */ "./projects/ngx-sticky/src/lib/in-viewport.directive.ts");
 /* harmony import */ var _sticky_boundary_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sticky-boundary.directive */ "./projects/ngx-sticky/src/lib/sticky-boundary.directive.ts");
 /* harmony import */ var _sticky_container_directive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./sticky-container.directive */ "./projects/ngx-sticky/src/lib/sticky-container.directive.ts");
-/* harmony import */ var _sticky_directive__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./sticky.directive */ "./projects/ngx-sticky/src/lib/sticky.directive.ts");
+/* harmony import */ var _sticky_spot_directive__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./sticky-spot.directive */ "./projects/ngx-sticky/src/lib/sticky-spot.directive.ts");
+/* harmony import */ var _sticky_directive__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./sticky.directive */ "./projects/ngx-sticky/src/lib/sticky.directive.ts");
+
 
 
 
@@ -2424,19 +2476,21 @@ __webpack_require__.r(__webpack_exports__);
  */
 let NgxStickyModule = class NgxStickyModule {
 };
-NgxStickyModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+NgxStickyModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
         declarations: [
             _in_viewport_directive__WEBPACK_IMPORTED_MODULE_3__["NgxInViewportDirective"],
             _sticky_boundary_directive__WEBPACK_IMPORTED_MODULE_4__["NgxStickyBoundaryDirective"],
             _sticky_container_directive__WEBPACK_IMPORTED_MODULE_5__["NgxStickyContainerDirective"],
-            _sticky_directive__WEBPACK_IMPORTED_MODULE_6__["NgxStickyDirective"],
+            _sticky_directive__WEBPACK_IMPORTED_MODULE_7__["NgxStickyDirective"],
+            _sticky_spot_directive__WEBPACK_IMPORTED_MODULE_6__["NgxStickySpotDirective"],
         ],
         exports: [
             _in_viewport_directive__WEBPACK_IMPORTED_MODULE_3__["NgxInViewportDirective"],
             _sticky_boundary_directive__WEBPACK_IMPORTED_MODULE_4__["NgxStickyBoundaryDirective"],
             _sticky_container_directive__WEBPACK_IMPORTED_MODULE_5__["NgxStickyContainerDirective"],
-            _sticky_directive__WEBPACK_IMPORTED_MODULE_6__["NgxStickyDirective"],
+            _sticky_directive__WEBPACK_IMPORTED_MODULE_7__["NgxStickyDirective"],
+            _sticky_spot_directive__WEBPACK_IMPORTED_MODULE_6__["NgxStickySpotDirective"],
         ],
         imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]],
     })
@@ -2456,7 +2510,7 @@ NgxStickyModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NGX_STICKY_WINDOW", function() { return NGX_STICKY_WINDOW; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 
 const NGX_STICKY_WINDOW = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('NGX_STICKY_WINDOW', {
     providedIn: 'root',
@@ -3159,7 +3213,7 @@ function getCrossedThreshold(thresholds, oldRatio, newRatio) {
 /*!***********************************************!*\
   !*** ./projects/ngx-sticky/src/public-api.ts ***!
   \***********************************************/
-/*! exports provided: NGX_BASE_INTERSECTION_CONFIG_SCHEMA, NgxInViewportDirective, NgxStickyBaseBoundaryController, NgxStickyBaseContainerController, NGX_STICKY_BASE_CONTAINER_CONFIG_SCHEMA, NgxStickyBaseContainerDirective, NgxStickyBaseController, NGX_STICKY_BASE_BOUNDARY_CONFIG_SCHEMA, NgxStickyBoundaryDirective, NgxStickyContainerDirective, NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP, NgxStickyEngine, NgxStickyRootContainerController, NGX_STICKY_BASE_CONFIG_SCHEMA, NgxStickyDirective, coerceStickyPosition, coerceStickyDirection, getStuckedPositionTop, isStickyPositionBottom, isStickyDirectionDown, NgxStickyModule, NGX_STICKY_WINDOW, coerceBooleanProperty, coerceNumberProperty, _isNumberValue, addEntry, deleteEntry, ConfigSubject, getDocumentHeightFactory, getDocumentWidthFactory, getElementAbsoluteRect, getElementRelativeRect, getWindowViewportHeight, getWindowViewportLeft, getWindowViewportTop, isElementScrollableY, setElementStyles, fromImageEvents, InputSubject, coerceIntersectionThresholds, getCrossedThreshold, fromMediaQuery */
+/*! exports provided: NGX_BASE_INTERSECTION_CONFIG_SCHEMA, NgxInViewportDirective, NgxStickyBaseBoundaryController, NgxStickyBaseContainerController, NGX_STICKY_BASE_CONTAINER_CONFIG_SCHEMA, NgxStickyBaseContainerDirective, NgxStickyBaseController, NGX_STICKY_BASE_BOUNDARY_CONFIG_SCHEMA, NgxStickyBoundaryDirective, NgxStickyContainerDirective, NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP, NgxStickyEngine, NgxStickyRootContainerController, NgxStickySpotDirective, NGX_STICKY_BASE_CONFIG_SCHEMA, NgxStickyDirective, coerceStickyPosition, coerceStickyDirection, getStuckedPositionTop, isStickyPositionBottom, isStickyDirectionDown, NgxStickyModule, NGX_STICKY_WINDOW, coerceBooleanProperty, coerceNumberProperty, _isNumberValue, addEntry, deleteEntry, ConfigSubject, getDocumentHeightFactory, getDocumentWidthFactory, getElementAbsoluteRect, getElementRelativeRect, getWindowViewportHeight, getWindowViewportLeft, getWindowViewportTop, isElementScrollableY, setElementStyles, fromImageEvents, InputSubject, coerceIntersectionThresholds, getCrossedThreshold, fromMediaQuery */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3199,72 +3253,76 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_sticky_root_container_controller__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./lib/sticky-root-container.controller */ "./projects/ngx-sticky/src/lib/sticky-root-container.controller.ts");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NgxStickyRootContainerController", function() { return _lib_sticky_root_container_controller__WEBPACK_IMPORTED_MODULE_8__["NgxStickyRootContainerController"]; });
 
-/* harmony import */ var _lib_sticky_directive__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lib/sticky.directive */ "./projects/ngx-sticky/src/lib/sticky.directive.ts");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NGX_STICKY_BASE_CONFIG_SCHEMA", function() { return _lib_sticky_directive__WEBPACK_IMPORTED_MODULE_9__["NGX_STICKY_BASE_CONFIG_SCHEMA"]; });
+/* harmony import */ var _lib_sticky_spot_directive__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lib/sticky-spot.directive */ "./projects/ngx-sticky/src/lib/sticky-spot.directive.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NgxStickySpotDirective", function() { return _lib_sticky_spot_directive__WEBPACK_IMPORTED_MODULE_9__["NgxStickySpotDirective"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NgxStickyDirective", function() { return _lib_sticky_directive__WEBPACK_IMPORTED_MODULE_9__["NgxStickyDirective"]; });
+/* harmony import */ var _lib_sticky_directive__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lib/sticky.directive */ "./projects/ngx-sticky/src/lib/sticky.directive.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NGX_STICKY_BASE_CONFIG_SCHEMA", function() { return _lib_sticky_directive__WEBPACK_IMPORTED_MODULE_10__["NGX_STICKY_BASE_CONFIG_SCHEMA"]; });
 
-/* harmony import */ var _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lib/sticky.helpers */ "./projects/ngx-sticky/src/lib/sticky.helpers.ts");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "coerceStickyPosition", function() { return _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_10__["coerceStickyPosition"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NgxStickyDirective", function() { return _lib_sticky_directive__WEBPACK_IMPORTED_MODULE_10__["NgxStickyDirective"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "coerceStickyDirection", function() { return _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_10__["coerceStickyDirection"]; });
+/* harmony import */ var _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lib/sticky.helpers */ "./projects/ngx-sticky/src/lib/sticky.helpers.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "coerceStickyPosition", function() { return _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_11__["coerceStickyPosition"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getStuckedPositionTop", function() { return _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_10__["getStuckedPositionTop"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "coerceStickyDirection", function() { return _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_11__["coerceStickyDirection"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isStickyPositionBottom", function() { return _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_10__["isStickyPositionBottom"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getStuckedPositionTop", function() { return _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_11__["getStuckedPositionTop"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isStickyDirectionDown", function() { return _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_10__["isStickyDirectionDown"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isStickyPositionBottom", function() { return _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_11__["isStickyPositionBottom"]; });
 
-/* harmony import */ var _lib_sticky_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./lib/sticky.module */ "./projects/ngx-sticky/src/lib/sticky.module.ts");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NgxStickyModule", function() { return _lib_sticky_module__WEBPACK_IMPORTED_MODULE_11__["NgxStickyModule"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isStickyDirectionDown", function() { return _lib_sticky_helpers__WEBPACK_IMPORTED_MODULE_11__["isStickyDirectionDown"]; });
 
-/* harmony import */ var _lib_sticky_tokens__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lib/sticky.tokens */ "./projects/ngx-sticky/src/lib/sticky.tokens.ts");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NGX_STICKY_WINDOW", function() { return _lib_sticky_tokens__WEBPACK_IMPORTED_MODULE_12__["NGX_STICKY_WINDOW"]; });
+/* harmony import */ var _lib_sticky_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./lib/sticky.module */ "./projects/ngx-sticky/src/lib/sticky.module.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NgxStickyModule", function() { return _lib_sticky_module__WEBPACK_IMPORTED_MODULE_12__["NgxStickyModule"]; });
 
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lib/utils */ "./projects/ngx-sticky/src/lib/utils/index.ts");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "coerceBooleanProperty", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["coerceBooleanProperty"]; });
+/* harmony import */ var _lib_sticky_tokens__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lib/sticky.tokens */ "./projects/ngx-sticky/src/lib/sticky.tokens.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NGX_STICKY_WINDOW", function() { return _lib_sticky_tokens__WEBPACK_IMPORTED_MODULE_13__["NGX_STICKY_WINDOW"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "coerceNumberProperty", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["coerceNumberProperty"]; });
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./lib/utils */ "./projects/ngx-sticky/src/lib/utils/index.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "coerceBooleanProperty", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["coerceBooleanProperty"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "_isNumberValue", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["_isNumberValue"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "coerceNumberProperty", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["coerceNumberProperty"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "addEntry", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["addEntry"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "_isNumberValue", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["_isNumberValue"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "deleteEntry", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["deleteEntry"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "addEntry", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["addEntry"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ConfigSubject", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["ConfigSubject"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "deleteEntry", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["deleteEntry"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getDocumentHeightFactory", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["getDocumentHeightFactory"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ConfigSubject", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["ConfigSubject"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getDocumentWidthFactory", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["getDocumentWidthFactory"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getDocumentHeightFactory", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["getDocumentHeightFactory"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getElementAbsoluteRect", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["getElementAbsoluteRect"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getDocumentWidthFactory", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["getDocumentWidthFactory"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getElementRelativeRect", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["getElementRelativeRect"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getElementAbsoluteRect", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["getElementAbsoluteRect"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getWindowViewportHeight", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["getWindowViewportHeight"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getElementRelativeRect", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["getElementRelativeRect"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getWindowViewportLeft", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["getWindowViewportLeft"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getWindowViewportHeight", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["getWindowViewportHeight"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getWindowViewportTop", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["getWindowViewportTop"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getWindowViewportLeft", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["getWindowViewportLeft"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isElementScrollableY", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["isElementScrollableY"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getWindowViewportTop", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["getWindowViewportTop"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "setElementStyles", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["setElementStyles"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isElementScrollableY", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["isElementScrollableY"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fromImageEvents", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["fromImageEvents"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "setElementStyles", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["setElementStyles"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InputSubject", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["InputSubject"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fromImageEvents", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["fromImageEvents"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "coerceIntersectionThresholds", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["coerceIntersectionThresholds"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InputSubject", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["InputSubject"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getCrossedThreshold", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["getCrossedThreshold"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "coerceIntersectionThresholds", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["coerceIntersectionThresholds"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fromMediaQuery", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_13__["fromMediaQuery"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getCrossedThreshold", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["getCrossedThreshold"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fromMediaQuery", function() { return _lib_utils__WEBPACK_IMPORTED_MODULE_14__["fromMediaQuery"]; });
 
 /*
  * Public API Surface of @enten/ngx-sticky
  */
+
 
 
 
@@ -3294,15 +3352,15 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppRoutingModule", function() { return AppRoutingModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 
 
 
 const routes = [];
 let AppRoutingModule = class AppRoutingModule {
 };
-AppRoutingModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+AppRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         imports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(routes)],
         exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]],
@@ -3335,7 +3393,7 @@ module.exports = ":host {\n  display: block;\n}\n\n.container {\n  padding: 2rem
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _projects_ngx_sticky_src_public_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../projects/ngx-sticky/src/public-api */ "./projects/ngx-sticky/src/public-api.ts");
 
 
@@ -3372,14 +3430,14 @@ let AppComponent = class AppComponent {
         }
     }
 };
-AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+AppComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-root',
         template: __webpack_require__(/*! raw-loader!./app.component.html */ "./node_modules/raw-loader/index.js!./src/app/app.component.html"),
         styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_projects_ngx_sticky_src_public_api__WEBPACK_IMPORTED_MODULE_2__["NGX_STICKY_WINDOW"])),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_projects_ngx_sticky_src_public_api__WEBPACK_IMPORTED_MODULE_2__["NGX_STICKY_WINDOW"])),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
         Window])
 ], AppComponent);
 
@@ -3398,8 +3456,8 @@ AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/__ivy_ngcc__/fesm2015/platform-browser.js");
 /* harmony import */ var _projects_ngx_sticky_src_public_api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../projects/ngx-sticky/src/public-api */ "./projects/ngx-sticky/src/public-api.ts");
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
@@ -3411,7 +3469,7 @@ __webpack_require__.r(__webpack_exports__);
 
 let AppModule = class AppModule {
 };
-AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         declarations: [
             _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"],
@@ -3467,8 +3525,8 @@ const environment = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/platform-browser-dynamic */ "./node_modules/@angular/platform-browser-dynamic/fesm2015/platform-browser-dynamic.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/platform-browser-dynamic */ "./node_modules/@angular/platform-browser-dynamic/__ivy_ngcc__/fesm2015/platform-browser-dynamic.js");
 /* harmony import */ var _app_app_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app/app.module */ "./src/app/app.module.ts");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./environments/environment */ "./src/environments/environment.ts");
 
