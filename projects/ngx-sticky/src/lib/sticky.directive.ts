@@ -79,6 +79,8 @@ export interface NgxStickyGhostStyle {
   marginLeft: string;
 
   height: string;
+  maxHeight: string;
+  minHeight: string;
   boxSizing: string;
   borderTop: string;
   borderBottom: string;
@@ -670,6 +672,8 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
       // width: element.style.width || elementStyle.width,
       // width: `${ghostWidth}px`,
       height: `${ghostHeight}px`,
+      maxHeight: `${ghostHeight}px`,
+      minHeight: `${ghostHeight}px`,
       borderTop: elementStyle.borderTop,
       borderBottom: elementStyle.borderBottom,
       borderLeft: elementStyle.borderLeft,

@@ -759,6 +759,8 @@ describe('_getStickyGhostStyle', () => {
       boxSizing: 'inherit',
       cssFloat: undefined,
       height: '38px',
+      maxHeight: '38px',
+      minHeight: '38px',
       left: undefined,
       marginBottom: undefined,
       marginLeft: undefined,
