@@ -43,7 +43,7 @@
     "jasmine-spec-reporter": "~4.2.1",
     "jest": "~24.8.0",
     "jest-cli": "~24.8.0",
-    "ng-packagr": "^9.1.5",
+    "ng-packagr": "^10.1.1",
     "normalize.css": "^8.0.1",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
