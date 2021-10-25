@@ -20,8 +20,13 @@
     "noFallthroughCasesInSwitch": true
   },
   "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "enableResourceInlining": true,
+    "fullTemplateTypeCheck": true,
+    "skipTemplateCodegen": true,
     "strictInjectionParameters": false,
     "strictInputAccessModifiers": false,
+    "strictMetadataEmit": true,
     "strictTemplates": false
   },
   "files": [],
