@@ -1,6 +1,6 @@
 {
   "name": "@enten/ngx-sticky",
-  "version": "0.1.3",
+  "version": "0.1.4-rc.0",
   "peerDependencies": {
     "@angular/common": "^12.2.0",
     "@angular/core": "^12.2.0",
