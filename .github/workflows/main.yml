@@ -1,0 +1,37 @@
+name: CI-CD
+
+on:
+  push:
+    branches: [ master, next ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build_test:
+    name: Build & Test App
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup node
+        uses: actions/setup-node@master
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: |
+          npm install
+          npm ci 
+
+      - name: build & test
+        run: |
+          npm run build
+          npm run test
+  
