@@ -14,7 +14,6 @@ let elementRef: ElementRef;
 let ngZone: NgZone;
 let win: Window;
 
-// tslint:disable-next-line: no-any
 const setup = (overrides: Record<string, any> = {}) => {
   rootContainer = 'rootContainer' in overrides
     ? overrides.rootContainer
@@ -236,7 +235,6 @@ describe('_initMonitoring', () => {
   });
 
   it('should initializes monitoring outside zone', () => {
-    // tslint:disable-next-line: no-any
     const runOutsideAngular = jest.fn((fn: (...args: any[]) => any) => fn());
     const monitoring$ = new Subject<boolean>();
 

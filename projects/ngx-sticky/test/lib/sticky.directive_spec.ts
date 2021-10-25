@@ -13,7 +13,7 @@ import {
 
 
 class RendererMock extends Renderer2 {
-  data: { [key: string]: any; } = {}; // tslint:disable-line: no-any
+  data: { [key: string]: any; } = {};
   destroy = jest.fn();
   createElement = jest.fn();
   createComment = jest.fn();
@@ -46,7 +46,6 @@ let renderer: RendererMock;
 let ngZone: NgZone;
 let win: Window;
 
-// tslint:disable-next-line: no-any
 const setup = (overrides: Record<string, any> = {}) => {
   rootContainer = 'rootContainer' in overrides
     ? overrides.rootContainer
@@ -824,7 +823,6 @@ describe('_initMonitoring', () => {
   });
 
   it('should initializes monitoring outside zone', () => {
-    // tslint:disable-next-line: no-any
     const runOutsideAngular = jest.fn((fn: (...args: any[]) => any) => fn());
     const monitoring$ = new Subject<boolean>();
 
@@ -898,8 +896,8 @@ describe('_refreshSticky', () => {
   it('should emit state change in angular zone', () => {
     setup({
       ngZone: {
-        run: jest.fn((fn: (...args: any[]) => any) => fn()), // tslint:disable-line: no-any
-        runOutsideAngular: jest.fn((fn: (...args: any[]) => any) => fn()), // tslint:disable-line: no-any
+        run: jest.fn((fn: (...args: any[]) => any) => fn()),
+        runOutsideAngular: jest.fn((fn: (...args: any[]) => any) => fn()),
       },
     });
 

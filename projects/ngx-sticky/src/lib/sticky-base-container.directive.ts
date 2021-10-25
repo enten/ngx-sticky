@@ -1,4 +1,4 @@
-import { Input, NgZone, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { Directive, Input, NgZone, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Observable, Subject, Subscription, animationFrameScheduler, fromEvent, merge, of } from 'rxjs';
 import { debounceTime, mapTo, share, takeUntil, throttleTime } from 'rxjs/operators';
 
@@ -53,7 +53,7 @@ export const NGX_STICKY_BASE_CONTAINER_CONFIG_SCHEMA: ConfigSubjectSchema<NgxSti
 /**
  * Abstract sticky container directive.
  */
-// tslint:disable-next-line: max-line-length
+@Directive()
 export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseContainerController implements OnChanges, OnDestroy {
   /**
    * Returns HTMLElement of the container or `null` in case of root container.

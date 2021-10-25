@@ -68,7 +68,7 @@ describe('isStickyDirectionDown', () => {
   it('should returns true when direction is not "up"', () => {
     expect(isStickyDirectionDown('up')).toBe(false);
     expect(isStickyDirectionDown('down')).toBe(true);
-    expect(isStickyDirectionDown('' as any)).toBe(true); // tslint:disable-line: no-any
+    expect(isStickyDirectionDown('' as any)).toBe(true);
   });
 });
 
@@ -77,6 +77,6 @@ describe('isStickyPositionBottom', () => {
   it('should returns true when position is "bottom"', () => {
     expect(isStickyPositionBottom('top')).toBe(false);
     expect(isStickyPositionBottom('bottom')).toBe(true);
-    expect(isStickyPositionBottom('' as any)).toBe(false); // tslint:disable-line: no-any
+    expect(isStickyPositionBottom('' as any)).toBe(false);
   });
 });

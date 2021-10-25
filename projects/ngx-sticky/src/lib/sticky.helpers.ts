@@ -5,11 +5,11 @@ import {
 } from './sticky.types';
 
 
-export function coerceStickyPosition(value: any): NgxStickyPosition { // tslint:disable-line: no-any
+export function coerceStickyPosition(value: any): NgxStickyPosition {
   return isStickyPositionBottom(value) ? 'bottom' : 'top';
 }
 
-export function coerceStickyDirection(value: any): NgxStickyDirection { // tslint:disable-line: no-any
+export function coerceStickyDirection(value: any): NgxStickyDirection {
   return isStickyDirectionDown(value) ? 'down' : 'up';
 }
 

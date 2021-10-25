@@ -224,7 +224,7 @@ export function isElementScrollableY(win: Window, element: HTMLElement): boolean
 export function setElementStyles(
   renderer: Renderer2,
   element: HTMLElement,
-  styles: any, // tslint:disable-line:no-any
+  styles: any,
 ): void {
   if (!element || !styles) {
     return;

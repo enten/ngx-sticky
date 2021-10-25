@@ -66,7 +66,7 @@ describe('ConfigSubject', () => {
       config.subscribe(onConfigChange);
 
       config.next({ });
-      config.next({ foo: '0' } as any); // tslint:disable-line: no-any
+      config.next({ foo: '0' } as any);
       config.next({ bar: '' });
       config.next({ foo: 1, bar: 'BAR' });
 
@@ -79,7 +79,7 @@ describe('ConfigSubject', () => {
 
       config.subscribe(onConfigChange);
 
-      config.next({ foo: '42' } as any); // tslint:disable-line: no-any
+      config.next({ foo: '42' } as any);
       config.next({ foo: 1 }, { skipCoercion: true });
 
       expect(onConfigChange).toBeCalledTimes(2);
@@ -95,7 +95,7 @@ describe('ConfigSubject', () => {
 
       config.subscribe(onConfigChange);
 
-      config.nextKeyValue('foo', '42' as any); // tslint:disable-line: no-any
+      config.nextKeyValue('foo', '42' as any);
 
       expect(onConfigChange).toBeCalledTimes(1);
       expect(onConfigChange).toBeCalledWith({ foo: 42, bar: '' });
@@ -124,7 +124,7 @@ describe('ConfigSubject', () => {
 
       config.subscribe(onConfigChange);
 
-      config.nextKeyValue('_foo' as any, '42' as any); // tslint:disable-line: no-any
+      config.nextKeyValue('_foo' as any, '42' as any);
       config.nextChanges({ _bar: { currentValue: 'BAR' } });
 
       expect(onConfigChange).toBeCalledTimes(2);

@@ -1,33 +1,28 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "module": "esnext",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
+    "lib": ["esnext", "dom", "es2020"],
     "target": "es2015",
-    "types": [
-      "jest"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "sourceMap": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
     "paths": {
-      "@enten/ngx-sticky": [
-        "projects/ngx-sticky/src/public-api.ts"
-      ],
-      "@enten/ngx-sticky/*": [
-        "projects/ngx-sticky/src/*"
-      ]
+      "@enten/ngx-sticky": ["dist/ngx-sticky"]
     }
-  }
+  },
+  "exclude": ["node_modules", "tmp"]
 }

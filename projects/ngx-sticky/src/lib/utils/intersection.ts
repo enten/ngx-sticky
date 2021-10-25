@@ -1,7 +1,7 @@
 
 
 /** Coerces a data-bound value (typically a string) to intersection thresholds. */
-export function coerceIntersectionThresholds(thresholds: any) { // tslint:disable-line: no-any
+export function coerceIntersectionThresholds(thresholds: any) {
   if (typeof thresholds === 'number') {
     return [ thresholds ];
   }

@@ -1,7 +1,7 @@
 module.exports = {
-  displayName: 'ngx-sticky',
-  preset: '../../jest.preset.js',
-  setupFilesAfterEnv: ['<rootDir>/test/test-setup.ts'],
+  displayName: 'ngx-sticky-app',
+  preset: '../jest.preset.js',
+  setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -11,9 +11,9 @@ module.exports = {
   "testMatch": [
     "**/?(*_)+(spec|test).+(ts|js)?(x)"
   ],
-  coverageDirectory: '../../coverage/ngx-sticky',
+  coverageDirectory: '../coverage/ngx-sticky-app',
   collectCoverageFrom: [
-    'projects/ngx-sticky/src/**/*.{ts,tsx}'
+    'src/**/*.{ts,tsx}'
   ],
   coveragePathIgnorePatterns: [
     'src/public-api.ts$',

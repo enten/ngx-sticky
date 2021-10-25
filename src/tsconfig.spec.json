@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc/ngx-sticky-spec",
+    "outDir": "../dist/out-tsc/dev-app-spec",
     "types": ["jest"]
   },
-  "files": ["test/test-setup.ts"],
+  "files": ["test-setup.ts"],
   "include": ["**/*.spec.ts", "**/*_spec.ts", "**/*.d.ts"]
 }

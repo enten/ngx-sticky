@@ -10,7 +10,7 @@ jest.mock('rxjs', () => ({
 }));
 
 
-const fromEventSpy = fromEvent as {} as jest.SpyInstance; // tslint:disable-line: deprecation
+const fromEventSpy = fromEvent as {} as jest.SpyInstance;
 const mergeSpy = merge as {} as jest.SpyInstance;
 
 

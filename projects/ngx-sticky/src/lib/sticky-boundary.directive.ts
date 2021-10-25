@@ -45,7 +45,6 @@ export const NGX_STICKY_BASE_BOUNDARY_CONFIG_SCHEMA: ConfigSubjectSchema<NgxStic
   selector: '[ngxStickyBoundary], [ngx-sticky-boundary], ngx-sticky-boundary',
   exportAs: 'ngxStickyBoundary',
 })
-// tslint:disable-next-line: max-line-length
 export class NgxStickyBoundaryDirective extends NgxStickyBaseBoundaryController implements OnChanges, OnDestroy, OnInit {
   /**
    * Enable/disable sticky stack inside boudary.

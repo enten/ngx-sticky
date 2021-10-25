@@ -22,7 +22,6 @@ let containerParent: NgxStickyContainerController;
 let ngZone: NgZone;
 let win: Window;
 
-// tslint:disable-next-line: no-any
 const setup = (overrides: Record<string, any> = {}) => {
   containerParent = 'containerParent' in overrides
     ? overrides.containerParent
@@ -617,7 +616,6 @@ describe('_initMonitoring', () => {
   });
 
   it('should initializes monitoring outside zone', () => {
-    // tslint:disable-next-line: no-any
     const runOutsideAngular = jest.fn((fn: (...args: any[]) => any) => fn());
     const monitoring$ = new Subject<boolean>();
 

@@ -130,7 +130,7 @@ export class ConfigSubject<T> extends Subject<T> {
    *
    * @param changes Simple changes
    */
-  nextChanges(changes: { [key: string]: { currentValue: any } }) { // tslint:disable-line: no-any
+  nextChanges(changes: { [key: string]: { currentValue: any } }) {
     const changeKeys = Object.keys(changes);
     const config: Partial<T> = {};
 

@@ -15,7 +15,6 @@ let elementRef: ElementRef;
 let ngZone: NgZone;
 let win: Window;
 
-// tslint:disable-next-line: no-any
 const setup = (overrides: Record<string, any> = {}) => {
   rootContainer = 'rootContainer' in overrides
     ? overrides.rootContainer
