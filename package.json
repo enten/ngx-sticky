@@ -9,10 +9,12 @@
     "lint": "ng lint",
     "test": "jest",
     "dev-app:build": "ng run ngx-sticky-app:build",
+    "dev-app:build:prod": "ng run ngx-sticky-app:build:production --deploy-url \"/ngx-sticky/\"",
     "dev-app:test": "jest --selectProjects ngx-sticky-app",
     "dev-app:lint": "ng lint ngx-sticky-app",
     "dev-app:watch": "ng run ngx-sticky-app:build --watch --configuration development",
     "lib:build": "ng run ngx-sticky:build",
+    "lib:build:prod": "ng run ngx-sticky:build:production",
     "lib:lint": "ng lint ngx-sticky",
     "lib:test": "jest --selectProjects ngx-sticky",
     "lib:watch": "ng run ngx-sticky:build --watch --configuration development"
