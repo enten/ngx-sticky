@@ -21,7 +21,7 @@ export function getDocumentHeightFactory(win: Window): () => number {
     () => win.document.documentElement.clientHeight,
   ];
 
-  let documentHeightGetter: () => number;
+  let documentHeightGetter = documentHeightGetters[0];
   let documentHeight = 0;
 
   for (const _documentHeightGetter of documentHeightGetters) {

@@ -26,6 +26,15 @@ describe('getDocumentHeightFactory', () => {
       },
     } as Window)()).toBe(6);
   });
+
+  it('should returns getter first getter when all height getters computes 0', () => {
+    expect(getDocumentHeightFactory({
+      document: {
+        body: { scrollHeight: 0, offsetHeight: 0, clientHeight: 0 },
+        documentElement: { scrollHeight: 0, offsetHeight: 0, clientHeight: 0 },
+      },
+    } as Window)()).toBe(0);
+  });
 });
 
 
@@ -41,6 +50,15 @@ describe('getDocumentWidthFactory', () => {
         documentElement: { scrollWidth: 2, offsetWidth: 4, clientWidth: 6 },
       },
     } as Window)()).toBe(6);
+  });
+
+  it('should returns getter first getter when all width getters computes 0', () => {
+    expect(getDocumentWidthFactory({
+      document: {
+        body: { scrollWidth: 0, offsetWidth: 0, clientWidth: 0 },
+        documentElement: { scrollWidth: 0, offsetWidth: 0, clientWidth: 0 },
+      },
+    } as Window)()).toBe(0);
   });
 });
 
