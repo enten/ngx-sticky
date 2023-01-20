@@ -71,7 +71,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
    * Defaults to `false`.
    */
   @Input()
-  stickyDisabled: boolean;
+  stickyDisabled!: boolean;
 
   /**
    * Defines offset bottom inside the sticky container.
@@ -91,7 +91,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
    * Defaults to `false`.
    */
   @Input()
-  stickyUnstacked: boolean;
+  stickyUnstacked!: boolean;
 
   get config(): NgxStickyContainerConfig {
     return this.config$.getValue();
@@ -105,13 +105,13 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
   readonly config$ = new ConfigSubject(NGX_STICKY_BASE_CONTAINER_CONFIG_SCHEMA);
 
   /** Container which reflect last call of _computeContainer() */
-  _container: NgxStickyContainer;
+  _container!: NgxStickyContainer;
 
   /** Emits when the service is destroyed. */
   readonly destroyed$ = new Subject<void>();
 
   /** Monitoring subscription which trigger update stickies */
-  _monitoring: Subscription;
+  _monitoring!: Subscription;
 
   /** Emits when updateStickies() is called */
   _updateStickies$ = new Subject<boolean>();
@@ -156,7 +156,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
 
   beforeRefresh(fastUpdate?: boolean): void {
     if (!fastUpdate) {
-      this._container = null;
+      this._container = null!;
     }
   }
 
@@ -180,9 +180,9 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
         target = elementAsNumber;
       } else {
         if (this.element) {
-          target = this.element.querySelector<HTMLElement>(target);
+          target = this.element.querySelector<HTMLElement>(target)!;
         } else {
-          target = this._win.document.querySelector<HTMLElement>(target);
+          target = this._win.document.querySelector<HTMLElement>(target)!;
         }
 
         if (target) {
@@ -213,8 +213,8 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
       return scrollPlan;
     }
 
-    let targetContainer: NgxStickyBaseContainerDirective;
-    let targetContainerScrollPlan: NgxScrollPlan;
+    let targetContainer!: NgxStickyBaseContainerDirective;
+    let targetContainerScrollPlan!: NgxScrollPlan;
 
     for (const containerController of (this.containers as NgxStickyBaseContainerDirective[])) {
       const containerScrollPlan = containerController.createScrollPlan(target, userOffsetTop);
@@ -276,7 +276,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     return getWindowViewportTop(this._win);
   }
 
-  registerSticky(sticky: NgxStickyController): void {
+  override registerSticky(sticky: NgxStickyController): void {
     super.registerSticky(sticky);
 
     if (this.stickies.length) {
@@ -284,7 +284,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     }
   }
 
-  unregisterSticky(sticky: NgxStickyController): void {
+  override unregisterSticky(sticky: NgxStickyController): void {
     super.unregisterSticky(sticky);
 
     if (!this.stickies.length) {
@@ -300,9 +300,9 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     }
   }
 
-  updateStickies(fastUpdate?: boolean): void {
+  override updateStickies(fastUpdate?: boolean): void {
     // intercept update stickies to throttle calls
-    this._updateStickies$.next(fastUpdate);
+    this._updateStickies$.next(!!fastUpdate);
   }
 
   _computeContainer(): NgxStickyContainer {
@@ -366,7 +366,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
   _destroyMonitoring(): void {
     if (this._monitoring) {
       this._monitoring.unsubscribe();
-      this._monitoring = null;
+      this._monitoring = null!;
     }
   }
 

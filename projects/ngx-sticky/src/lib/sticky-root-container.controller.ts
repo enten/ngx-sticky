@@ -14,16 +14,16 @@ import { NgxStickyContainerController } from './sticky.types';
 })
 export class NgxStickyRootContainerController extends NgxStickyBaseContainerDirective {
   // root container never has parent container
-  readonly containerParent: NgxStickyContainerController = null;
+  override readonly containerParent: NgxStickyContainerController = null!;
   // root container never has element
-  readonly element: HTMLElement = null;
+  readonly element: HTMLElement = null!;
 
   constructor(
-    readonly stickyEngine: NgxStickyEngine,
-    readonly ngZone: NgZone,
+    stickyEngine: NgxStickyEngine,
+    ngZone: NgZone,
     @Inject(NGX_STICKY_WINDOW)
-    readonly _win: Window,
+    _win: Window,
   ) {
-    super(null, stickyEngine, ngZone, _win);
+    super(null!, stickyEngine, ngZone, _win);
   }
 }

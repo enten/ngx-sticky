@@ -54,7 +54,7 @@ export class NgxStickyBoundaryDirective extends NgxStickyBaseBoundaryController 
    * Defaults to `false`.
    */
   @Input()
-  stickyUnstacked: boolean;
+  stickyUnstacked!: boolean;
 
   get config(): NgxStickyBoundaryConfig {
     return this.config$.getValue();
@@ -68,7 +68,7 @@ export class NgxStickyBoundaryDirective extends NgxStickyBaseBoundaryController 
   readonly config$ = new ConfigSubject(NGX_STICKY_BASE_BOUNDARY_CONFIG_SCHEMA);
 
   /** Boundary line which reflect last call of _computeBoundary() */
-  _boundary: NgxStickyBoundary;
+  _boundary!: NgxStickyBoundary;
 
   /** Boundary container controller */
   readonly _container: NgxStickyContainerController;
@@ -77,7 +77,7 @@ export class NgxStickyBoundaryDirective extends NgxStickyBaseBoundaryController 
   readonly _destroyed$ = new Subject<void>();
 
   /** Monitoring subscription which trigger update stickies */
-  _monitoring: Subscription;
+  _monitoring!: Subscription;
 
   constructor(
     readonly rootContainer: NgxStickyRootContainerController,
@@ -118,7 +118,7 @@ export class NgxStickyBoundaryDirective extends NgxStickyBaseBoundaryController 
 
   beforeRefresh(fastUpdate?: boolean): void {
     if (!fastUpdate) {
-      this._boundary = null;
+      this._boundary = null!;
     }
   }
 
@@ -161,7 +161,7 @@ export class NgxStickyBoundaryDirective extends NgxStickyBaseBoundaryController 
   _destroyMonitoring(): void {
     if (this._monitoring) {
       this._monitoring.unsubscribe();
-      this._monitoring = null;
+      this._monitoring = null!;
     }
   }
 

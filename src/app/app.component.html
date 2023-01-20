@@ -59,7 +59,7 @@
       <h3>Sticky</h3>
       <div class="sidepanes">
         <div ngx-sticky-boundary class="controls">
-          <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span> <span class="html-attr">stickyDisabled</span><span class="html-sign">=&quot;</span><input type="checkbox" [value]="exampleSticky1.disabled" (change)="exampleSticky1.config$.nextKeyValue('disabled', $event.target.checked)"><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
+          <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span> <span class="html-attr">stickyDisabled</span><span class="html-sign">=&quot;</span><input type="checkbox" [value]="exampleSticky1.disabled" (change)="exampleSticky1.config$.nextKeyValue('disabled', $any($event.target).checked)"><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
   I am sticky!
 <span class="html-tag">&lt;/p&gt;</span></code></pre>
         </div>
@@ -75,8 +75,8 @@
       <h3>Sticky inside boundary</h3>
       <div class="sidepanes">
         <div ngx-sticky-boundary class="controls">
-          <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span><span class="html-attr">stickyDisabled</span><span class="html-sign">=&quot;</span><input type="checkbox" [value]="exampleStickyOutsideBoundary.disabled" (change)="exampleStickyOutsideBoundary.config$.nextKeyValue('disabled', $event.target.checked)"><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
-  I am sticky!
+          <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span> <span class="html-attr">stickyDisabled</span><span class="html-sign">=&quot;</span><input type="checkbox" [value]="exampleStickyOutsideBoundary.disabled" (change)="exampleStickyOutsideBoundary.config$.nextKeyValue('disabled', $any($event.target).checked)"><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
+    I am sticky!
 <span class="html-tag">&lt;/p&gt;</span>
 
 <span class="html-tag">&lt;div</span> <span class="html-attr">ngx-sticky-boundary</span><span class="html-tag">&gt;</span>
@@ -100,7 +100,7 @@
         <div ngx-sticky-boundary class="controls">
           <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;div</span>
   <span class="html-attr">ngx-sticky-boundary</span>
-  <span class="html-attr">stickyUnstacked</span><span class="html-sign">=&quot;</span><input type="checkbox" [checked]="exampleBoundaryUnstacked.config.unstacked" (change)="exampleBoundaryUnstacked.config$.nextKeyValue('unstacked', $event.target.checked)"><span class="html-sign">&quot;</span>
+  <span class="html-attr">stickyUnstacked</span><span class="html-sign">=&quot;</span><input type="checkbox" [checked]="exampleBoundaryUnstacked.config.unstacked" (change)="exampleBoundaryUnstacked.config$.nextKeyValue('unstacked', $any($event.target).checked)"><span class="html-sign">&quot;</span>
 <span class="html-tag">&gt;</span>
   <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span>&gt;Sticky 1<span class="html-tag">&lt;/p&gt;</span>
   <span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span>&gt;Sticky 2<span class="html-tag">&lt;/p&gt;</span>
@@ -291,14 +291,14 @@
                 <label>stickyDisabled</label>
                 <input type="checkbox"
                   [checked]="apiSticky.disabled"
-                  (change)="apiSticky.config$.nextKeyValue('disabled', $event.target.checked)"
+                  (change)="apiSticky.config$.nextKeyValue('disabled', $any($event.target).checked)"
                 >
               </div>
               <div>
                 <label>stickyPosition</label>
                 <select
                   [value]="apiSticky.config.position"
-                  (change)="apiSticky.config$.nextKeyValue('position', $event.target.value)"
+                  (change)="apiSticky.config$.nextKeyValue('position', $any($event.target).value)"
                 >
                   <option value="top">top</option>
                   <option value="bottom">bottom</option>
@@ -308,7 +308,7 @@
                 <label>stickyDirection</label>
                 <select
                   [value]="apiSticky.config.direction"
-                  (change)="apiSticky.config$.nextKeyValue('direction', $event.target.value)"
+                  (change)="apiSticky.config$.nextKeyValue('direction', $any($event.target).value)"
                 >
                   <option value="up">up</option>
                   <option value="down">down</option>
@@ -319,7 +319,7 @@
                 <label>stickyOrbit</label>
                 <input type="checkbox"
                   [checked]="apiSticky.config.orbit"
-                  (change)="apiSticky.config$.nextKeyValue('orbit', $event.target.checked)"
+                  (change)="apiSticky.config$.nextKeyValue('orbit', $any($event.target).checked)"
                 >
               </div>
               -->
@@ -385,7 +385,7 @@
                 <label>stickyUnstacked</label>
                 <input type="checkbox"
                   [checked]="apiBoundary.config.unstacked"
-                  (change)="apiBoundary.config$.nextKeyValue('unstacked', $event.target.checked)"
+                  (change)="apiBoundary.config$.nextKeyValue('unstacked', $any($event.target).checked)"
                 >
               </div>
             </div>
@@ -415,7 +415,7 @@
                 <label>stickyPosition</label>
                 <select
                   [value]="apiBoundaryStickyPosition"
-                  (change)="apiBoundaryStickyPosition = $event.target.value"
+                  (change)="apiBoundaryStickyPosition = $any($event.target).value"
                 >
                   <option value="top">top</option>
                   <option value="bottom">bottom</option>
@@ -425,7 +425,7 @@
                 <label>stickyDirection</label>
                 <select
                   [value]="apiBoundaryStickyDirection"
-                  (change)="apiBoundaryStickyDirection = $event.target.value"
+                  (change)="apiBoundaryStickyDirection = $any($event.target).value"
                 >
                   <option value="up">up</option>
                   <option value="down">down</option>
@@ -499,28 +499,28 @@
                 <label>stickyDisabled</label>
                 <input type="checkbox"
                   [checked]="apiContainer.disabled"
-                  (change)="apiContainer.config$.nextKeyValue('disabled', $event.target.checked)"
+                  (change)="apiContainer.config$.nextKeyValue('disabled', $any($event.target).checked)"
                 >
               </div>
               <div>
                 <label>stickyOffsetTop</label>
                 <input type="number"
                   [value]="apiContainerStickyOffsetTop"
-                  (change)="apiContainerStickyOffsetTop = +$event.target.value"
+                  (change)="apiContainerStickyOffsetTop = +$any($event.target).value"
                 >
               </div>
               <div>
                 <label>stickyOffsetBottom</label>
                 <input type="number"
                   [value]="apiContainerStickyOffsetBottom"
-                  (change)="apiContainerStickyOffsetBottom = +$event.target.value"
+                  (change)="apiContainerStickyOffsetBottom = +$any($event.target).value"
                 >
               </div>
               <div>
                 <label>stickyUnstacked</label>
                 <input type="checkbox"
                   [checked]="apiContainer.config.unstacked"
-                  (change)="apiContainer.config$.nextKeyValue('unstacked', $event.target.checked)"
+                  (change)="apiContainer.config$.nextKeyValue('unstacked', $any($event.target).checked)"
                 >
               </div>
             </div>
@@ -562,7 +562,7 @@
                 <label>stickyPosition</label>
                 <select
                   [value]="apiContainerStickyPosition"
-                  (change)="apiContainerStickyPosition = $event.target.value"
+                  (change)="apiContainerStickyPosition = $any($event.target).value"
                 >
                   <option value="top">top</option>
                   <option value="bottom">bottom</option>
@@ -572,7 +572,7 @@
                 <label>stickyDirection</label>
                 <select
                   [value]="apiContainerStickyDirection"
-                  (change)="apiContainerStickyDirection = $event.target.value"
+                  (change)="apiContainerStickyDirection = $any($event.target).value"
                 >
                   <option value="up">up</option>
                   <option value="down">down</option>
@@ -661,14 +661,14 @@
                 <label>intersectionDisabled</label>
                 <input type="checkbox"
                   [checked]="apiInViewport.disabled"
-                  (change)="apiInViewport.config$.nextKeyValue('disabled', $event.target.checked)"
+                  (change)="apiInViewport.config$.nextKeyValue('disabled', $any($event.target).checked)"
                 >
               </div>
               <div>
                 <label>intersectionThresholds</label>
                 <input type="text"
                   [value]="apiInViewport.config.thresholds.join(',')"
-                  (change)="apiInViewport.config$.nextKeyValue('thresholds', $event.target.value)"
+                  (change)="apiInViewport.config$.nextKeyValue('thresholds', $any($event.target).value)"
                 >
               </div>
             </div>
@@ -725,7 +725,7 @@
                 <label>stickyPosition</label>
                 <select
                   [value]="apiInViewportStickyPosition"
-                  (change)="apiInViewportStickyPosition = $event.target.value"
+                  (change)="apiInViewportStickyPosition = $any($event.target).value"
                 >
                   <option value="top">top</option>
                   <option value="bottom">bottom</option>
@@ -735,7 +735,7 @@
                 <label>stickyDirection</label>
                 <select
                   [value]="apiInViewportStickyDirection"
-                  (change)="apiInViewportStickyDirection = $event.target.value"
+                  (change)="apiInViewportStickyDirection = $any($event.target).value"
                 >
                   <option value="up">up</option>
                   <option value="down">down</option>
@@ -806,5 +806,4 @@
 <footer class="footer">
   <p class="container">made with ☕ by <a href="http://enten.fr">enten</a></p>
 </footer>
-  
-  
+

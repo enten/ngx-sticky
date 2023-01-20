@@ -17,22 +17,22 @@ let win: Window;
 
 const setup = (overrides: Record<string, any> = {}) => {
   rootContainer = 'rootContainer' in overrides
-    ? overrides.rootContainer
+    ? overrides['rootContainer']
     : TestBed.get(NgxStickyRootContainerController);
   stickyContainer = 'stickyContainer' in overrides
-    ? overrides.stickyContainer
+    ? overrides['stickyContainer']
     : null;
   elementRef = 'elementRef' in overrides
-    ? overrides.elementRef
+    ? overrides['elementRef']
     : { nativeElement: {} };
   ngZone = 'ngZone' in overrides
-    ? overrides.ngZone
+    ? overrides['ngZone']
     : {
       run: jest.fn(),
       runOutsideAngular: jest.fn(),
     } as {} as NgZone;
   win = 'win' in overrides
-    ? overrides.win
+    ? overrides['win']
     : null;
 
   inViewport = new NgxInViewportDirective(
@@ -46,11 +46,11 @@ const setup = (overrides: Record<string, any> = {}) => {
 
 
 beforeEach(() => {
-  rootContainer = null;
-  stickyContainer = null;
-  elementRef = null;
-  ngZone = null;
-  win = null;
+  rootContainer = null!;
+  stickyContainer = null!;
+  elementRef = null!;
+  ngZone = null!;
+  win = null!;
 });
 
 
