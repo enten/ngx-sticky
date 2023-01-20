@@ -1,15 +1,22 @@
 {
   "name": "@enten/ngx-sticky",
-  "version": "0.1.7-rc.0",
+  "version": "14.0.0-next.0",
   "peerDependencies": {
     "@angular/core": "^14.0.0",
-    "rxjs": "*"
+    "rxjs": "^6.5.3 || ^7.4.0"
   },
   "dependencies": {
-    "tslib": "^2.4.0"
+    "tslib": "^2.3.0"
   },
+  "author": "Steven Enten <steven@enten.fr>",
+  "keywords": [
+    "angular",
+    "sticky"
+  ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/enten/ngx-sticky"
-  }
+  },
+  "sideEffects": false
 }

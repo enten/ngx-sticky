@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: setup node
+      - name: Setup node
         uses: actions/setup-node@master
         with:
           node-version: ${{ matrix.node-version }}
@@ -30,8 +30,11 @@ jobs:
           npm install
           npm ci 
 
-      - name: build & test
+      - name: Test
         run: |
-          npm run build
           npm run test
-  
+
+      - name: Build
+        run: |
+          npm run lib:build:prod
+          npm run dev-app:build:prod

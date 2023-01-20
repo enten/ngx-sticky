@@ -174,7 +174,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
    * Defaults to `false`.
    */
   @Input()
-  stickyClasses: boolean;
+  stickyClasses!: boolean;
 
   /**
    * Direction of the sticky; one of 'up' or 'down'.
@@ -182,7 +182,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
    * Defaults to `'down'`.
    */
   @Input()
-  stickyDirection: NgxStickyDirection;
+  stickyDirection!: NgxStickyDirection;
 
   /**
    * Disable sticky.
@@ -190,13 +190,13 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
    * Defaults to `false`.
    */
   @Input()
-  stickyDisabled: boolean;
+  stickyDisabled!: boolean;
 
   /**
    * Force element height when calculate sticky element height.
    */
   @Input()
-  stickyHeight: number;
+  stickyHeight!: number;
 
   // /**
   //  * Indicate sticky element is an orbit.
@@ -217,7 +217,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
    * Defaults to `'top'`.
    */
   @Input()
-  stickyPosition: NgxStickyPosition;
+  stickyPosition!: NgxStickyPosition;
 
   /**
    * Sticky spacer.
@@ -225,7 +225,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
    * Defaults to `null`.
    */
   @Input()
-  stickySpacer: HTMLElement | null;
+  stickySpacer!: HTMLElement | null;
 
   /**
    * Reference to an element used to determine sticky state.
@@ -236,13 +236,13 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
    * Defaults to `null`.
    */
   @Input()
-  stickySpot: HTMLElement | null;
+  stickySpot!: HTMLElement | null;
 
   /**
    * Force spot height when calculate sticky spot height.
    */
   @Input()
-  stickySpotHeight: number;
+  stickySpotHeight!: number;
 
   /**
    * Emit sticky computation.
@@ -290,7 +290,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
   // get cssClassStickydirectionDown() { return this.cssClassSticky && isStickyDirectionDown(this.config.direction); }
 
   get boundary(): NgxStickyBoundaryController {
-    return this._boundary;
+    return this._boundary as NgxStickyBoundaryController;
   }
 
   get container(): NgxStickyContainerController {
@@ -325,28 +325,28 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
   readonly _destroyed$ = new Subject<void>();
 
   /** Sticky element style original */
-  _elementOriginStyle: NgxStickyElementStyle;
+  _elementOriginStyle!: NgxStickyElementStyle;
 
   /** Monitoring subscription which trigger update stickies and handle refresh */
-  _monitoring: Subscription;
+  _monitoring!: Subscription;
 
   /** Sticky spacer generated */
-  _spacerGenerated: HTMLElement;
+  _spacerGenerated!: HTMLElement;
 
   /** Sticky which reflect last call of _computeSticky() */
-  _sticky: NgxSticky;
+  _sticky!: NgxSticky;
 
   /** Emits when refresh() is called */
   readonly _refresh$ = new Subject<NgxStickyComputation>();
 
   /** Sticky computation which reflect last call of _refreshSticky()  */
-  _stickyComputation: NgxStickyComputation;
+  _stickyComputation!: NgxStickyComputation;
 
   /** Sticky element state which reflect last call of _refreshStickyElement() */
-  _stickyElementState: NgxStickyState = null;
+  _stickyElementState: NgxStickyState = null!;
 
   /** Sticky element state which reflect last sticky state output */
-  _stickyState: NgxStickyState = null;
+  _stickyState: NgxStickyState = null!;
 
   constructor(
     readonly rootContainer: NgxStickyRootContainerController,
@@ -369,7 +369,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
     this._container = stickyContainer || rootContainer;
 
     // ensure sticky boundary is in same container
-    this._boundary = stickyBoundary && stickyBoundary.container === this._container ? stickyBoundary : null;
+    this._boundary = stickyBoundary && stickyBoundary.container === this._container ? stickyBoundary : null!;
 
     // register sticky in container only if isn't in another sticky
     if (!this.stickyParent) {
@@ -404,7 +404,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
 
   beforeRefresh(fastUpdate?: boolean): void {
     if (!fastUpdate) {
-      this._sticky = null;
+      this._sticky = null!;
     }
   }
 
@@ -430,7 +430,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
 
   _computeSticky(): NgxSticky {
     // IMPORTANT: refresh sticky element to its normal state is required to compute repainted element height.
-    this._refreshStickyElement(null);
+    this._refreshStickyElement(null!);
     this._refreshStickyElement('normal');
 
     const config = this.config$.getValue();
@@ -449,12 +449,12 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
 
     return {
       disabled: config.disabled,
-      boundary: this.boundary ? this.boundary.getBoundary() : null,
+      boundary: this.boundary ? this.boundary.getBoundary() : null!,
       direction: config.direction,
       height: elementRect.height,
       position: config.position,
       top: elementRect.top,
-      spot: spotRect,
+      spot: spotRect!,
     };
   }
 
@@ -465,7 +465,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
     return merge(
       this.config$,
       fromImageEvents(this.elementRef.nativeElement),
-      fromImageEvents(this.config.spot),
+      fromImageEvents(this.config.spot!),
       animationFrameScheduler,
     ).pipe(
       // throttleTime(0, animationFrameScheduler),
@@ -479,7 +479,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
   _destroyMonitoring(): void {
     if (this._monitoring) {
       this._monitoring.unsubscribe();
-      this._monitoring = null;
+      this._monitoring = null!;
     }
   }
 
@@ -496,7 +496,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
     const win = this._win;
 
     if (!win || !state) {
-      return null;
+      return null!;
     }
 
     const ghost = this.config.spacer || this._spacerGenerated;
@@ -546,7 +546,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
       return styles;
     }
 
-    const { container, stickyComputed, viewportHeight } = computation.snap;
+    const { container, stickyComputed, viewportHeight } = computation!.snap;
 
     // when state is sticked
     if (state === 'sticked') {
@@ -568,13 +568,13 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
         } else {
           const ghostParentRect = getElementAbsoluteRect(ghostParent);
 
-          elementTop = computation.viewportTop - ghostParentRect.top;
+          elementTop = computation!.viewportTop - ghostParentRect.top;
         }
 
         if (positionBottom) {
-          elementTop += viewportHeight - stickyComputed.height - computation.offsetSticked - computation.offsetStucked;
+          elementTop += viewportHeight - stickyComputed.height - computation!.offsetSticked - computation!.offsetStucked;
         } else {
-          elementTop += computation.offsetSticked + computation.offsetStucked;
+          elementTop += computation!.offsetSticked + computation!.offsetStucked;
         }
 
         return {
@@ -586,7 +586,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
       } else {
         const ghostRect = getElementAbsoluteRect(ghost);
 
-        elementTop = computation.offsetSticked + computation.offsetStucked;
+        elementTop = computation!.offsetSticked + computation!.offsetStucked;
         elementLeft = ghostRect.left + win.document.documentElement.offsetLeft;
 
         return {
@@ -605,7 +605,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
       let elementTop: number;
       let elementLeft: number;
 
-      elementTop = getStuckedPositionTop(computation);
+      elementTop = getStuckedPositionTop(computation!);
 
       elementLeft = ghostRect.left;
 
@@ -635,7 +635,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
     }
 
     // throw new Error(`Invalid state: ${state}`);
-    return null;
+    return null!;
   }
 
   /**
@@ -647,7 +647,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
     const stickySpacer = this.config.spacer || this._spacerGenerated;
 
     if (!this._win || !stickySpacer) {
-      return null;
+      return null!;
     }
 
     const element = this.elementRef.nativeElement;
@@ -835,7 +835,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
 
     // hide ghost and refresh original style when state is null
     if (!state) {
-      this._stickyElementState = null;
+      this._stickyElementState = null!;
 
       this._hideStickyGhost();
       this._restoreStickyElementStyle();
@@ -868,7 +868,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
    */
   _restoreStickyElementStyle(): void {
     setElementStyles(this.renderer, this.elementRef.nativeElement, this._elementOriginStyle);
-    this._elementOriginStyle = null;
+    this._elementOriginStyle = null!;
   }
 
   /**
@@ -904,7 +904,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
       return;
     } else if (this.config.spacer && this._spacerGenerated) {
       this._spacerGenerated.remove();
-      this._spacerGenerated = null;
+      this._spacerGenerated = null!;
     }
 
     const ghost = this.config.spacer || this._spacerGenerated;

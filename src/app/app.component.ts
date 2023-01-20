@@ -6,7 +6,7 @@ import {
   NgxStickyDirection,
   NgxStickyPosition,
   fromMediaQuery,
-} from '../../projects/ngx-sticky/src/public-api';
+} from '@enten/ngx-sticky';
 
 
 @Component({
@@ -32,8 +32,8 @@ export class AppComponent implements OnDestroy, OnInit  {
   apiInViewportStickyDirection: NgxStickyDirection = 'down';
   apiInViewportStickyPosition: NgxStickyPosition = 'top';
 
-  _isSmallScreen: boolean;
-  _smallBreakpointSubscription: Subscription;
+  _isSmallScreen!: boolean;
+  _smallBreakpointSubscription!: Subscription;
 
   constructor(
     readonly changeDetectorRef: ChangeDetectorRef,
@@ -52,7 +52,7 @@ export class AppComponent implements OnDestroy, OnInit  {
   ngOnDestroy(): void {
     if (this._smallBreakpointSubscription) {
       this._smallBreakpointSubscription.unsubscribe();
-      this._smallBreakpointSubscription = null;
+      this._smallBreakpointSubscription = null!;
     }
   }
 }

@@ -2,8 +2,16 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../dist/out-tsc/dev-app-spec",
-    "types": ["jest"]
+    "types": [
+      "jest"
+    ]
   },
-  "files": ["test-setup.ts"],
-  "include": ["**/*.spec.ts", "**/*_spec.ts", "**/*.d.ts"]
+  "files": [
+    "test-setup.ts"
+  ],
+  "include": [
+    "**/*.spec.ts",
+    "**/*_spec.ts",
+    "**/*.d.ts"
+  ]
 }

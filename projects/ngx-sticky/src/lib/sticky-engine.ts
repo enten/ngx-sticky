@@ -5,6 +5,7 @@ import {
   NgxIntersection,
   NgxIntersectionComputation,
   NgxIntersectionSnap,
+  NgxIntersectionState,
   NgxSticky,
   NgxStickyBoundary,
   NgxStickyBoundaryComputed,
@@ -19,11 +20,11 @@ import {
 
 
 export const NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP = {
-  'sticked,normal': 'enter',
-  'stucked,normal': 'entered',
-  'sticked,sticked': 'entered',
-  'stucked,sticked': 'exit',
-  'stucked,stucked': 'exited',
+  'sticked,normal': 'enter' as const,
+  'stucked,normal': 'entered' as const,
+  'sticked,sticked': 'entered' as const,
+  'stucked,sticked': 'exit' as const,
+  'stucked,stucked': 'exited' as const,
 };
 
 
@@ -199,8 +200,8 @@ export class NgxStickyEngine {
     // - entered: when enter sticky (on bottom) is _stucked_ and exit sticky (on top) is _normal_ ;
     // - exit: when enter sticky (on bottom) is _stucked_ and exit sticky (on top) is _sticked_ ;
     // - exited: when enter (on bottom) and exit (on top) stickies are _stucked_.
-    const stateKey = [ enter.state, exit.state ].join(',');
-    const state = NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP[stateKey] || null;
+    const stateKey = [ enter.state, exit.state ].join(',') as keyof typeof NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP;
+    const state: NgxIntersectionState = NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP[stateKey] || null;
 
     const viewportOffsetless = snap.viewportHeight - enter.offsetSticked - exit.offsetSticked;
     const maxHeightVisible = Math.min(snap.intersection.height, viewportOffsetless);
@@ -324,7 +325,7 @@ export class NgxStickyEngine {
       // (computation as any)._state = _stickyComputedState;
     }
 
-    computation.state = _stickyComputedState;
+    computation.state = _stickyComputedState!;
 
     return computation;
   }
@@ -352,7 +353,7 @@ export class NgxStickyEngine {
 
     for (const _sticky of stickies) {
       // skip sticky when is position bottom
-      if (isStickyPositionBottom(_sticky.position) !== positionBottom) {
+      if (isStickyPositionBottom(_sticky.position!) !== positionBottom) {
         continue;
       }
 
@@ -405,7 +406,7 @@ export class NgxStickyEngine {
     intersection: NgxIntersection,
     viewportHeight: number,
   ): NgxIntersectionSnap {
-    const disabled = intersection.disabled;
+    const disabled: boolean = intersection.disabled!;
 
     // enter sticky is sticked on bottom
     const enterSticky: NgxSticky = {
@@ -468,16 +469,16 @@ export class NgxStickyEngine {
   ): NgxStickySnap {
     const boundariesMap: Record<string, NgxStickyBoundaryComputed> = {};
 
-    const directionDown = isStickyDirectionDown(sticky.direction);
-    const positionBottom = isStickyPositionBottom(sticky.position);
+    const directionDown = isStickyDirectionDown(sticky.direction!);
+    const positionBottom = isStickyPositionBottom(sticky.position!);
 
     const stickyComputed: NgxStickyComputed = {
       boundary: this.computeStickyBoundary(
         container,
-        sticky.boundary,
+        sticky.boundary!,
         sticky,
         directionDown,
-        sticky.spot,
+        sticky.spot!,
         viewportHeight,
       ),
       directionDown,
@@ -485,7 +486,7 @@ export class NgxStickyEngine {
       height: sticky.height,
       positionBottom,
       sortPoint: this.computeStickySortPoint(sticky, positionBottom, directionDown, viewportHeight),
-      sticked: null,
+      sticked: null!,
       top: sticky.top,
     };
 
@@ -566,16 +567,16 @@ export class NgxStickyEngine {
         _stickyComputed = stickyComputed;
         _stickyComputedBoundaryRight = stickyComputedBoundaryRight;
       } else {
-        _directionDown = isStickyDirectionDown(_sticky.direction);
-        _positionBottom = isStickyPositionBottom(_sticky.position);
+        _directionDown = isStickyDirectionDown(_sticky.direction!);
+        _positionBottom = isStickyPositionBottom(_sticky.position!);
 
         _stickyComputed = {
           boundary: this.computeStickyBoundary(
             container,
-            _sticky.boundary,
+            _sticky.boundary!,
             _sticky,
             _directionDown,
-            _sticky.spot,
+            _sticky.spot!,
             viewportHeight,
           ),
           disabled: false,
@@ -583,7 +584,7 @@ export class NgxStickyEngine {
           height: _sticky.height,
           positionBottom: _positionBottom,
           sortPoint: this.computeStickySortPoint(_sticky, _positionBottom, _directionDown, viewportHeight),
-          sticked: null,
+          sticked: null!,
           top: _sticky.top,
         };
 
@@ -649,7 +650,7 @@ export class NgxStickyEngine {
       }
 
       // pushforce offset spacer as sticky siblings
-      if (_sticky === offsetSpacer) {
+      if (_sticky === offsetSpacer!) {
         stickiesComputed.push(_stickyComputed);
 
         continue;

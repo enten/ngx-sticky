@@ -3,26 +3,46 @@
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
-    "module": "commonjs",
+    "outDir": "./dist/out-tsc/workspace",
+    "target": "ES2020",
+    "module": "ES2020",
     "moduleResolution": "node",
-    "lib": ["esnext", "dom", "es2020"],
-    "target": "es2015",
-    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "ES2020",
+      "dom"
+    ],
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
     "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
     "sourceMap": true,
     "strict": true,
     "resolveJsonModule": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
+    "useDefineForClassFields": false,
     "paths": {
-      "@enten/ngx-sticky": ["dist/ngx-sticky"]
+      "@enten/ngx-sticky": [
+        "projects/ngx-sticky/src/public-api.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "dist",
+    "coverage",
+    "node_modules",
+    "tmp"
+  ],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
 }

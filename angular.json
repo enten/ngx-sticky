@@ -34,6 +34,7 @@
           },
           "configurations": {
             "production": {
+              "tsConfig": "src/tsconfig.app.prod.json",
               "budgets": [
                 {
                   "type": "initial",
@@ -129,8 +130,7 @@
       }
     }
   },
-  "defaultProject": "ngx-sticky-app",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }

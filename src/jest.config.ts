@@ -1,4 +1,6 @@
-module.exports = {
+import { Config } from 'jest';
+
+export default <Config>{
   displayName: 'ngx-sticky-app',
   preset: '../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
@@ -8,12 +10,12 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  "testMatch": [
-    "**/?(*_)+(spec|test).+(ts|js)?(x)"
+  testMatch: [
+    '**/?(*_)+(spec|test).+(ts|js)?(x)',
   ],
   coverageDirectory: '../coverage/ngx-sticky-app',
   collectCoverageFrom: [
-    'src/**/*.{ts,tsx}'
+    'src/**/*.{ts,tsx}',
   ],
   coveragePathIgnorePatterns: [
     'src/public-api.ts$',
@@ -21,14 +23,10 @@ module.exports = {
     'src/lib/sticky.module.ts$',
     '^.+\\.d\\.ts$',
     '/e2e/',
-    '/node_modules/'
+    '/node_modules/',
   ],
-  transform: {
-    '^.+\\.(ts|js|html)$': 'jest-preset-angular',
+  moduleNameMapper: {
+    '^@enten/ngx-sticky$': '<rootDir>/../projects/ngx-sticky/src/public-api.ts',
+    '^@enten/ngx-sticky/(.+)$': '<rootDir>/../projects/ngx-sticky/src/$1',
   },
-  snapshotSerializers: [
-    'jest-preset-angular/build/serializers/no-ng-attributes',
-    'jest-preset-angular/build/serializers/ng-snapshot',
-    'jest-preset-angular/build/serializers/html-comment',
-  ],
 };

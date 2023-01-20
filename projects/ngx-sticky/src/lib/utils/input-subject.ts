@@ -23,7 +23,7 @@ export class InputSubject<T> extends Subject<T> {
 
   _firstChange = true;
   _value: T;
-  _valueSetted: T;
+  _valueSetted!: T;
 
   constructor(
     readonly defaultValue: T,
@@ -47,16 +47,16 @@ export class InputSubject<T> extends Subject<T> {
    * @param value Next value
    * @param options Options to skip coercion
    */
-  next(value?: T, options?: InputSubjectNextOptions): void {
+  override next(value?: T, options?: InputSubjectNextOptions): void {
     if (!options || !options.skipCoercion) {
       if (value === this._valueSetted) {
         return;
       }
 
-      this._valueSetted = value;
+      this._valueSetted = value as T;
 
       if (this.coercion) {
-        value = this.coercion(value);
+        value = this.coercion(value as T);
       }
     }
 
@@ -65,15 +65,15 @@ export class InputSubject<T> extends Subject<T> {
       const previousValue = this._value;
 
       this._firstChange = false;
-      this._value = value;
+      this._value = value as T;
 
       this.change$.next({
         previousValue,
-        currentValue: value,
+        currentValue: value as T,
         firstChange,
       });
 
-      super.next(value);
+      super.next(value as T);
     }
   }
 }

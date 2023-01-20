@@ -32,7 +32,7 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
 
   readonly _stickyComputations: Record<number, NgxStickyComputation> = {};
   readonly _stickySnaps: Record<number, NgxStickySnap> = {};
-  _stickySnapContainerHeight: number;
+  _stickySnapContainerHeight!: number;
 
   readonly _intersectionComputations: Record<number, NgxIntersectionComputation> = {};
   readonly _intersectionSnaps: Record<number, NgxIntersectionSnap> = {};
@@ -103,8 +103,8 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
     const intersectionIndex = addEntry(this.intersections, intersectionController);
 
     if (intersectionIndex !== -1) {
-      this._intersectionSnaps[intersectionIndex] = null;
-      this._intersectionComputations[intersectionIndex] = null;
+      this._intersectionSnaps[intersectionIndex] = null!;
+      this._intersectionComputations[intersectionIndex] = null!;
     }
   }
 
@@ -112,8 +112,8 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
     const stickyIndex = addEntry(this.stickies, stickyController);
 
     if (stickyIndex !== -1) {
-      this._stickySnaps[stickyIndex] = null;
-      this._stickyComputations[stickyIndex] = null;
+      this._stickySnaps[stickyIndex] = null!;
+      this._stickyComputations[stickyIndex] = null!;
     }
   }
 
@@ -144,15 +144,15 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
       }
 
       for (let stickyIndex = 0; stickyIndex < this.stickies.length; ++stickyIndex) {
-        this._stickyComputations[stickyIndex] = null;
-        this._stickySnaps[stickyIndex] = null;
+        this._stickyComputations[stickyIndex] = null!;
+        this._stickySnaps[stickyIndex] = null!;
 
         this.stickies[stickyIndex].beforeRefresh(fastUpdate);
       }
 
       for (let intersectionIndex = 0; intersectionIndex < this.intersections.length; ++intersectionIndex) {
-        this._intersectionComputations[intersectionIndex] = null;
-        this._intersectionSnaps[intersectionIndex] = null;
+        this._intersectionComputations[intersectionIndex] = null!;
+        this._intersectionSnaps[intersectionIndex] = null!;
 
         this.intersections[intersectionIndex].beforeRefresh(fastUpdate);
       }
@@ -166,7 +166,7 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
     const viewportHeight = this.getViewportHeight();
     // compute absolute viewport top
     const viewportTop = this.getViewportTop() + this.getContainer().top;
-    let stickies: NgxSticky[];
+    let stickies!: NgxSticky[];
 
     // refresh stickies
     for (let stickyIndex = 0; stickyIndex < this.stickies.length; ++stickyIndex) {
@@ -241,8 +241,8 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
     const intersectionIndex = deleteEntry(this.intersections, intersectionController);
 
     if (intersectionIndex !== -1) {
-      this._intersectionSnaps[intersectionIndex] = null;
-      this._intersectionComputations[intersectionIndex] = null;
+      this._intersectionSnaps[intersectionIndex] = null!;
+      this._intersectionComputations[intersectionIndex] = null!;
     }
   }
 
@@ -250,8 +250,8 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
     const stickyIndex = deleteEntry(this.stickies, sticky);
 
     if (stickyIndex !== -1) {
-      this._stickySnaps[stickyIndex] = null;
-      this._stickyComputations[stickyIndex] = null;
+      this._stickySnaps[stickyIndex] = null!;
+      this._stickyComputations[stickyIndex] = null!;
     }
   }
 }

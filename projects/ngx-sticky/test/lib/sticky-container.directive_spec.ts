@@ -17,25 +17,25 @@ let win: Window;
 
 const setup = (overrides: Record<string, any> = {}) => {
   rootContainer = 'rootContainer' in overrides
-    ? overrides.rootContainer
+    ? overrides['rootContainer']
     : TestBed.get(NgxStickyRootContainerController);
   stickyContainerParent = 'stickyContainerParent' in overrides
-    ? overrides.stickyContainerParent
+    ? overrides['stickyContainerParent']
     : null;
   stickyEngine = 'stickyEngine' in overrides
-    ? overrides.stickyEngine
+    ? overrides['stickyEngine']
     : TestBed.get(NgxStickyEngine);
   elementRef = 'elementRef' in overrides
-    ? overrides.elementRef
+    ? overrides['elementRef']
     : { nativeElement: {} };
   ngZone = 'ngZone' in overrides
-    ? overrides.ngZone
+    ? overrides['ngZone']
     : {
       run: jest.fn(),
       runOutsideAngular: jest.fn(),
     } as {} as NgZone;
   win = 'win' in overrides
-    ? overrides.win
+    ? overrides['win']
     : null;
 
   container = new NgxStickyContainerDirective(
@@ -50,12 +50,12 @@ const setup = (overrides: Record<string, any> = {}) => {
 
 
 beforeEach(() => {
-  rootContainer = null;
-  stickyContainerParent = null;
-  stickyEngine = null;
-  ngZone = null;
-  elementRef = null;
-  win = null;
+  rootContainer = null!;
+  stickyContainerParent = null!;
+  stickyEngine = null!;
+  ngZone = null!;
+  elementRef = null!;
+  win = null!;
 });
 
 

@@ -67,7 +67,7 @@ export class NgxInViewportDirective implements NgxIntersectionController, AfterV
    * Defaults to `false`.
    */
   @Input()
-  intersectionDisabled: boolean;
+  intersectionDisabled!: boolean;
 
   /**
    * Intersection thresholds.
@@ -75,7 +75,7 @@ export class NgxInViewportDirective implements NgxIntersectionController, AfterV
    * Defaults to `[ 0, 1 ]`.
    */
   @Input()
-  intersectionThresholds: number[];
+  intersectionThresholds!: number[];
 
   /**
    * Emit intersection.
@@ -130,22 +130,22 @@ export class NgxInViewportDirective implements NgxIntersectionController, AfterV
   readonly _destroyed$ = new Subject<void>();
 
   /** Intersection which reflect last call of _computeIntersection() */
-  _intersection: NgxIntersection;
+  _intersection!: NgxIntersection;
 
   /** Intersection computation which reflect last call of _refreshIntersection()  */
-  _intersectionComputation: NgxIntersectionComputation;
+  _intersectionComputation!: NgxIntersectionComputation;
 
   /** Intersection computation with last threshold crossed */
-  _intersectionCrossed: NgxIntersectionComputation;
+  _intersectionCrossed!: NgxIntersectionComputation;
 
   /** Last inetersection state crossed */
-  _intersectionState: NgxIntersectionState;
+  _intersectionState!: NgxIntersectionState;
 
   /** Last inetersection threshold crossed */
-  _intersectionThreshold: number;
+  _intersectionThreshold!: number;
 
   /** Monitoring subscription which trigger update stickies and handle refresh */
-  _monitoring: Subscription;
+  _monitoring!: Subscription;
 
   /** Emits when refresh() is called */
   readonly _refresh$ = new Subject<NgxIntersectionComputation>();
@@ -187,7 +187,7 @@ export class NgxInViewportDirective implements NgxIntersectionController, AfterV
 
   beforeRefresh(fastUpdate?: boolean): void {
     if (!fastUpdate) {
-      this._intersection = null;
+      this._intersection = null!;
     }
   }
 
@@ -247,7 +247,7 @@ export class NgxInViewportDirective implements NgxIntersectionController, AfterV
   _destroyMonitoring(): void {
     if (this._monitoring) {
       this._monitoring.unsubscribe();
-      this._monitoring = null;
+      this._monitoring = null!;
     }
   }
 

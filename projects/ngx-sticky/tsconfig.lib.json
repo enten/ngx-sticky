@@ -1,12 +1,18 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "esnext",
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true
   },
-  "files": ["src/public-api.ts"],
-  "include": ["src/**/*.d.ts"],
-  "exclude": ["src/**/*.spec.ts"]
+  "files": [
+    "src/public-api.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*_spec.ts"
+  ]
 }
