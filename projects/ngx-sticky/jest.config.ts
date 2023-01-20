@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   displayName: 'ngx-sticky',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/test/test-setup.ts'],
@@ -9,7 +9,7 @@ module.exports = {
     },
   },
   "testMatch": [
-    "**/?(*_)+(spec|test).+(ts|js)?(x)"
+    "**/?(*_)+(spec|test).+(ts|mjs|js)?(x)"
   ],
   coverageDirectory: '../../coverage/ngx-sticky',
   collectCoverageFrom: [

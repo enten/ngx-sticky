@@ -3,7 +3,8 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageReporters: ['html'],
   transform: {
-    '^.+\\.(ts|js|html)$': 'ts-jest',
+    '^.+\\.(ts|mjs|js|html)$': 'ts-jest',
   },
+  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
   testEnvironment: 'jsdom',
 };
