@@ -20,7 +20,7 @@ describe('fromImageEvents', () => {
   });
 
   it('should emit nothing when element is falsy', () => {
-    fromImageEvents(undefined);
+    fromImageEvents(undefined!);
 
     expect(of).toBeCalledTimes(1);
     expect(of).toBeCalledWith();
@@ -45,7 +45,7 @@ describe('fromImageEvents', () => {
       querySelectorAll: jest.fn(() => (images as unknown as NodeListOf<HTMLImageElement>)) as HTMLParagraphElement['querySelectorAll'],
     } as HTMLParagraphElement;
 
-    fromImageEvents(element as {} as HTMLParagraphElement);
+    fromImageEvents(element);
 
     expect(element.querySelectorAll).toBeCalledWith('img');
     expect(fromEventSpy).toBeCalledTimes(4);

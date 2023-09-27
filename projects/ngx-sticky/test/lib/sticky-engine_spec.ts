@@ -1,5 +1,5 @@
 import { NgxStickyEngine } from '../../src/lib/sticky-engine';
-import { NgxIntersection, NgxSticky, NgxStickyDirection, NgxStickyPosition } from '../../src/lib/sticky.types';
+import { NgxIntersection, NgxIntersectionSnap, NgxSticky, NgxStickyDirection, NgxStickyPosition } from '../../src/lib/sticky.types';
 
 
 const engine = new NgxStickyEngine();
@@ -219,13 +219,13 @@ describe('determineIntersectionState', () => {
         viewportHeight: 10,
       },
       intersection: {
-        disabled: undefined,
+        disabled: undefined!,
         height: 2,
         thresholds: [ 0, 1 ],
         top: 10,
       },
       viewportHeight: 10,
-    };
+    } as NgxIntersectionSnap;
 
     expect(engine.determineIntersectionState(snap, 0)).toEqual({
       snap,

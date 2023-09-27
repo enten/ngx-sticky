@@ -15,7 +15,7 @@ import {
 
 describe('getDocumentHeightFactory', () => {
   it('should returns getter of 0 when window is falsy', () => {
-    expect(getDocumentHeightFactory(null)()).toBe(0);
+    expect(getDocumentHeightFactory(null!)()).toBe(0);
   });
 
   it('should returns getter of maximum window height property', () => {
@@ -40,7 +40,7 @@ describe('getDocumentHeightFactory', () => {
 
 describe('getDocumentWidthFactory', () => {
   it('should returns getter of 0 when window is falsy', () => {
-    expect(getDocumentWidthFactory(null)()).toBe(0);
+    expect(getDocumentWidthFactory(null!)()).toBe(0);
   });
 
   it('should returns getter of maximum window width property', () => {
@@ -90,7 +90,9 @@ describe('getElementAbsoluteRect', () => {
 
 describe('getElementRelativeRect', () => {
   it('should returns rect which includes offset parents until position "relative"', () => {
-    const win = { getComputedStyle: element => (element.style || {}) } as {} as Window;
+    const win = {
+      getComputedStyle: element => ((element as HTMLElement).style || {}) as CSSStyleDeclaration,
+    } as Window;
 
     expect(getElementRelativeRect(win, {
       offsetHeight: 5,
@@ -123,7 +125,7 @@ describe('getElementRelativeRect', () => {
 
 describe('getWindowViewportHeight', () => {
   it('should returns 0 when window is falsy', () => {
-    expect(getWindowViewportHeight(undefined)).toBe(0);
+    expect(getWindowViewportHeight(undefined!)).toBe(0);
   });
 
   it('should returns window innerHeight', () => {
@@ -134,7 +136,7 @@ describe('getWindowViewportHeight', () => {
 
 describe('getWindowViewportLeft', () => {
   it('should returns 0 when window is falsy', () => {
-    expect(getWindowViewportLeft(undefined)).toBe(0);
+    expect(getWindowViewportLeft(undefined!)).toBe(0);
   });
 
   it('should returns scroll top value', () => {
@@ -175,7 +177,7 @@ describe('getWindowViewportLeft', () => {
 
 describe('getWindowViewportTop', () => {
   it('should returns 0 when window is falsy', () => {
-    expect(getWindowViewportTop(undefined)).toBe(0);
+    expect(getWindowViewportTop(undefined!)).toBe(0);
   });
 
   it('should returns scroll top value', () => {

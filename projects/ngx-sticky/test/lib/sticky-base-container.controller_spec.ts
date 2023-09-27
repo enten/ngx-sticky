@@ -23,28 +23,28 @@ jest.mock('../../src/lib/utils/collections', () => ({
 
 
 class NgxStickyEngineMock extends NgxStickyEngine {
-  getStickedOffset = jest.fn();
-  snapIntersection = jest.fn();
-  snapSticky = jest.fn();
-  determineIntersectionState = jest.fn();
-  determineStickyState = jest.fn();
+  override getStickedOffset = jest.fn();
+  override snapIntersection = jest.fn();
+  override snapSticky = jest.fn();
+  override determineIntersectionState = jest.fn();
+  override determineStickyState = jest.fn();
 }
 
 
 class NgxStickyTestContainerController extends NgxStickyBaseContainerController {
-  containerParent?: NgxStickyContainerController;
-  stickyEngine = new NgxStickyEngineMock();
-  disabled = false;
-  beforeRefresh = jest.fn();
-  createScrollPlan = jest.fn();
-  disableStickies = jest.fn();
-  enableStickies = jest.fn();
-  getContainer = jest.fn(() => null);
-  getViewportHeight = jest.fn(() => 0);
-  getViewportLeft = jest.fn(() => 0);
-  getViewportTop = jest.fn(() => 0);
-  scrollToTop = jest.fn();
-  _computeContainer = jest.fn();
+  override containerParent?: NgxStickyContainerController;
+  override stickyEngine = new NgxStickyEngineMock();
+  override disabled = false;
+  override beforeRefresh = jest.fn();
+  override createScrollPlan = jest.fn();
+  override disableStickies = jest.fn();
+  override enableStickies = jest.fn();
+  override getContainer = jest.fn<NgxStickyContainer, []>(() => null!);
+  override getViewportHeight = jest.fn(() => 0);
+  override getViewportLeft = jest.fn(() => 0);
+  override getViewportTop = jest.fn(() => 0);
+  override scrollToTop = jest.fn();
+  override _computeContainer = jest.fn();
 }
 
 
@@ -124,7 +124,7 @@ describe('fixViewportTop', () => {
     const container = new NgxStickyTestContainerController();
 
     container.containerParent = {} as NgxStickyContainerController;
-    container.getContainer.mockImplementation(() => ({ top: 10 }));
+    container.getContainer.mockImplementation(() => ({ top: 10 }) as NgxStickyContainer);
     container.getStickedOffset = () => 15;
 
     expect(container.fixViewportTop(50, 5)).toBe(50 - 5 - 15 - 10);

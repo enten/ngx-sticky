@@ -26,25 +26,25 @@ export class NgxStickyContainerDirective extends NgxStickyBaseContainerDirective
     readonly rootContainer: NgxStickyRootContainerController,
     @SkipSelf() @Optional() @Inject(forwardRef(() => NgxStickyContainerDirective))
     readonly stickyContainerParent: NgxStickyContainerController,
-    readonly stickyEngine: NgxStickyEngine,
-    readonly ngZone: NgZone,
+    stickyEngine: NgxStickyEngine,
+    ngZone: NgZone,
     readonly elementRef: ElementRef<HTMLElement>,
     @Inject(NGX_STICKY_WINDOW)
-    readonly _win: Window,
+    _win: Window,
   ) {
     // use root container when boundary isn't in container
     super(stickyContainerParent || rootContainer, stickyEngine, ngZone, _win);
   }
 
-  getViewportHeight(): number {
+  override getViewportHeight(): number {
     return this.element.offsetHeight;
   }
 
-  getViewportLeft(): number {
+  override getViewportLeft(): number {
     return this.element.scrollLeft;
   }
 
-  getViewportTop(): number {
+  override getViewportTop(): number {
     return this.element.scrollTop;
   }
 }

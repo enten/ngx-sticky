@@ -13,7 +13,7 @@ describe('fromMediaQuery', () => {
   it('should emit nothing when win is falsy', () => {
     const matchMediaListener = jest.fn();
 
-    fromMediaQuery(undefined, 'screen').subscribe(matchMediaListener);
+    fromMediaQuery(undefined!, 'screen').subscribe(matchMediaListener);
 
     expect(matchMediaListener).not.toBeCalled();
   });

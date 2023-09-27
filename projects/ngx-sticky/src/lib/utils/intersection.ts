@@ -34,7 +34,7 @@ export function coerceIntersectionThresholds(thresholds: any) {
  * @returns Threshold crossed or `undefined`
  */
 export function getCrossedThreshold(thresholds: number[], oldRatio: number, newRatio: number): number {
-  let crossedThreshold: number;
+  let crossedThreshold!: number;
 
   for (const threshold of thresholds) {
     if (

@@ -3,10 +3,14 @@
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
-    "module": "es2020",
+    "outDir": "./dist/out-tsc/workspace",
+    "target": "ES2020",
+    "module": "ES2020",
     "moduleResolution": "node",
-    "lib": ["esnext", "dom", "es2020"],
-    "target": "es2020",
+    "lib": [
+      "ES2020",
+      "dom"
+    ],
     "allowSyntheticDefaultImports": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -14,15 +18,32 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
     "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
     "sourceMap": true,
     "strict": true,
     "resolveJsonModule": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
+    "useDefineForClassFields": false,
     "paths": {
-      "@enten/ngx-sticky": ["dist/ngx-sticky"]
+      "@enten/ngx-sticky": [
+        "dist/ngx-sticky"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "dist",
+    "coverage",
+    "node_modules",
+    "tmp"
+  ],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
 }

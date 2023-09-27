@@ -24,8 +24,8 @@ export class ConfigSubject<T> extends Subject<T> {
   readonly inputs: ConfigInputSubjects<T>;
 
   _config: T;
-  _configChanged: boolean;
-  _configChanges: ConfigSubjectChanges<T>;
+  _configChanged!: boolean;
+  _configChanges!: ConfigSubjectChanges<T>;
 
   readonly _aliases: { [key: string]: keyof T };
 
@@ -95,7 +95,7 @@ export class ConfigSubject<T> extends Subject<T> {
       const inputKey = (this._aliases[key as string] || key) as keyof T;
 
       if (inputKey in this.inputs) {
-        const inputValue = partialConfig[key] as T[keyof T];
+        const inputValue = (partialConfig)[key] as T[keyof T];
         const inputSubject = this.inputs[inputKey];
 
         inputSubject.next(inputValue, options);

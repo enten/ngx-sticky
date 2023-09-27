@@ -48,31 +48,31 @@ let win: Window;
 
 const setup = (overrides: Record<string, any> = {}) => {
   rootContainer = 'rootContainer' in overrides
-    ? overrides.rootContainer
+    ? overrides['rootContainer']
     : TestBed.get(NgxStickyRootContainerController);
   stickyContainer = 'stickyContainer' in overrides
-    ? overrides.stickyContainer
+    ? overrides['stickyContainer']
     : null;
   stickyBoundary = 'stickyBoundary' in overrides
-    ? overrides.stickyBoundary
+    ? overrides['stickyBoundary']
     : null;
   stickyParent = 'stickyParent' in overrides
-    ? overrides.stickyParent
+    ? overrides['stickyParent']
     : null;
   elementRef = 'elementRef' in overrides
-    ? overrides.elementRef
+    ? overrides['elementRef']
     : { nativeElement: {} };
   renderer = 'renderer' in overrides
-    ? overrides.renderer
+    ? overrides['renderer']
     : new RendererMock();
   ngZone = 'ngZone' in overrides
-    ? overrides.ngZone
+    ? overrides['ngZone']
     : {
       run: jest.fn() as NgZone['run'],
       runOutsideAngular: jest.fn() as NgZone['runOutsideAngular'],
     } as NgZone;
   win = 'win' in overrides
-    ? overrides.win
+    ? overrides['win']
     : null;
 
   sticky = new NgxStickyDirective(
@@ -89,14 +89,14 @@ const setup = (overrides: Record<string, any> = {}) => {
 
 
 beforeEach(() => {
-  rootContainer = null;
-  stickyContainer = null;
-  stickyBoundary = null;
-  stickyParent = null;
-  elementRef = null;
-  renderer = null;
-  ngZone = null;
-  win = null;
+  rootContainer = null!;
+  stickyContainer = null!;
+  stickyBoundary = null!;
+  stickyParent = null!;
+  elementRef = null!;
+  renderer = null!;
+  ngZone = null!;
+  win = null!;
 });
 
 
@@ -479,11 +479,11 @@ describe('_getStickyElementStyle', () => {
     it('should returns null when window or state is null', () => {
       setup({ win: null });
 
-      expect(sticky._getStickyElementStyle(null)).toBe(null);
+      expect(sticky._getStickyElementStyle(null!)).toBe(null);
 
       setup({ win: {} });
 
-      expect(sticky._getStickyElementStyle(null)).toBe(null);
+      expect(sticky._getStickyElementStyle(null!)).toBe(null);
     });
   });
 
@@ -930,7 +930,7 @@ describe('_refreshStickyElement', () => {
     sticky._saveStickyElementStyle = jest.fn();
     sticky._showStickyGhost = jest.fn();
 
-    sticky._refreshStickyElement(null);
+    sticky._refreshStickyElement(null!);
 
     expect(sticky._hideStickyGhost).not.toBeCalled();
     expect(sticky._restoreStickyElementStyle).not.toBeCalled();
@@ -944,7 +944,7 @@ describe('_refreshStickyElement', () => {
     sticky._hideStickyGhost = jest.fn();
     sticky._restoreStickyElementStyle = jest.fn();
 
-    sticky._refreshStickyElement(null);
+    sticky._refreshStickyElement(null!);
 
     expect(sticky._stickyElementState).toBe(null);
     expect(sticky._hideStickyGhost).toBeCalled();

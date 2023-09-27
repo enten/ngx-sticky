@@ -12,7 +12,7 @@ import {
 
 
 class NgxStickyTestContainerDirective extends NgxStickyBaseContainerDirective {
-  element: HTMLElement = null;
+  element: HTMLElement = null!;
 }
 
 
@@ -24,34 +24,34 @@ let win: Window;
 
 const setup = (overrides: Record<string, any> = {}) => {
   containerParent = 'containerParent' in overrides
-    ? overrides.containerParent
+    ? overrides['containerParent']
     : null;
   stickyEngine = 'stickyEngine' in overrides
-    ? overrides.stickyEngine
+    ? overrides['stickyEngine']
     : TestBed.get(NgxStickyEngine);
   ngZone = 'ngZone' in overrides
-    ? overrides.ngZone
+    ? overrides['ngZone']
     : {
       run: jest.fn() as NgZone['run'],
       runOutsideAngular: jest.fn() as NgZone['runOutsideAngular'],
     } as NgZone;
   win = 'win' in overrides
-    ? overrides.win
+    ? overrides['win']
     : null;
 
   container = new NgxStickyTestContainerDirective(containerParent, stickyEngine, ngZone, win);
 
   if ('element' in overrides) {
-    Object.assign(container, { element: overrides.element });
+    Object.assign(container, { element: overrides['element'] });
   }
 };
 
 
 beforeEach(() => {
-  containerParent = null;
-  stickyEngine = null;
-  ngZone = null;
-  win = null;
+  containerParent = null!;
+  stickyEngine = null!;
+  ngZone = null!;
+  win = null!;
 });
 
 
