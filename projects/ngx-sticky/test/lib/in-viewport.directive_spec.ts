@@ -28,9 +28,9 @@ const setup = (overrides: Record<string, any> = {}) => {
   ngZone = 'ngZone' in overrides
     ? overrides.ngZone
     : {
-      run: jest.fn(),
-      runOutsideAngular: jest.fn(),
-    } as {} as NgZone;
+      run: jest.fn() as NgZone['run'],
+      runOutsideAngular: jest.fn() as NgZone['runOutsideAngular'],
+    } as NgZone;
   win = 'win' in overrides
     ? overrides.win
     : null;
@@ -291,9 +291,9 @@ describe('_destroyMonitoring', () => {
   it('shoud unsubscribe monitoring', () => {
     setup();
 
-    const unsubscribe = jest.fn();
+    const unsubscribe = jest.fn() as Subscription['unsubscribe'];
 
-    inViewport._monitoring = { unsubscribe } as {} as Subscription;
+    inViewport._monitoring = { unsubscribe } as Subscription;
 
     inViewport._destroyMonitoring();
 

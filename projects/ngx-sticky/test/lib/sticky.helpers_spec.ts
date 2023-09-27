@@ -5,7 +5,7 @@ import {
   isStickyDirectionDown,
   isStickyPositionBottom,
 } from '../../src/lib/sticky.helpers';
-import { NgxStickyComputation } from '../../src/lib/sticky.types';
+import { NgxStickyComputation, NgxStickyDirection, NgxStickyPosition } from '../../src/lib/sticky.types';
 
 
 describe('coerceStickyDirection', () => {
@@ -68,7 +68,7 @@ describe('isStickyDirectionDown', () => {
   it('should returns true when direction is not "up"', () => {
     expect(isStickyDirectionDown('up')).toBe(false);
     expect(isStickyDirectionDown('down')).toBe(true);
-    expect(isStickyDirectionDown('' as any)).toBe(true);
+    expect(isStickyDirectionDown('' as NgxStickyDirection)).toBe(true);
   });
 });
 
@@ -77,6 +77,6 @@ describe('isStickyPositionBottom', () => {
   it('should returns true when position is "bottom"', () => {
     expect(isStickyPositionBottom('top')).toBe(false);
     expect(isStickyPositionBottom('bottom')).toBe(true);
-    expect(isStickyPositionBottom('' as any)).toBe(false);
+    expect(isStickyPositionBottom('' as NgxStickyPosition)).toBe(false);
   });
 });

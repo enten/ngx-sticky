@@ -1,8 +1,12 @@
 import { ConfigSubject } from '../../../src/lib/utils/config-subject';
 
+interface Foobar {
+  foo: number;
+  bar: string;
+}
 
 describe('ConfigSubject', () => {
-  let config: ConfigSubject<{ foo: number; bar: string }>;
+  let config: ConfigSubject<Foobar>;
 
   beforeEach(() => {
     config = new ConfigSubject({
@@ -17,8 +21,8 @@ describe('ConfigSubject', () => {
 
       config.changes$.subscribe(onChange);
 
-      config.next({ foo: 0 });
-      config.next({ foo: 1 });
+      config.next({ foo: 0 } as Foobar);
+      config.next({ foo: 1 } as Foobar);
       config.next({ foo: 1, bar: 'BAR' });
       config.next({ foo: 1, bar: 'BAR' });
       config.next({ foo: 42, bar: 'bax' });
@@ -65,9 +69,9 @@ describe('ConfigSubject', () => {
 
       config.subscribe(onConfigChange);
 
-      config.next({ });
-      config.next({ foo: '0' } as any);
-      config.next({ bar: '' });
+      config.next({} as Foobar);
+      config.next({ foo: '0' as unknown as number } as Foobar);
+      config.next({ bar: '' } as Foobar);
       config.next({ foo: 1, bar: 'BAR' });
 
       expect(onConfigChange).toBeCalledTimes(1);
@@ -79,8 +83,8 @@ describe('ConfigSubject', () => {
 
       config.subscribe(onConfigChange);
 
-      config.next({ foo: '42' } as any);
-      config.next({ foo: 1 }, { skipCoercion: true });
+      config.next({ foo: '42' as unknown as number } as Foobar);
+      config.next({ foo: 1 } as Foobar, { skipCoercion: true });
 
       expect(onConfigChange).toBeCalledTimes(2);
       expect(onConfigChange).toHaveBeenNthCalledWith(1, { foo: 42, bar: '' });
@@ -95,7 +99,7 @@ describe('ConfigSubject', () => {
 
       config.subscribe(onConfigChange);
 
-      config.nextKeyValue('foo', '42' as any);
+      config.nextKeyValue('foo', '42' as unknown as number);
 
       expect(onConfigChange).toBeCalledTimes(1);
       expect(onConfigChange).toBeCalledWith({ foo: 42, bar: '' });
@@ -124,7 +128,7 @@ describe('ConfigSubject', () => {
 
       config.subscribe(onConfigChange);
 
-      config.nextKeyValue('_foo' as any, '42' as any);
+      config.nextKeyValue('_foo' as keyof Foobar, '42');
       config.nextChanges({ _bar: { currentValue: 'BAR' } });
 
       expect(onConfigChange).toBeCalledTimes(2);

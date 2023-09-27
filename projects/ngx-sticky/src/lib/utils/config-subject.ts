@@ -88,11 +88,11 @@ export class ConfigSubject<T> extends Subject<T> {
    * @param partialConfig Partial next config
    * @param options Options to skip coercion
    */
-  next(partialConfig?: Partial<T>, options?: InputSubjectNextOptions): void {
-    const inputKeys = Object.keys(partialConfig);
+  override next(partialConfig: T, options?: InputSubjectNextOptions): void {
+    const inputKeys = Object.keys(partialConfig as Partial<T>) as (keyof T)[];
 
     for (const key of inputKeys) {
-      const inputKey = (this._aliases[key] || key) as keyof T;
+      const inputKey = (this._aliases[key as string] || key) as keyof T;
 
       if (inputKey in this.inputs) {
         const inputValue = partialConfig[key] as T[keyof T];
@@ -122,7 +122,7 @@ export class ConfigSubject<T> extends Subject<T> {
    * @param options Options to skip coercion
    */
   nextKeyValue<K extends keyof T>(inputKey: K, value: T[K], options?: InputSubjectNextOptions): void {
-    this.next({ [inputKey]: value } as {} as Partial<T>, options);
+    this.next({ [inputKey]: value } as Record<keyof K, any> as T, options);
   }
 
   /**
@@ -130,14 +130,14 @@ export class ConfigSubject<T> extends Subject<T> {
    *
    * @param changes Simple changes
    */
-  nextChanges(changes: { [key: string]: { currentValue: any } }) {
-    const changeKeys = Object.keys(changes);
+  nextChanges<K extends keyof T>(changes: Record<K, { currentValue: T[K] }> | Record<string, { currentValue: any }>): void {
+    const changeKeys = Object.keys(changes) as (keyof T)[];
     const config: Partial<T> = {};
 
     for (const inputKey of changeKeys) {
-      config[inputKey] = changes[inputKey].currentValue;
+      config[inputKey] = changes[inputKey as K].currentValue;
     }
 
-    this.next(config);
+    this.next(config as T);
   }
 }

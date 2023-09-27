@@ -21,18 +21,18 @@ describe('getDocumentHeightFactory', () => {
   it('should returns getter of maximum window height property', () => {
     expect(getDocumentHeightFactory({
       document: {
-        body: { scrollHeight: 1, offsetHeight: 3, clientHeight: 5 },
-        documentElement: { scrollHeight: 2, offsetHeight: 4, clientHeight: 6 },
-      },
+        body: { scrollHeight: 1, offsetHeight: 3, clientHeight: 5 } as HTMLBodyElement,
+        documentElement: { scrollHeight: 2, offsetHeight: 4, clientHeight: 6 } as HTMLElement,
+      } as Partial<Document> as Document,
     } as Window)()).toBe(6);
   });
 
   it('should returns getter first getter when all height getters computes 0', () => {
     expect(getDocumentHeightFactory({
       document: {
-        body: { scrollHeight: 0, offsetHeight: 0, clientHeight: 0 },
-        documentElement: { scrollHeight: 0, offsetHeight: 0, clientHeight: 0 },
-      },
+        body: { scrollHeight: 0, offsetHeight: 0, clientHeight: 0 } as HTMLBodyElement,
+        documentElement: { scrollHeight: 0, offsetHeight: 0, clientHeight: 0 } as HTMLElement,
+      } as Partial<Document> as Document,
     } as Window)()).toBe(0);
   });
 });
@@ -55,9 +55,9 @@ describe('getDocumentWidthFactory', () => {
   it('should returns getter first getter when all width getters computes 0', () => {
     expect(getDocumentWidthFactory({
       document: {
-        body: { scrollWidth: 0, offsetWidth: 0, clientWidth: 0 },
-        documentElement: { scrollWidth: 0, offsetWidth: 0, clientWidth: 0 },
-      },
+        body: { scrollWidth: 0, offsetWidth: 0, clientWidth: 0 } as HTMLBodyElement,
+        documentElement: { scrollWidth: 0, offsetWidth: 0, clientWidth: 0 } as HTMLElement,
+      } as Partial<Document> as Document,
     } as Window)()).toBe(0);
   });
 });
@@ -76,9 +76,9 @@ describe('getElementAbsoluteRect', () => {
         offsetParent: {
           offsetTop: 20,
           offsetLeft: 10,
-        },
-      },
-    } as {} as HTMLElement)).toEqual({
+        } as HTMLElement as Element,
+      } as HTMLElement as Element,
+    } as HTMLElement)).toEqual({
       width: 10,
       height: 5,
       top: 60,
@@ -108,10 +108,10 @@ describe('getElementRelativeRect', () => {
             offsetTop: 20,
             offsetLeft: 10,
             style: { position: 'relative'},
-          },
-        },
-      },
-    } as {} as HTMLElement)).toEqual({
+          } as HTMLElement as Element,
+        } as HTMLElement as Element,
+      } as HTMLElement as Element,
+    } as HTMLElement)).toEqual({
       width: 10,
       height: 5,
       top: 40,
@@ -143,32 +143,32 @@ describe('getWindowViewportLeft', () => {
       document: {
         body: {
           scrollLeft: 0,
-        },
+        } as HTMLBodyElement,
         documentElement: {
           getBoundingClientRect: () => winRect,
           scrollLeft: 0,
-        },
-      },
+        } as HTMLElement,
+      } as Partial<Document> as Document,
       scrollX: 0,
     };
 
-    expect(getWindowViewportLeft(win as {} as Window)).toBe(0);
+    expect(getWindowViewportLeft(win as Window)).toBe(0);
 
     win.document.documentElement.scrollLeft = 1;
 
-    expect(getWindowViewportLeft(win as {} as Window)).toBe(1);
+    expect(getWindowViewportLeft(win as Window)).toBe(1);
 
     win.scrollX = 2;
 
-    expect(getWindowViewportLeft(win as {} as Window)).toBe(2);
+    expect(getWindowViewportLeft(win as Window)).toBe(2);
 
     win.document.body.scrollLeft = 3;
 
-    expect(getWindowViewportLeft(win as {} as Window)).toBe(3);
+    expect(getWindowViewportLeft(win as Window)).toBe(3);
 
     winRect.left = -4;
 
-    expect(getWindowViewportLeft(win as {} as Window)).toBe(4);
+    expect(getWindowViewportLeft(win as Window)).toBe(4);
   });
 });
 
@@ -184,32 +184,32 @@ describe('getWindowViewportTop', () => {
       document: {
         body: {
           scrollTop: 0,
-        },
+        } as HTMLBodyElement,
         documentElement: {
           getBoundingClientRect: () => winRect,
           scrollTop: 0,
-        },
-      },
+        } as HTMLElement,
+      } as Partial<Document> as Document,
       scrollY: 0,
     };
 
-    expect(getWindowViewportTop(win as {} as Window)).toBe(0);
+    expect(getWindowViewportTop(win as Window)).toBe(0);
 
     win.document.documentElement.scrollTop = 1;
 
-    expect(getWindowViewportTop(win as {} as Window)).toBe(1);
+    expect(getWindowViewportTop(win as Window)).toBe(1);
 
     win.scrollY = 2;
 
-    expect(getWindowViewportTop(win as {} as Window)).toBe(2);
+    expect(getWindowViewportTop(win as Window)).toBe(2);
 
     win.document.body.scrollTop = 3;
 
-    expect(getWindowViewportTop(win as {} as Window)).toBe(3);
+    expect(getWindowViewportTop(win as Window)).toBe(3);
 
     winRect.top = -4;
 
-    expect(getWindowViewportTop(win as {} as Window)).toBe(4);
+    expect(getWindowViewportTop(win as Window)).toBe(4);
   });
 });
 
@@ -217,8 +217,10 @@ describe('getWindowViewportTop', () => {
 describe('isElementScrollableY', () => {
   it('should returns true when element is scrollable vertically', () => {
     const element = { offsetHeight: 0, scrollHeight: 0 };
-    const elementStyles = { overflowY: '' };
-    const win = { getComputedStyle: () => elementStyles } as {} as Window;
+    const elementStyles = { overflowY: '' } as CSSStyleDeclaration;
+    const win = {
+      getComputedStyle: (() => elementStyles) as Window['getComputedStyle'],
+    } as Window;
 
     expect(isElementScrollableY(win, element as HTMLElement)).toBe(false);
 
@@ -236,7 +238,7 @@ describe('isElementScrollableY', () => {
 
 describe('setElementStyles', () => {
   it('should set styles on element with renderer', () => {
-    const renderer = { setStyle: jest.fn() } as {} as Renderer2;
+    const renderer = { setStyle: jest.fn() as Renderer2['setStyle'] } as Renderer2;
     const styles = { foo: 'FOO', bar: 'BAR' };
     const element = {} as HTMLElement;
 
@@ -248,7 +250,7 @@ describe('setElementStyles', () => {
   });
 
   it('should remove empty styles on element with renderer', () => {
-    const renderer = { removeStyle: jest.fn() } as {} as Renderer2;
+    const renderer = { removeStyle: jest.fn() as Renderer2['removeStyle'] } as Renderer2;
     const styles = { foo: '', bar: '' };
     const element = {} as HTMLElement;
 

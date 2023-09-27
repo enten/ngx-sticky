@@ -95,7 +95,7 @@ describe('getStickedOffset', () => {
     const containerInstance = {} as NgxStickyContainer;
     const viewportHeight = 200;
     const stickedOffset = 11;
-    const stickies = [ {}, {} ] as {} as NgxSticky[];
+    const stickies: NgxSticky[] = [ {} as NgxSticky, {} as NgxSticky ];
     const container = new NgxStickyTestContainerController();
 
     container.getContainer.mockImplementation(() => containerInstance);
@@ -103,8 +103,8 @@ describe('getStickedOffset', () => {
     container.stickyEngine.getStickedOffset.mockImplementation(() => stickedOffset);
 
     container.stickies.push(
-      { getSticky: jest.fn(() => stickies[0]) } as {} as NgxStickyController,
-      { getSticky: jest.fn(() => stickies[1]) } as {} as NgxStickyController,
+      { getSticky: jest.fn(() => stickies[0]) as NgxStickyController['getSticky'] } as NgxStickyController,
+      { getSticky: jest.fn(() => stickies[1]) as NgxStickyController['getSticky'] } as NgxStickyController,
     );
 
     expect(container.getStickedOffset('top', 42)).toBe(11);
@@ -234,8 +234,8 @@ describe('updateStickies', () => {
     container.getViewportTop.mockImplementation(() => viewportTop);
 
     container.boundaries.push(
-      { beforeRefresh: jest.fn() } as {} as NgxStickyBoundaryController,
-      { beforeRefresh: jest.fn() } as {} as NgxStickyBoundaryController,
+      { beforeRefresh: jest.fn() as NgxStickyBoundaryController['beforeRefresh'] } as NgxStickyBoundaryController,
+      { beforeRefresh: jest.fn() as NgxStickyBoundaryController['beforeRefresh'] } as NgxStickyBoundaryController,
     );
 
     container.updateStickies(false);
@@ -248,7 +248,7 @@ describe('updateStickies', () => {
     const containerInstance = { top: 0 } as NgxStickyContainer;
     const viewportHeight = 20;
     const viewportTop = 50;
-    const stickies = [ {}, {} ] as {} as NgxSticky[];
+    const stickies: NgxSticky[] = [ {} as NgxSticky, {} as NgxSticky ];
     const computation = {};
     const snap = {};
     const container = new NgxStickyTestContainerController();
@@ -260,8 +260,16 @@ describe('updateStickies', () => {
     container.stickyEngine.snapSticky.mockImplementation(() => snap);
 
     container.stickies.push(
-      { beforeRefresh: jest.fn(), getSticky: () => stickies[0], refresh: jest.fn() } as {} as NgxStickyController,
-      { beforeRefresh: jest.fn(), getSticky: () => stickies[1], refresh: jest.fn() } as {} as NgxStickyController,
+      {
+        beforeRefresh: jest.fn() as NgxStickyController['beforeRefresh'],
+        getSticky: () => stickies[0],
+        refresh: jest.fn() as NgxStickyController['refresh'],
+      } as NgxStickyController,
+      {
+        beforeRefresh: jest.fn() as NgxStickyController['beforeRefresh'],
+        getSticky: () => stickies[1],
+        refresh: jest.fn() as NgxStickyController['refresh'],
+      } as NgxStickyController,
     );
 
     container.updateStickies(false);
@@ -294,8 +302,8 @@ describe('updateStickies', () => {
     const containerInstance = { top: 0 } as NgxStickyContainer;
     const viewportHeight = 20;
     const viewportTop = 50;
-    const stickies = [ {}, {} ] as {} as NgxSticky[];
-    const intersections = [ {}, {} ] as {} as NgxIntersection[];
+    const stickies: NgxSticky[] = [ {} as NgxSticky, {} as NgxSticky ];
+    const intersections: NgxIntersection[] = [ {} as NgxIntersection, {} as NgxIntersection ];
     const computation = {};
     const snap = {};
     const container = new NgxStickyTestContainerController();
@@ -309,21 +317,29 @@ describe('updateStickies', () => {
     container.stickyEngine.snapSticky.mockImplementation(() => snap);
 
     container.stickies.push(
-      { beforeRefresh: jest.fn(), getSticky: () => stickies[0], refresh: jest.fn() } as {} as NgxStickyController,
-      { beforeRefresh: jest.fn(), getSticky: () => stickies[1], refresh: jest.fn() } as {} as NgxStickyController,
+      {
+        beforeRefresh: jest.fn() as NgxStickyController['beforeRefresh'],
+        getSticky: () => stickies[0],
+        refresh: jest.fn() as NgxStickyController['refresh'],
+      } as NgxStickyController,
+      {
+        beforeRefresh: jest.fn() as NgxStickyController['beforeRefresh'],
+        getSticky: () => stickies[1],
+        refresh: jest.fn() as NgxStickyController['refresh'],
+      } as NgxStickyController,
     );
 
     container.intersections.push(
       {
-        beforeRefresh: jest.fn(),
+        beforeRefresh: jest.fn() as NgxIntersectionController['beforeRefresh'],
         getIntersection: () => intersections[0],
-        refresh: jest.fn(),
-      } as {} as NgxIntersectionController,
+        refresh: jest.fn() as NgxIntersectionController['refresh'],
+      } as NgxIntersectionController,
       {
-        beforeRefresh: jest.fn(),
+        beforeRefresh: jest.fn() as NgxIntersectionController['beforeRefresh'],
         getIntersection: () => intersections[1],
-        refresh: jest.fn(),
-      } as {} as NgxIntersectionController,
+        refresh: jest.fn() as NgxIntersectionController['refresh'],
+      } as NgxIntersectionController,
     );
 
     container.updateStickies(false);

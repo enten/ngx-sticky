@@ -15,7 +15,7 @@ beforeEach(() => {
 
 describe('stickySpotHeight', () => {
   it('should returns spot height', () => {
-    stickySpot.stickySpotHeight = '10' as any;
+    stickySpot.stickySpotHeight = '10' as unknown as number;
 
     expect(stickySpot.stickySpotHeight).toBe(10);
   });

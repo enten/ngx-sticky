@@ -3,7 +3,9 @@ import { NgxStickyContainerController } from '../../src/lib/sticky.types';
 
 
 class NgxStickyTestBoundaryController extends NgxStickyBaseBoundaryController {
-  container = { updateStickies: jest.fn() } as {} as NgxStickyContainerController;
+  container = {
+    updateStickies: jest.fn() as NgxStickyContainerController['updateStickies'],
+  } as NgxStickyContainerController;
   beforeRefresh = jest.fn();
   getBoundary = jest.fn();
 }

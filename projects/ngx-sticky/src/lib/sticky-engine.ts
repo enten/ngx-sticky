@@ -321,7 +321,7 @@ export class NgxStickyEngine {
           computation.offsetSticked += _stickyComputed.height;
         }
       }
-      // (computation as any)._state = _stickyComputedState;
+      // (computation as { _state: NgxStickyState })._state = _stickyComputedState;
     }
 
     computation.state = _stickyComputedState;
