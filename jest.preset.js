@@ -12,7 +12,13 @@ module.exports = {
   ],
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.(ts|js|mjs|html|svg)$': 'jest-preset-angular',
+    '^.+\\.(ts|js|mjs|html|svg)$': [
+      'jest-preset-angular',
+      {
+        tsconfig: '<rootDir>/tsconfig.spec.json',
+        stringifyContentPathRegex: '\\.(html|svg)$',
+      },
+    ],
   },
   transformIgnorePatterns: [
     'node_modules/(?!.*\\.mjs$)',
