@@ -72,13 +72,13 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
    * Defines offset bottom inside the sticky container.
    */
   @Input()
-  stickyOffsetBottom: (element: HTMLElement) => number;
+  stickyOffsetBottom: number;
 
   /**
    * Defines offset top inside the sticky container.
    */
   @Input()
-  stickyOffsetTop: (element: HTMLElement) => number;
+  stickyOffsetTop: number;
 
   /**
    * Enable/disable sticky stack inside container.
