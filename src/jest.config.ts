@@ -4,12 +4,6 @@ export default <Config>{
   displayName: 'ngx-sticky-app',
   preset: '../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-      stringifyContentPathRegex: '\\.(html|svg)$',
-    },
-  },
   testMatch: [
     '**/?(*_)+(spec|test).+(ts|js)?(x)',
   ],
