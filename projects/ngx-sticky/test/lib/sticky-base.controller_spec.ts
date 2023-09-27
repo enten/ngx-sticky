@@ -3,15 +3,17 @@ import { NgxStickyContainerController } from '../../src/lib/sticky.types';
 
 
 class NgxStickyTestController extends NgxStickyBaseController {
-  container = { updateStickies: jest.fn() } as {} as NgxStickyContainerController;
-  boundary = null;
-  disabled = false;
-  state = null;
-  beforeRefresh = jest.fn();
-  disableSticky = jest.fn();
-  enableSticky = jest.fn();
-  getSticky = jest.fn();
-  refresh = jest.fn();
+  override container = {
+    updateStickies: jest.fn() as NgxStickyContainerController['updateStickies'],
+  } as NgxStickyContainerController;
+  override boundary = null!;
+  override disabled = false;
+  override state = null!;
+  override beforeRefresh = jest.fn();
+  override disableSticky = jest.fn();
+  override enableSticky = jest.fn();
+  override getSticky = jest.fn();
+  override refresh = jest.fn();
 }
 
 

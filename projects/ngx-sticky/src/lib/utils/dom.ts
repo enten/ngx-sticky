@@ -224,21 +224,21 @@ export function isElementScrollableY(win: Window, element: HTMLElement): boolean
 export function setElementStyles(
   renderer: Renderer2,
   element: HTMLElement,
-  styles: any,
+  styles: Partial<Record<keyof CSSStyleDeclaration, string>>,
 ): void {
   if (!element || !styles) {
     return;
   }
 
-  const propKeys = Object.keys(styles);
+  const propKeys = Object.keys(styles) as (keyof CSSStyleDeclaration)[];
 
   for (const prop of propKeys) {
     const value = styles[prop];
 
     if (value) {
-      renderer.setStyle(element, prop, value);
+      renderer.setStyle(element, prop as string, value);
     } else {
-      renderer.removeStyle(element, prop);
+      renderer.removeStyle(element, prop as string);
     }
   }
 }

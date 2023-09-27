@@ -39,8 +39,11 @@ describe('fromImageEvents', () => {
   });
 
   it('should add event listener for "load" and "error" events on all images under given element', () => {
-    const images = [ { tagName: 'IMG' }, { tagName: 'IMG' } ];
-    const element = { tagName: 'P', querySelectorAll: jest.fn(() => images) };
+    const images = [ { tagName: 'IMG' } as HTMLImageElement, { tagName: 'IMG' } as HTMLImageElement ];
+    const element = {
+      tagName: 'P',
+      querySelectorAll: jest.fn(() => (images as unknown as NodeListOf<HTMLImageElement>)) as HTMLParagraphElement['querySelectorAll'],
+    } as HTMLParagraphElement;
 
     fromImageEvents(element);
 
