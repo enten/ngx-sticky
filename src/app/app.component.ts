@@ -46,7 +46,10 @@ export class AppComponent implements OnDestroy, OnInit  {
 
     this._smallBreakpointSubscription = smallBreakpoint$.subscribe(mqlEvent => {
       this._isSmallScreen = !mqlEvent.matches;
+      this.changeDetectorRef.markForCheck();
     });
+
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy(): void {
