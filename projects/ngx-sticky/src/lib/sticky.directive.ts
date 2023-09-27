@@ -45,7 +45,7 @@ import { fromImageEvents } from './utils/from-image-events';
 /**
  * Interface for a sticky style.
  */
-export interface NgxStickyElementStyle {
+export interface NgxStickyElementStyle extends Partial<Record<keyof CSSStyleDeclaration, string>> {
   // [prop: string]: string;
   width: string;
   position: string;
@@ -64,7 +64,7 @@ export interface NgxStickyElementStyle {
 /**
  * Interface for a sticky ghost style.
  */
-export interface NgxStickyGhostStyle {
+export interface NgxStickyGhostStyle extends Partial<Record<keyof CSSStyleDeclaration, string>> {
   // [prop: string]: string;
   width: string;
   position: string;

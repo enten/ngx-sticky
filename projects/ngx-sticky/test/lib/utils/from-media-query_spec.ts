@@ -19,10 +19,10 @@ describe('fromMediaQuery', () => {
   });
 
   it('should create observable with media query list', () => {
-    const addListener = jest.fn();
-    const removeListener = jest.fn();
-    const matchMedia = jest.fn(() => ({ matches: true, addListener, removeListener }));
-    const win = { matchMedia } as {} as Window;
+    const addListener = jest.fn() as MediaQueryList['addListener'];
+    const removeListener = jest.fn() as MediaQueryList['removeListener'];
+    const matchMedia = jest.fn(() => ({ matches: true, addListener, removeListener } as MediaQueryList)) as Window['matchMedia'];
+    const win = { matchMedia } as Window;
     const matchMediaListener = jest.fn();
 
     const mql$ = fromMediaQuery(win, 'screen');

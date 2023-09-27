@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { Subject, Subscription } from 'rxjs';
 
 import { NgxStickyRootContainerController } from '../../src/lib/sticky-root-container.controller';
-import { NgxStickyDirective, NgxStickyElementStyle, NgxStickyGhostStyle } from '../../src/lib/sticky.directive';
+import { NgxStickyConfig, NgxStickyDirective, NgxStickyElementStyle, NgxStickyGhostStyle } from '../../src/lib/sticky.directive';
 import {
   NgxSticky,
   NgxStickyBoundaryController,
@@ -68,9 +68,9 @@ const setup = (overrides: Record<string, any> = {}) => {
   ngZone = 'ngZone' in overrides
     ? overrides['ngZone']
     : {
-      run: jest.fn(),
-      runOutsideAngular: jest.fn(),
-    } as {} as NgZone;
+      run: jest.fn() as NgZone['run'],
+      runOutsideAngular: jest.fn() as NgZone['runOutsideAngular'],
+    } as NgZone;
   win = 'win' in overrides
     ? overrides['win']
     : null;
@@ -390,7 +390,7 @@ describe('_computeSticky', () => {
         offsetWidth: 10,
       } as HTMLElement,
       spotHeight: 11,
-    });
+    } as NgxStickyConfig);
 
     expect(sticky._computeSticky()).toEqual({
       disabled: false,
@@ -433,9 +433,9 @@ describe('_destroyMonitoring', () => {
   it('shoud unsubscribe monitoring', () => {
     setup();
 
-    const unsubscribe = jest.fn();
+    const unsubscribe = jest.fn() as Subscription['unsubscribe'];
 
-    sticky._monitoring = { unsubscribe } as {} as Subscription;
+    sticky._monitoring = { unsubscribe } as Subscription;
 
     sticky._destroyMonitoring();
 
@@ -1034,7 +1034,7 @@ describe('_showStickyGhost', () => {
     setup();
 
     const spacer = { style: {} } as HTMLElement;
-    const spacerGenerated = { remove: jest.fn() } as {} as HTMLElement;
+    const spacerGenerated = { remove: jest.fn() as HTMLElement['remove'] } as HTMLElement;
 
     sticky._spacerGenerated = spacerGenerated;
     sticky.config$.nextKeyValue('spacer', spacer);

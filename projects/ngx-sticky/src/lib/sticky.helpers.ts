@@ -35,10 +35,10 @@ export function getStuckedPositionTop(computation: NgxStickyComputation): number
 }
 
 
-export function isStickyPositionBottom(position: NgxStickyPosition) {
+export function isStickyPositionBottom(position: NgxStickyPosition): position is 'bottom' {
   return position === 'bottom';
 }
 
-export function isStickyDirectionDown(direction: NgxStickyDirection) {
+export function isStickyDirectionDown(direction: NgxStickyDirection): direction is 'down' {
   return direction !== 'up';
 }

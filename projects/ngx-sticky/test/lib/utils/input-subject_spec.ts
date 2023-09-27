@@ -39,7 +39,7 @@ describe('InputSubject', () => {
       input.subscribe(onValueChange);
 
       input.next(0);
-      input.next('42' as any);
+      input.next('42' as unknown as number);
       input.next(42);
 
       expect(onValueChange).toBeCalledTimes(1);
@@ -52,7 +52,7 @@ describe('InputSubject', () => {
       input.subscribe(onValueChange);
 
       input.next(0);
-      input.next('42' as any);
+      input.next('42' as unknown as number);
       input.next(1, { skipCoercion: true });
 
       expect(onValueChange).toBeCalledTimes(2);
