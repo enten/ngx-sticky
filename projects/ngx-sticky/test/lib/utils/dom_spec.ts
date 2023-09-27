@@ -102,14 +102,14 @@ describe('getElementRelativeRect', () => {
       offsetParent: {
         offsetTop: 20,
         offsetLeft: 10,
-        styles: { position: 'absolute' },
+        style: { position: 'absolute' },
         offsetParent: {
           offsetTop: 20,
           offsetLeft: 10,
           offsetParent: {
             offsetTop: 20,
             offsetLeft: 10,
-            styles: { position: 'relative'},
+            style: { position: 'relative'},
           },
         },
       },
@@ -118,8 +118,6 @@ describe('getElementRelativeRect', () => {
       height: 5,
       top: 40,
       left: 20,
-      // top: 80,
-      // left: 40,
     });
   });
 });
