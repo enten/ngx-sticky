@@ -75,7 +75,7 @@
       <h3>Sticky inside boundary</h3>
       <div class="sidepanes">
         <div ngx-sticky-boundary class="controls">
-          <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span><span class="html-attr">stickyDisabled</span><span class="html-sign">=&quot;</span><input type="checkbox" [value]="exampleStickyOutsideBoundary.disabled" (change)="exampleStickyOutsideBoundary.config$.nextKeyValue('disabled', $event.target.checked)"><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
+          <pre ngx-sticky [stickyDisabled]="_isSmallScreen" data-header="html" class="code"><code><span class="html-tag">&lt;p</span> <span class="html-attr">ngx-sticky</span> <span class="html-attr">stickyDisabled</span><span class="html-sign">=&quot;</span><input type="checkbox" [value]="exampleStickyOutsideBoundary.disabled" (change)="exampleStickyOutsideBoundary.config$.nextKeyValue('disabled', $event.target.checked)"><span class="html-sign">&quot;</span><span class="html-tag">&gt;</span>
   I am sticky!
 <span class="html-tag">&lt;/p&gt;</span>
 
@@ -803,7 +803,7 @@
   </div>
 </section>
 
-<footer class="footer">
+<footer class="footer" ngx-sticky stickyDirection="up" stickyPosition="bottom">
   <p class="container">made with ☕ by <a href="http://enten.fr">enten</a></p>
 </footer>
   

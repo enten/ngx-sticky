@@ -6,11 +6,15 @@
   padding: 2rem;
 }
 
+.navigation,
+.footer {
+  z-index: 5;
+}
+
 .navigation {
-  background: #cfd8dc;
+  background: rgba(207, 216, 220, 0.5)/*#cfd8dc*/;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
   font-size: 2.4rem;
-  z-index: 5;
 
   h1 {
     display: inline;
@@ -31,7 +35,7 @@
 }
 
 .footer {
-  background: #9da6a9;
+  background: rgba(157, 166, 169, 0.80)/*#9da6a9*/;
   color: #eceff1;
 }
 
