@@ -13,8 +13,8 @@ import {
   SimpleChanges,
   forwardRef,
 } from '@angular/core';
-import { Observable, Subject, Subscription, animationFrameScheduler, merge } from 'rxjs';
-import { distinctUntilChanged, mapTo, share, takeUntil, throttleTime } from 'rxjs/operators';
+import { Observable, Subject, Subscription, animationFrameScheduler, asyncScheduler } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, takeUntil, throttleTime } from 'rxjs/operators';
 
 import { NgxStickyBaseContainerDirective } from './sticky-base-container.directive';
 import { NgxStickyContainerDirective } from './sticky-container.directive';
@@ -232,12 +232,10 @@ export class NgxInViewportDirective implements NgxIntersectionController, AfterV
    * Create intersection monitoring observable.
    */
   _createMonitoringObservable(): Observable<boolean> {
-    return merge(
-      this.config$,
-      animationFrameScheduler,
-    ).pipe(
-      // throttleTime(0, animationFrameScheduler),
-      mapTo(false),
+    return this.config$.pipe(
+      debounceTime(0, asyncScheduler),
+      map(() => false),
+      takeUntil(this._destroyed$),
     );
   }
 
@@ -260,25 +258,19 @@ export class NgxInViewportDirective implements NgxIntersectionController, AfterV
     }
 
     this.ngZone.runOutsideAngular(() => {
-      const handleRefreshSubscription = this._refresh$
-        .pipe(
-          takeUntil(this._destroyed$),
-          distinctUntilChanged(),
-          throttleTime(0, animationFrameScheduler, { leading: true, trailing: true }),
-          share(),
-        )
-        .subscribe(computation => {
-          this._refreshIntersection(computation);
-        });
+      const handleRefreshSubscription = this._refresh$.pipe(
+        distinctUntilChanged(),
+        throttleTime(0, animationFrameScheduler, { leading: true, trailing: true }),
+        takeUntil(this._destroyed$),
+      ).subscribe(computation => {
+        this._refreshIntersection(computation);
+      });
 
-      const triggerUpdateSubscription = this._createMonitoringObservable()
-        .pipe(
-          takeUntil(this._destroyed$),
-          share(),
-        )
-        .subscribe(fastUpdate => {
-          this.update(fastUpdate);
-        });
+      const triggerUpdateSubscription = this._createMonitoringObservable().pipe(
+        takeUntil(this._destroyed$),
+      ).subscribe(fastUpdate => {
+        this.update(fastUpdate);
+      });
 
       this._monitoring = new Subscription();
       this._monitoring.add(handleRefreshSubscription);

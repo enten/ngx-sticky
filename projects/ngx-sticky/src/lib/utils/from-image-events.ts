@@ -1,5 +1,5 @@
 import { Observable, fromEvent, merge, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 
 /**
@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
  * @param element Element
  * @returns Observable on image events
  */
-export function fromImageEvents(element: HTMLElement): Observable<{ event: Event; target: HTMLImageElement }> {
+export function fromImageEvents(element: HTMLElement): Observable<{ event: Event; target: HTMLImageElement; }> {
   if (!element) {
     return of();
   }
@@ -16,8 +16,8 @@ export function fromImageEvents(element: HTMLElement): Observable<{ event: Event
   const images$: Observable<{ event: Event; target: HTMLImageElement }>[] = [];
 
   const addImage = (target: HTMLImageElement) => images$.push(
-    fromEvent(target, 'load').pipe(map(event => ({ event, target }))),
-    fromEvent(target, 'error').pipe(map(event => ({ event, target }))),
+    fromEvent(target, 'load').pipe(map(event => ({ event, target })), take(1)),
+    fromEvent(target, 'error').pipe(map(event => ({ event, target })), take(1)),
   );
 
   // if (element instanceof HTMLImageElement) {

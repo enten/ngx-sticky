@@ -17,8 +17,8 @@ import {
   forwardRef,
   isDevMode,
 } from '@angular/core';
-import { Observable, Subject, Subscription, animationFrameScheduler, merge } from 'rxjs';
-import { distinctUntilChanged, mapTo, share, takeUntil, throttleTime } from 'rxjs/operators';
+import { Observable, Subject, Subscription, animationFrameScheduler, asyncScheduler, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, takeUntil, throttleTime } from 'rxjs/operators';
 
 import { NgxStickyBaseController } from './sticky-base.controller';
 import { NgxStickyBoundaryDirective } from './sticky-boundary.directive';
@@ -466,10 +466,10 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
       this.config$,
       fromImageEvents(this.elementRef.nativeElement),
       fromImageEvents(this.config.spot!),
-      animationFrameScheduler,
     ).pipe(
-      // throttleTime(0, animationFrameScheduler),
-      mapTo(false),
+      debounceTime(0, asyncScheduler),
+      map(() => false),
+      takeUntil(this._destroyed$),
     );
   }
 
@@ -727,25 +727,19 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
     }
 
     this.ngZone.runOutsideAngular(() => {
-      const handleRefreshSubscription = this._refresh$
-        .pipe(
-          takeUntil(this._destroyed$),
-          distinctUntilChanged(),
-          throttleTime(0, animationFrameScheduler, { leading: true, trailing: true }),
-          share(),
-        )
-        .subscribe(computation => {
-          this._refreshSticky(computation);
-        });
+      const handleRefreshSubscription = this._refresh$.pipe(
+        distinctUntilChanged(),
+        throttleTime(0, animationFrameScheduler, { leading: true, trailing: true }),
+        takeUntil(this._destroyed$),
+      ).subscribe(computation => {
+        this._refreshSticky(computation);
+      });
 
-      const triggerUpdateSubscription = this._createMonitoringObservable()
-        .pipe(
-          takeUntil(this._destroyed$),
-          share(),
-        )
-        .subscribe(fastUpdate => {
-          this.update(fastUpdate);
-        });
+      const triggerUpdateSubscription = this._createMonitoringObservable().pipe(
+        takeUntil(this._destroyed$),
+      ).subscribe(fastUpdate => {
+        this.update(fastUpdate);
+      });
 
       this._monitoring = new Subscription();
       this._monitoring.add(handleRefreshSubscription);
