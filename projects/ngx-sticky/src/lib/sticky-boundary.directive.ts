@@ -11,8 +11,8 @@ import {
   SimpleChanges,
   forwardRef,
 } from '@angular/core';
-import { Observable, Subject, Subscription, animationFrameScheduler, merge } from 'rxjs';
-import { mapTo, share, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, Subscription, animationFrameScheduler } from 'rxjs';
+import { debounceTime, map, takeUntil } from 'rxjs/operators';
 
 import { NgxStickyBaseBoundaryController } from './sticky-base-boundary.controller';
 import { NgxStickyContainerDirective } from './sticky-container.directive';
@@ -149,12 +149,10 @@ export class NgxStickyBoundaryDirective extends NgxStickyBaseBoundaryController 
   }
 
   _createMonitoringObservable(): Observable<boolean> {
-    return merge(
-      this.config$,
-      animationFrameScheduler,
-    ).pipe(
-      // throttleTime(0, animationFrameScheduler),
-      mapTo(false),
+    return this.config$.pipe(
+      debounceTime(0, animationFrameScheduler),
+      map(() => false),
+      takeUntil(this._destroyed$),
     );
   }
 
@@ -171,14 +169,11 @@ export class NgxStickyBoundaryDirective extends NgxStickyBaseBoundaryController 
     }
 
     this.ngZone.runOutsideAngular(() => {
-      this._monitoring = this._createMonitoringObservable()
-        .pipe(
-          takeUntil(this._destroyed$),
-          share(),
-        )
-        .subscribe(fastUpdate => {
-          this.updateStickies(fastUpdate);
-        });
+      this._monitoring = this._createMonitoringObservable().pipe(
+        takeUntil(this._destroyed$),
+      ).subscribe(fastUpdate => {
+        this.updateStickies(fastUpdate);
+      });
     });
   }
 }

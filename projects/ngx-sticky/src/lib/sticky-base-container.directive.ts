@@ -1,6 +1,6 @@
 import { Directive, Input, NgZone, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Observable, Subject, Subscription, animationFrameScheduler, fromEvent, merge, of } from 'rxjs';
-import { debounceTime, mapTo, share, takeUntil, throttleTime } from 'rxjs/operators';
+import { debounceTime, filter, map, startWith, switchMap, takeUntil, throttleTime } from 'rxjs/operators';
 
 import { NgxStickyBaseContainerController } from './sticky-base-container.controller';
 import { NgxStickyEngine } from './sticky-engine';
@@ -337,39 +337,35 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
       return of();
     }
 
-    return merge(
-      this._createMonitoringInputsObservable(),
-      this._createMonitoringScrollObservable(),
-      this._createMonitoringWindowObservable(),
-      this._updateStickies$,
-      animationFrameScheduler,
-    )/*.pipe(throttleTime(0, animationFrameScheduler))*/;
-  }
-
-  _createMonitoringInputsObservable(): Observable<boolean> {
-    return this.config$.pipe(
-      debounceTime(0),
-      // throttleTime(0, animationFrameScheduler),
-      mapTo(false),
+    const updateStickiesFast$ = merge(
+      this._updateStickies$.pipe(filter(fastUpdate => fastUpdate)),
+      fromEvent(this.element || this._win, 'scroll', { passive: true }),
+    ).pipe(
+      throttleTime(0, animationFrameScheduler, { leading: true, trailing: true }),
     );
-  }
 
-  _createMonitoringScrollObservable(): Observable<boolean> {
-    return fromEvent(this.element || this._win, 'scroll', { passive: true })
-      .pipe(
-        throttleTime(0, animationFrameScheduler),
-        mapTo(true),
-      );
-  }
-
-  _createMonitoringWindowObservable(): Observable<boolean> {
-    return merge(
+    const updateStickiesFull$ = merge(
+      this.config$,
+      this._updateStickies$.pipe(filter(fastUpdate => !fastUpdate)),
+      fromEvent(this._win.document, 'DOMContentLoaded', { passive: true }),
       fromEvent(this._win, 'load', { passive: true }),
+      fromEvent(this._win, 'pageshow', { passive: true }),
+      // fromEvent(this._win, 'visibilitychange', { passive: true }),
       fromEvent(this._win, 'orientationchange', { passive: true }),
-      fromEvent(this._win, 'resize', { passive: true }),
+      fromEvent(this._win, 'resize', { capture: true, passive: true }),
     ).pipe(
       debounceTime(0, animationFrameScheduler),
-      mapTo(false),
+    );
+
+    return updateStickiesFull$.pipe(
+      takeUntil(this.destroyed$),
+      switchMap(() => {
+        return updateStickiesFast$.pipe(
+          map(() => true),
+          startWith(false),
+          takeUntil(this.destroyed$),
+        );
+      }),
     );
   }
 
@@ -386,17 +382,15 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     }
 
     this.ngZone.runOutsideAngular(() => {
-      this._monitoring = this._createMonitoringObservable()
-        .pipe(
-          takeUntil(this.destroyed$),
-          // throttleTime(0, animationFrameScheduler),
-          share(),
-        )
-        .subscribe(fastUpdate => {
-          this._updateStickies(fastUpdate);
-        });
+      this._monitoring = this._createMonitoringObservable().pipe(
+        takeUntil(this.destroyed$),
+      ).subscribe(fastUpdate => {
+        this._updateStickies(fastUpdate);
+      });
 
-      // fromMediaQuery(this._win, 'print').subscribe(mqlEvent => {
+      // fromMediaQuery(this._win, 'print').pipe(
+      //   takeUntil(this.destroyed$),
+      // ).subscribe(mqlEvent => {
       //   if (mqlEvent.matches) {
       //     this.disableStickies();
       //   } else {
