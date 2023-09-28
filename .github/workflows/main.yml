@@ -2,9 +2,13 @@ name: CI-CD
 
 on:
   push:
-    branches: [ master, next ]
+    branches:
+      - main
+      - next
+      - ng*
   pull_request:
-    branches: [ master ]
+    branches:
+      - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -15,7 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version:
+          - 16.x
 
     steps:
       - uses: actions/checkout@v2
