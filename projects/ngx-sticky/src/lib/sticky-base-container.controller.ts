@@ -150,6 +150,9 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
     //   fastUpdate = false;
     // }
 
+    // get container viewport top before any update
+    const containerViewportTop = this.getViewportTop();
+
     if (!fastUpdate) {
       this.beforeRefresh(fastUpdate);
 
@@ -174,12 +177,12 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
 
     //   // legacy code
     //   const viewportHeight = this.getViewportHeight() - this.stickyOffsetTop - this.stickyOffsetBottom;
-    //   const viewportTop = this.getViewportTop() + this.getContainer().top + this.stickyOffsetTop;
+    //   const viewportTop = containerViewportTop + this.getContainer().top + this.stickyOffsetTop;
 
     const container = this.getContainer();
     const viewportHeight = this.getViewportHeight();
     // compute absolute viewport top
-    const viewportTop = this.getViewportTop() + this.getContainer().top;
+    const viewportTop = containerViewportTop + this.getContainer().top;
     let stickies!: NgxSticky[];
 
     // refresh stickies
@@ -240,6 +243,11 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
       }
 
       intersectionController.refresh(intersectionComputation);
+    }
+
+    if (!fastUpdate) {
+      // restore container viewport top after full update
+      this.scrollToTop(containerViewportTop, { excludeStickies: true });
     }
   }
 

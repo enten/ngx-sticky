@@ -1,6 +1,6 @@
 import { NgZone } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Subject, Subscription, asyncScheduler } from 'rxjs';
+import { Subject, Subscription, animationFrameScheduler, timer } from 'rxjs';
 
 import { NgxStickyBaseContainerDirective } from '../../src/lib/sticky-base-container.directive';
 import { NgxStickyEngine } from '../../src/lib/sticky-engine';
@@ -402,178 +402,205 @@ describe('_computeContainer', () => {
 });
 
 
-// describe('_createMonitoringObservable', () => {
-//   it('should returns observable which emit monitoring events', done => {
-//     setup({
-//       win: {
-//         document: {
-//           body: { scrollHeight: 2000 },
-//           documentElement: {},
-//         },
-//       },
-//     });
-
-//     const monitoringInputs$ = new Subject<boolean>();
-//     const monitoringScroll$ = new Subject<boolean>();
-//     const monitoringWindow$ = new Subject<boolean>();
-//     const monitoringSubscriber = jest.fn();
-
-//     container._createMonitoringInputsObservable = () => monitoringInputs$;
-//     container._createMonitoringScrollObservable = () => monitoringScroll$;
-//     container._createMonitoringWindowObservable = () => monitoringWindow$;
-
-//     const monitoring$ = container._createMonitoringObservable();
-
-//     monitoring$.subscribe(monitoringSubscriber);
-
-//     monitoringInputs$.next(false);
-//     monitoringScroll$.next(true);
-//     monitoringWindow$.next(false);
-//     container._updateStickies$.next(false);
-
-//     animationFrameScheduler.schedule(() => {
-//       expect(monitoringSubscriber).toBeCalledTimes(4);
-//       expect(monitoringSubscriber).toHaveBeenNthCalledWith(1, false);
-//       expect(monitoringSubscriber).toHaveBeenNthCalledWith(2, true);
-//       expect(monitoringSubscriber).toHaveBeenNthCalledWith(3, false);
-//       expect(monitoringSubscriber).toHaveBeenNthCalledWith(4, false);
-//       done();
-//     });
-//   });
-// });
-
-
-describe('_createMonitoringInputsObservable', () => {
-  it('should returns observable which emit when config change', done => {
-    setup();
-
-    const monitoringSubscriber = jest.fn();
-    const monitoringInputs$ = container._createMonitoringInputsObservable();
-
-    monitoringInputs$.subscribe(monitoringSubscriber);
-
-    container.config$.nextKeyValue('unstacked', !container.config.unstacked);
-
-    asyncScheduler.schedule(() => {
-      expect(monitoringSubscriber).toBeCalledWith(false);
-      done();
-    });
+describe('_createMonitoringObservable', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
-});
 
-
-describe('_createMonitoringScrollObservable', () => {
-  it('should returns observable which emit when window scroll', done => {
-    const addEventListener = jest.fn();
-    const removeEventListener = jest.fn();
-
+  it('should returns observable which emit when config change', async () => {
     setup({
       win: {
         document: {
           body: { scrollHeight: 2000 },
           documentElement: {},
+          addEventListener: jest.fn(),
+          removeEventListener: jest.fn(),
         },
-        addEventListener,
-        removeEventListener,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
       },
     });
 
     const monitoringSubscriber = jest.fn();
-    const monitoringInputs$ = container._createMonitoringScrollObservable();
+    const monitoringInputs$ = container._createMonitoringObservable();
 
     monitoringInputs$.subscribe(monitoringSubscriber);
 
-    expect(addEventListener).toBeCalledTimes(1);
+    container.config$.nextKeyValue('unstacked', !container.config.unstacked);
+    await timer(0, animationFrameScheduler).toPromise();
 
-    const scrollHandler = addEventListener.mock.calls[0][1];
-
-    expect(addEventListener).toBeCalledWith('scroll', scrollHandler, { passive: true });
-
-    scrollHandler();
-    scrollHandler();
-    scrollHandler();
-
-    asyncScheduler.schedule(() => {
-      expect(monitoringSubscriber).toBeCalledTimes(1);
-      expect(monitoringSubscriber).toBeCalledWith(true);
-      done();
-    });
+    expect(monitoringSubscriber).toBeCalledWith(false);
   });
 
-  it('should returns observable which emit when container element scroll', done => {
+  it('should returns observable which emit when window fires events', async () => {
+    const winAddEventListener = jest.fn();
+    const winRemoveEventListener = jest.fn();
+    const doc = {
+      body: { scrollHeight: 2000 },
+      documentElement: {},
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    };
+
+    setup({
+      win: {
+        document: doc,
+        addEventListener: winAddEventListener,
+        removeEventListener: winRemoveEventListener,
+      },
+    });
+
+    const monitoringSubscriber = jest.fn();
+    const monitoringInputs$ = container._createMonitoringObservable();
+
+    monitoringInputs$.subscribe(monitoringSubscriber);
+
+    expect(monitoringSubscriber).not.toBeCalled();
+    expect(doc.addEventListener).toBeCalledTimes(1);
+    expect(doc.addEventListener).toBeCalledWith('DOMContentLoaded', expect.any(Function), { passive: true });
+    expect(winAddEventListener).toBeCalledTimes(4);
+    expect(winAddEventListener).toHaveBeenNthCalledWith(1, 'load', expect.any(Function), { passive: true });
+    expect(winAddEventListener).toHaveBeenNthCalledWith(2, 'pageshow', expect.any(Function), { passive: true });
+    expect(winAddEventListener).toHaveBeenNthCalledWith(3, 'orientationchange', expect.any(Function), { passive: true });
+    expect(winAddEventListener).toHaveBeenNthCalledWith(4, 'resize', expect.any(Function), { capture: true, passive: true });
+    expect(winAddEventListener).not.toBeCalledWith('scroll', expect.any(Function), { passive: true });
+
+    const loadHandler = winAddEventListener.mock.calls[0][1];
+    loadHandler();
+    await timer(0, animationFrameScheduler).toPromise();
+    expect(monitoringSubscriber).toBeCalledTimes(1);
+    expect(monitoringSubscriber).not.toBeCalledWith(true);
+
+    const pageshowHandler = winAddEventListener.mock.calls[1][1];
+    pageshowHandler();
+    await timer(0, animationFrameScheduler).toPromise();
+    expect(monitoringSubscriber).toBeCalledTimes(2);
+    expect(monitoringSubscriber).not.toBeCalledWith(true);
+
+    const orientationchangeHandler = winAddEventListener.mock.calls[2][1];
+    orientationchangeHandler();
+    await timer(0, animationFrameScheduler).toPromise();
+    expect(monitoringSubscriber).toBeCalledTimes(3);
+    expect(monitoringSubscriber).not.toBeCalledWith(true);
+
+    const resizeHandler = winAddEventListener.mock.calls[3][1];
+    resizeHandler();
+    await timer(0, animationFrameScheduler).toPromise();
+    expect(monitoringSubscriber).toBeCalledTimes(4);
+    expect(monitoringSubscriber).toBeCalledWith(false);
+    expect(monitoringSubscriber).not.toBeCalledWith(true);
+
+    expect(winAddEventListener).toBeCalledWith('scroll', expect.any(Function), { passive: true });
+    const scrollHandler = winAddEventListener.mock.lastCall[1];
+    scrollHandler();
+    await timer(0, animationFrameScheduler).toPromise();
+    expect(monitoringSubscriber).toBeCalledTimes(5);
+    expect(monitoringSubscriber).toBeCalledWith(true);
+  });
+
+  it('should returns observable which emit when window scroll', async () => {
+    const winAddEventListener = jest.fn();
+    const winRemoveEventListener = jest.fn();
+    const doc = {
+      body: { scrollHeight: 2000 },
+      documentElement: {},
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    };
+
+    setup({
+      win: {
+        document: doc,
+        addEventListener: winAddEventListener,
+        removeEventListener: winRemoveEventListener,
+      },
+    });
+
+    const monitoringSubscriber = jest.fn();
+    const monitoringInputs$ = container._createMonitoringObservable();
+
+    monitoringInputs$.subscribe(monitoringSubscriber);
+
+    expect(winAddEventListener).not.toBeCalledWith('scroll', expect.anything(), { passive: true });
+    expect(doc.addEventListener.mock.calls).toHaveProperty([0, 0], 'DOMContentLoaded');
+    const domContentLoadedHandler = doc.addEventListener.mock.calls[0][1];
+    expect(doc.addEventListener).toBeCalledWith('DOMContentLoaded', domContentLoadedHandler, { passive: true });
+
+    domContentLoadedHandler();
+    await timer(0, animationFrameScheduler).toPromise();
+
+    expect(monitoringSubscriber).toBeCalledTimes(1);
+    expect(monitoringSubscriber).toBeCalledWith(false);
+
+    expect(winAddEventListener).toBeCalled();
+    expect(winAddEventListener.mock.calls).toHaveProperty([4, 0], 'scroll');
+    const scrollHandler = winAddEventListener.mock.calls[4][1];
+    expect(winAddEventListener).toBeCalledWith('scroll', scrollHandler, { passive: true });
+
+    scrollHandler();
+    await timer(0, animationFrameScheduler).toPromise();
+    scrollHandler();
+    await timer(0, animationFrameScheduler).toPromise();
+    scrollHandler();
+    await timer(0, animationFrameScheduler).toPromise();
+
+    expect(monitoringSubscriber).toBeCalledTimes(4);
+    expect(monitoringSubscriber).toBeCalledWith(true);
+  });
+
+  it('should returns observable which emit when container element scroll', async () => {
+    const doc = {
+      body: { scrollHeight: 2000 },
+      documentElement: {},
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    };
     const element = {
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
     };
 
-    setup({ element });
+    setup({
+      element,
+      win: {
+        document: doc,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+      },
+    });
 
     const monitoringSubscriber = jest.fn();
-    const monitoringInputs$ = container._createMonitoringScrollObservable();
+    const monitoringInputs$ = container._createMonitoringObservable();
 
     monitoringInputs$.subscribe(monitoringSubscriber);
 
-    expect(element.addEventListener).toBeCalledTimes(1);
+    expect(element.addEventListener).not.toBeCalled();
+    expect(doc.addEventListener.mock.calls).toHaveProperty([0, 0], 'DOMContentLoaded');
+    const domContentLoadedHandler = doc.addEventListener.mock.calls[0][1];
+    expect(doc.addEventListener).toBeCalledWith('DOMContentLoaded', domContentLoadedHandler, { passive: true });
 
+    domContentLoadedHandler();
+    await timer(0, animationFrameScheduler).toPromise();
+
+    expect(monitoringSubscriber).toBeCalledTimes(1);
+    expect(monitoringSubscriber).toBeCalledWith(false);
+
+    expect(element.addEventListener).toBeCalled();
+    expect(element.addEventListener.mock.calls).toHaveProperty([0, 0], 'scroll');
     const scrollHandler = element.addEventListener.mock.calls[0][1];
-
     expect(element.addEventListener).toBeCalledWith('scroll', scrollHandler, { passive: true });
 
     scrollHandler();
+    await timer(0, animationFrameScheduler).toPromise();
     scrollHandler();
+    await timer(0, animationFrameScheduler).toPromise();
     scrollHandler();
+    await timer(0, animationFrameScheduler).toPromise();
 
-    asyncScheduler.schedule(() => {
-      expect(monitoringSubscriber).toBeCalledTimes(1);
-      expect(monitoringSubscriber).toBeCalledWith(true);
-      done();
-    });
+    expect(monitoringSubscriber).toBeCalledTimes(4);
+    expect(monitoringSubscriber).toBeCalledWith(true);
   });
 });
-
-
-// describe('_createMonitoringWindowObservable', () => {
-//   it('should returns observable which emit when window load or resize', done => {
-//     const addEventListener = jest.fn();
-//     const removeEventListener = jest.fn();
-
-//     setup({
-//       win: {
-//         document: {
-//           body: { scrollHeight: 2000 },
-//           documentElement: {},
-//         },
-//         addEventListener,
-//         removeEventListener,
-//       },
-//     });
-
-//     const monitoringSubscriber = jest.fn();
-//     const monitoringInputs$ = container._createMonitoringWindowObservable();
-
-//     monitoringInputs$.subscribe(monitoringSubscriber);
-
-//     expect(addEventListener).toBeCalledTimes(3);
-
-//     const loadHandler = addEventListener.mock.calls[0][1];
-//     const orientationchangeHandler = addEventListener.mock.calls[1][1];
-//     const resizeHandler = addEventListener.mock.calls[2][1];
-
-//     expect(addEventListener).toBeCalledWith('load', loadHandler, { passive: true });
-//     expect(addEventListener).toBeCalledWith('orientationchange', orientationchangeHandler, { passive: true });
-//     expect(addEventListener).toBeCalledWith('resize', resizeHandler, { passive: true });
-
-//     loadHandler();
-//     orientationchangeHandler();
-//     resizeHandler();
-
-//     asyncScheduler.schedule(() => {
-//       expect(monitoringSubscriber).toBeCalledTimes(1);
-//       expect(monitoringSubscriber).toBeCalledWith(false);
-//       done();
-//     });
-//   });
-// });
 
 
 describe('_destroyMonitoring', () => {
@@ -634,6 +661,9 @@ describe('_initMonitoring', () => {
     expect(container._updateStickies).not.toBeCalled();
 
     monitoring$.next(true);
+
+    expect(container._updateStickies).toBeCalledTimes(1);
+    expect(container._updateStickies).toBeCalledWith(true);
 
     container.destroyed$.next();
     container.destroyed$.complete();
