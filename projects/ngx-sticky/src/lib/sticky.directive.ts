@@ -784,10 +784,11 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
 
     const nestedStickyError = new Error('Nested sticky is not support. Sticky will not work.');
 
-    const logLevel = isDevMode() ? 'error' : 'warn';
-    const logLevelLogger = console[logLevel];
-
-    logLevelLogger(nestedStickyError);
+    if (isDevMode()) {
+      console.error(nestedStickyError);
+    } else {
+      console.warn(nestedStickyError);
+    }
 
     return true;
   }
