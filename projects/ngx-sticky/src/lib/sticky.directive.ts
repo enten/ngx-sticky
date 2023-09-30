@@ -465,7 +465,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
     return merge(
       this.config$,
       fromImageEvents(this.elementRef.nativeElement),
-      fromImageEvents(this.config.spot!),
+      ...(this.config.spot ? [fromImageEvents(this.config.spot)] : []),
       animationFrameScheduler,
     ).pipe(
       // throttleTime(0, animationFrameScheduler),

@@ -1,5 +1,4 @@
-import { Observable, fromEvent, merge, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 
 /**
@@ -8,24 +7,56 @@ import { map } from 'rxjs/operators';
  * @param element Element
  * @returns Observable on image events
  */
-export function fromImageEvents(element: HTMLElement): Observable<{ event: Event; target: HTMLImageElement }> {
-  if (!element) {
-    return of();
-  }
+export function fromImageEvents(
+  element: HTMLElement,
+  options?: AddEventListenerOptions,
+): Observable<Event & { type: 'load' | 'error'; target: HTMLImageElement; }> {
+  return new Observable(subscriber => {
+    const images: HTMLImageElement[] = [];
 
-  const images$: Observable<{ event: Event; target: HTMLImageElement }>[] = [];
+    const next = (errorOrLoadEvent: Event & { type: 'load' | 'error'; target: HTMLImageElement; }): void => {
+      removeImage(errorOrLoadEvent.target as HTMLImageElement);
+      subscriber.next(errorOrLoadEvent);
+      if (!images.length && !subscriber.closed) {
+        subscriber.complete();
+      }
+    };
 
-  const addImage = (target: HTMLImageElement) => images$.push(
-    fromEvent(target, 'load').pipe(map(event => ({ event, target }))),
-    fromEvent(target, 'error').pipe(map(event => ({ event, target }))),
-  );
+    const onload = (loadEvent: Event): void => {
+      next(loadEvent as Event & { type: 'load'; target: HTMLImageElement; });
+    };
+    const onerror = (errorEvent: Event): void => {
+      next(errorEvent as Event & { type: 'error'; target: HTMLImageElement; });
+    };
 
-  // if (element instanceof HTMLImageElement) {
-  if (element.tagName === 'IMG' || element.tagName === 'img') {
-    addImage(element as HTMLImageElement);
-  } else {
-    element.querySelectorAll('img').forEach(addImage);
-  }
+    const addImage = (image: HTMLImageElement): void => {
+      if (image.complete || images.indexOf(image) !== -1) {
+        return;
+      }
+      images.push(image);
+      image.addEventListener('load', onload, options);
+      image.addEventListener('error', onerror, options);
+    };
+    const removeImage = (image: HTMLImageElement): void => {
+      const imageIndex = images.indexOf(image);
+      if (imageIndex === -1) {
+        return;
+      }
+      images.splice(imageIndex, 1);
+      image.removeEventListener('load', onload, options);
+      image.removeEventListener('error', onerror, options);
+    };
 
-  return merge(...images$);
+    if (element.tagName === 'IMG' || element.tagName === 'img') {
+      addImage(element as HTMLImageElement);
+    } else {
+      element.querySelectorAll<HTMLImageElement>('img').forEach(addImage);
+    }
+
+    if (!images.length) {
+      subscriber.complete();
+    }
+
+    return () => [...images].forEach(removeImage);
+  });
 }
