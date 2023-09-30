@@ -1,59 +1,147 @@
-import { fromEvent, merge, of } from 'rxjs';
+import { Observer } from 'rxjs';
 
 import { fromImageEvents } from '../../../src/lib/utils/from-image-events';
 
+const mockImage = () => {
+  const listeners: {
+    type: string;
+    listener: EventListener;
+    options?: boolean | AddEventListenerOptions;
+  }[] = [];
 
-jest.mock('rxjs', () => ({
-  fromEvent: jest.fn(() => ({ pipe: jest.fn() })),
-  merge: jest.fn(() => ({ subscribe: jest.fn() })),
-  of: jest.fn(() => ({ subscribe: jest.fn() })),
-}));
-
-
-const fromEventSpy = fromEvent as {} as jest.SpyInstance;
-const mergeSpy = merge as {} as jest.SpyInstance;
-
+  return {
+    listeners,
+    image: {
+      tagName: 'IMG',
+      addEventListener: jest.fn((type, listener, options) => {
+        listeners.push({ type, listener: listener as EventListener, options });
+      }) as HTMLImageElement['addEventListener'],
+      removeEventListener: jest.fn((type, listener) => {
+        const listenerFound = listeners.find(candidate => candidate.type === type && candidate.listener === listener);
+        const listenerIndex = listenerFound ? listeners.indexOf(listenerFound) : -1;
+        if (listenerIndex !== -1) {
+          listeners.splice(listenerIndex, 1);
+        }
+      }) as HTMLImageElement['removeEventListener'],
+      querySelectorAll: jest.fn() as HTMLImageElement['querySelectorAll'],
+    } as HTMLImageElement,
+  };
+};
 
 describe('fromImageEvents', () => {
+  let observer: Observer<Event>;
+
   beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should emit nothing when element is falsy', () => {
-    fromImageEvents(undefined!);
-
-    expect(of).toBeCalledTimes(1);
-    expect(of).toBeCalledWith();
+    observer = {
+      next: jest.fn() as Observer<Event>['next'],
+      error: jest.fn() as Observer<Event>['error'],
+      complete: jest.fn() as Observer<Event>['complete'],
+    } as Observer<Event>;
   });
 
   it('should add event listener for "load" and "error" events on given image', () => {
-    const element = { tagName: 'IMG' };
+    const { image, listeners } = mockImage();
 
-    fromImageEvents(element as {} as HTMLImageElement);
+    const imageEvents$ = fromImageEvents(image);
 
-    expect(fromEventSpy).toBeCalledTimes(2);
-    expect(fromEventSpy).toHaveBeenNthCalledWith(1, element, 'load');
-    expect(fromEventSpy).toHaveBeenNthCalledWith(2, element, 'error');
-    expect(mergeSpy).toBeCalledTimes(1);
-    expect(mergeSpy.mock.calls[0].length).toBe(2);
+    expect(image.addEventListener).not.toBeCalled();
+    expect(image.removeEventListener).not.toBeCalled();
+
+    imageEvents$.subscribe(observer);
+
+    expect(observer.next).not.toBeCalled();
+    expect(observer.error).not.toBeCalled();
+    expect(observer.complete).not.toBeCalled();
+    expect(image.addEventListener).toBeCalledTimes(2);
+    expect(image.addEventListener as jest.Mock).toHaveProperty(['mock', 'calls', 0, 0], 'load');
+    expect(listeners[0]).toHaveProperty('type', 'load');
+    expect(image.addEventListener as jest.Mock).toHaveProperty(['mock', 'calls', 1, 0], 'error');
+    expect(listeners[1]).toHaveProperty('type', 'error');
+    expect(listeners).toHaveLength(2);
+    expect(image.removeEventListener).not.toBeCalled();
+
+    const fakeEventA = { target: image as EventTarget } as Event;
+    listeners[0].listener(fakeEventA);
+
+    expect(observer.next).toBeCalledWith(fakeEventA);
+    expect(observer.error).not.toBeCalled();
+    expect(observer.complete).toBeCalled();
+    expect(image.removeEventListener).toBeCalled();
   });
 
   it('should add event listener for "load" and "error" events on all images under given element', () => {
-    const images = [ { tagName: 'IMG' } as HTMLImageElement, { tagName: 'IMG' } as HTMLImageElement ];
+    const imageMockA = mockImage();
+    const imageMockB = mockImage();
+    const images: HTMLImageElement[] = [imageMockA.image, imageMockB.image];
     const element = {
       tagName: 'P',
       querySelectorAll: jest.fn(() => (images as unknown as NodeListOf<HTMLImageElement>)) as HTMLParagraphElement['querySelectorAll'],
     } as HTMLParagraphElement;
 
-    fromImageEvents(element);
+    fromImageEvents(element).subscribe(observer);
 
     expect(element.querySelectorAll).toBeCalledWith('img');
-    expect(fromEventSpy).toBeCalledTimes(4);
-    expect(fromEventSpy).toHaveBeenNthCalledWith(1, images[0], 'load');
-    expect(fromEventSpy).toHaveBeenNthCalledWith(2, images[0], 'error');
-    expect(fromEventSpy).toHaveBeenNthCalledWith(3, images[1], 'load');
-    expect(fromEventSpy).toHaveBeenNthCalledWith(4, images[1], 'error');
-    expect(mergeSpy).toBeCalledTimes(1);
-    expect(mergeSpy.mock.calls[0].length).toBe(4);
+    expect(imageMockA.image.addEventListener).toBeCalledTimes(2);
+    expect(imageMockA.image.removeEventListener).toBeCalledTimes(0);
+    expect(imageMockB.image.addEventListener).toBeCalledTimes(2);
+    expect(imageMockB.image.removeEventListener).toBeCalledTimes(0);
+
+    const fakeEventA = { target: imageMockA.image as EventTarget } as Event;
+    imageMockA.listeners[0].listener(fakeEventA);
+
+    expect(observer.next).toBeCalledWith(fakeEventA);
+    expect(observer.error).not.toBeCalled();
+    expect(observer.complete).not.toBeCalled();
+    expect(imageMockA.image.removeEventListener).toBeCalled();
+
+    const fakeEventB = { target: imageMockB.image as EventTarget } as ErrorEvent;
+    imageMockB.listeners[1].listener(fakeEventB);
+
+    expect(observer.next).toBeCalledWith(fakeEventB);
+    expect(observer.error).not.toBeCalled();
+    expect(observer.complete).toBeCalled();
+    expect(imageMockB.image.removeEventListener).toBeCalled();
+  });
+
+  it('should remove all events listeners on teardown', () => {
+    const imageMockA = mockImage();
+    const imageMockB = mockImage();
+    const images: HTMLImageElement[] = [imageMockA.image, imageMockB.image];
+    const element = {
+      tagName: 'P',
+      querySelectorAll: jest.fn(() => (images as unknown as NodeListOf<HTMLImageElement>)) as HTMLParagraphElement['querySelectorAll'],
+    } as HTMLParagraphElement;
+
+    const subscription = fromImageEvents(element).subscribe(observer);
+
+    expect(element.querySelectorAll).toBeCalledWith('img');
+    expect(imageMockA.image.addEventListener).toBeCalledTimes(2);
+    expect(imageMockA.image.removeEventListener).toBeCalledTimes(0);
+    expect(imageMockB.image.addEventListener).toBeCalledTimes(2);
+    expect(imageMockB.image.removeEventListener).toBeCalledTimes(0);
+
+    subscription.unsubscribe();
+
+    expect(imageMockA.image.addEventListener).toBeCalledTimes(2);
+    expect(imageMockA.image.removeEventListener).toBeCalledTimes(2);
+    expect(imageMockB.image.addEventListener).toBeCalledTimes(2);
+    expect(imageMockB.image.removeEventListener).toBeCalledTimes(2);
+    expect(observer.next).not.toBeCalled();
+    expect(observer.error).not.toBeCalled();
+    expect(observer.complete).not.toBeCalled();
+  });
+
+  it('should complete when element has no images', () => {
+    const images: HTMLImageElement[] = [];
+    const element = {
+      tagName: 'P',
+      querySelectorAll: jest.fn(() => (images as unknown as NodeListOf<HTMLImageElement>)) as HTMLParagraphElement['querySelectorAll'],
+    } as HTMLParagraphElement;
+
+    fromImageEvents(element).subscribe(observer);
+
+    expect(observer.next).not.toBeCalled();
+    expect(observer.error).not.toBeCalled();
+    expect(observer.complete).toBeCalled();
   });
 });
