@@ -166,18 +166,41 @@ export interface NgxStickyContainerController {
    * Create scroll plan to a given element.
    *
    * @param target Target which can be number, selector or HTMLElement
-   * @param userOffsetTop Offset top
+   * @param extraOffsetTop Additional offset top
+   * @returns Scroll plan
+   * @deprecated
+   */
+  createScrollPlan(element: number | string | HTMLElement, extraOffsetTop: number): NgxScrollPlan;
+  /**
+   * Create scroll plan to a given element.
+   *
+   * @param target Target which can be number, selector or HTMLElement
+   * @param options
    * @returns Scroll plan
    */
-  createScrollPlan(element: number | string | HTMLElement, userOffsetTop?: number): NgxScrollPlan;
+  createScrollPlan(
+    element: number | string | HTMLElement,
+    options?: { excludeStickies?: boolean; extraOffsetTop?: number; },
+  ): NgxScrollPlan;
 
   /**
    * Fix given viewport top by substract sticked offset top.
    *
    * @param viewportTop Viewport top value to fix
-   * @param userOffsetTop Additional offset
+   * @param extraOffsetTop Additional offset top
+   * @deprecated
    */
-  fixViewportTop(viewportTop: number, userOffsetTop?: number): number;
+  fixViewportTop(viewportTop: number, extraOffsetTop: number): number;
+  /**
+   * Fix given viewport top by substract sticked offset top.
+   *
+   * @param viewportTop Viewport top value to fix
+   * @param options
+   */
+  fixViewportTop(
+    viewportTop: number,
+    options?: { excludeStickies?: boolean; extraOffsetTop?: number; },
+  ): number;
 
   /**
    * Returns offset top reserved for stickies sticked at given viewport top position.
@@ -266,9 +289,20 @@ export interface NgxStickyContainerController {
    * Scroll to top of target and considering sticked offset.
    *
    * @param target Element
-   * @param userOffsetTop Top offset
+   * @param extraOffsetTop Additional offset top
+   * @deprecated
    */
-  scrollToTop(target: number | string | HTMLElement, userOffsetTop?: number): void;
+  scrollToTop(target: number | string | HTMLElement, extraOffsetTop: number): void;
+  /**
+   * Scroll to top of target and considering sticked offset.
+   *
+   * @param target Element
+   * @param options
+   */
+  scrollToTop(
+    target: number | string | HTMLElement,
+    options?: { excludeStickies?: boolean; extraOffsetTop?: number; },
+  ): void;
 
   /**
    * Update all stickies in each container.

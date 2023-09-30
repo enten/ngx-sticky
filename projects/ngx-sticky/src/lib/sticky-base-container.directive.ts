@@ -160,7 +160,12 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     }
   }
 
-  createScrollPlan(target: number | string | HTMLElement, userOffsetTop?: number): NgxScrollPlan {
+  createScrollPlan(
+    target: number | string | HTMLElement,
+    optionsOrExtraOffsetTop?: { excludeStickies?: boolean; extraOffsetTop?: number; } | number,
+  ): NgxScrollPlan {
+    // const options = typeof optionsOrExtraOffsetTop === 'number' ? { extraOffsetTop: optionsOrExtraOffsetTop } : optionsOrExtraOffsetTop;
+    const options = optionsOrExtraOffsetTop;
     const scrollPlan: NgxScrollPlan = [];
 
     if (!this._win) {
@@ -192,7 +197,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     }
 
     if (typeof target === 'number' && !isNaN(target)) {
-      const elementTop = this.fixViewportTop(target, userOffsetTop);
+      const elementTop = this.fixViewportTop(target, options);
 
       scrollPlan.push({
         scrollToOptions: { left: this.getViewportLeft(), top: elementTop },
@@ -217,7 +222,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     let targetContainerScrollPlan!: NgxScrollPlan;
 
     for (const containerController of (this.containers as NgxStickyBaseContainerDirective[])) {
-      const containerScrollPlan = containerController.createScrollPlan(target, userOffsetTop);
+      const containerScrollPlan = containerController.createScrollPlan(target, options);
 
       if (containerScrollPlan.length) {
         targetContainerScrollPlan = containerScrollPlan;
@@ -233,7 +238,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
       const targetLine = targetContainer
         ? targetContainer.getContainer()
         : getElementAbsoluteRect(target as HTMLElement);
-      const targetTopFixed = this.fixViewportTop(targetLine.top, userOffsetTop);
+      const targetTopFixed = this.fixViewportTop(targetLine.top, options);
 
       scrollPlan.push({
         scrollToFn,
@@ -292,8 +297,13 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     }
   }
 
-  scrollToTop(target: number | string | HTMLElement, userOffsetTop?: number): void {
-    const scrollPlan = this.createScrollPlan(target, userOffsetTop);
+  scrollToTop(
+    target: number | string | HTMLElement,
+    optionsOrExtraOffsetTop?: { excludeStickies?: boolean; extraOffsetTop?: number; } | number,
+  ): void {
+    // const options = typeof optionsOrExtraOffsetTop === 'number' ? { extraOffsetTop: optionsOrExtraOffsetTop } : optionsOrExtraOffsetTop;
+    const options = optionsOrExtraOffsetTop;
+    const scrollPlan = this.createScrollPlan(target, options);
 
     for (const scrollStep of scrollPlan) {
       scrollStep.scrollToFn(scrollStep.scrollToOptions);

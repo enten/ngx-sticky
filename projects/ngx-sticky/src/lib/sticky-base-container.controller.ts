@@ -38,14 +38,24 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
   readonly _intersectionSnaps: Record<number, NgxIntersectionSnap> = {};
 
   abstract beforeRefresh(fastUpdate?: boolean): void;
-  abstract createScrollPlan(element: number | string | HTMLElement, userOffsetTop?: number): NgxScrollPlan;
+  /** @deprecated */
+  abstract createScrollPlan(element: number | string | HTMLElement, extraOffsetTop: number): NgxScrollPlan;
+  abstract createScrollPlan(
+    element: number | string | HTMLElement,
+    options?: { excludeStickies?: boolean; extraOffsetTop?: number; },
+  ): NgxScrollPlan;
   abstract disableStickies(): void;
   abstract enableStickies(): void;
   abstract getContainer(): NgxStickyContainer;
   abstract getViewportHeight(): number;
   abstract getViewportLeft(): number;
   abstract getViewportTop(): number;
-  abstract scrollToTop(target: number | string | HTMLElement, userOffsetTop?: number): void;
+  /** @deprecated */
+  abstract scrollToTop(target: number | string | HTMLElement, extraOffsetTop: number): void;
+  abstract scrollToTop(
+    target: number | string | HTMLElement,
+    options?: { excludeStickies?: boolean; extraOffsetTop?: number; },
+  ): void;
 
   abstract _computeContainer(): NgxStickyContainer;
 
@@ -77,10 +87,14 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
     return this.stickyEngine.getStickedOffset(container, stickies, position, viewportHeight, viewportTop);
   }
 
-  fixViewportTop(viewportTop: number, userOffsetTop?: number): number {
+  fixViewportTop(
+    viewportTop: number,
+    optionsOrExtraOffsetTop?: { excludeStickies?: boolean; extraOffsetTop?: number; } | number,
+  ): number {
+    const options = typeof optionsOrExtraOffsetTop === 'number' ? { extraOffsetTop: optionsOrExtraOffsetTop } : optionsOrExtraOffsetTop;
     // const container = this.getContainer();
-    const viewportTopOffsetless = viewportTop - (userOffsetTop || 0);
-    const stickedOffsetTop = this.getStickedOffset('top', viewportTopOffsetless);
+    const viewportTopOffsetless = viewportTop - (options?.extraOffsetTop || 0);
+    const stickedOffsetTop = options?.excludeStickies ? 0 : this.getStickedOffset('top', viewportTopOffsetless);
 
     let viewportTopFixed = viewportTopOffsetless /* - container.offsetTop*/ - stickedOffsetTop;
 
