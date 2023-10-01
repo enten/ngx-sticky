@@ -1,5 +1,14 @@
 import { NgxStickyEngine } from '../../src/lib/sticky-engine';
-import { NgxIntersection, NgxIntersectionSnap, NgxSticky, NgxStickyDirection, NgxStickyPosition } from '../../src/lib/sticky.types';
+import {
+  NgxIntersection,
+  NgxIntersectionSnap,
+  NgxSticky,
+  NgxStickyBoundaryComputed,
+  NgxStickyComputed,
+  NgxStickyDirection,
+  NgxStickyPosition,
+  NgxStickySnap,
+} from '../../src/lib/sticky.types';
 
 
 const engine = new NgxStickyEngine();
@@ -39,7 +48,7 @@ describe('computeStickyBoundary', () => {
       true,
       { top: 30, height: 5 },
       10,
-    )).toEqual({ top: 10, height: 12, left: 0, width: 80, unstacked: false, offsetTop: 0, offsetBottom: 0 });
+    )).toEqual({ top: 10, height: 10, left: 0, width: 80, unstacked: false, offsetTop: 0, offsetBottom: 0 });
 
     expect(engine.computeStickyBoundary(
       container,
@@ -102,7 +111,7 @@ describe('determineIntersectionState', () => {
   it('should returns state relative to viewport top', () => {
     const container = { top: 0, height: 50, left: 0, width: 100 };
 
-    const boundaryComputed = {
+    const boundaryComputed: NgxStickyBoundaryComputed = {
       height: 50,
       left: 0,
       offsetBottom: 10,
@@ -112,7 +121,7 @@ describe('determineIntersectionState', () => {
       width: 100,
     };
 
-    const enterStickyComputed = {
+    const enterStickyComputed: NgxStickyComputed = {
       boundary: {
         top: 9,
         height: 2,
@@ -131,7 +140,7 @@ describe('determineIntersectionState', () => {
       top: 9,
     };
 
-    const exitStickyComputed = {
+    const exitStickyComputed: NgxStickyComputed = {
       boundary: {
         top: 10,
         height: 1,
@@ -150,23 +159,22 @@ describe('determineIntersectionState', () => {
       top: 10,
     };
 
-    const snap = {
+    const snap: NgxIntersectionSnap = {
       container,
       enter: {
         boundaries: { '0,50': boundaryComputed },
         container,
+        oppositeStickies: [],
         stickies: [
           {
             boundary: boundaryComputed,
             directionDown: true,
             disabled: false,
             height: 2,
-            left: 0,
             positionBottom: true,
             sortPoint: 2,
             sticked: { top: -2, height: 42 },
             top: 6,
-            width: 100,
           },
           enterStickyComputed,
         ],
@@ -184,6 +192,7 @@ describe('determineIntersectionState', () => {
       exit: {
         boundaries: { '0,50': boundaryComputed },
         container,
+        oppositeStickies: [],
         stickies: [
           {
             boundary: boundaryComputed,
@@ -225,7 +234,7 @@ describe('determineIntersectionState', () => {
         top: 10,
       },
       viewportHeight: 10,
-    } as NgxIntersectionSnap;
+    };
 
     expect(engine.determineIntersectionState(snap, 0)).toEqual({
       snap,
@@ -290,7 +299,7 @@ describe('determineStickyState', () => {
     const container = { top: 0, height: 50, left: 0, width: 100 };
     const sticky: NgxSticky = { top: 15, height: 2 };
 
-    const boundaryComputed = {
+    const boundaryComputed: NgxStickyBoundaryComputed = {
       height: 50,
       left: 0,
       offsetBottom: 10,
@@ -300,7 +309,7 @@ describe('determineStickyState', () => {
       width: 100,
     };
 
-    const stickyComputed = {
+    const stickyComputed: NgxStickyComputed = {
       boundary: boundaryComputed,
       directionDown: true,
       disabled: false,
@@ -311,9 +320,21 @@ describe('determineStickyState', () => {
       top: 15,
     };
 
-    const snap = {
+    const snap: NgxStickySnap = {
       boundaries: { '0,50': boundaryComputed },
       container,
+      oppositeStickies: [
+        {
+          boundary: boundaryComputed,
+          directionDown: false,
+          disabled: false,
+          height: 5,
+          positionBottom: true,
+          sortPoint: 35,
+          sticked: { top: -10, height: 40 },
+          top: 40,
+        },
+      ],
       stickies: [
         {
           boundary: boundaryComputed,
@@ -342,11 +363,25 @@ describe('determineStickyState', () => {
       viewportHeight: 10,
     };
 
+    expect(engine.determineStickyState(snap, -11)).toEqual({
+      snap,
+      state: 'normal',
+      offsetSticked: 0,
+      offsetStucked: 0,
+      oppositeState: 'stucked',
+      oppositeOffsetSticked: 0,
+      oppositeOffsetStucked: 5,
+      viewportTop: -11,
+    });
+
     expect(engine.determineStickyState(snap, 0)).toEqual({
       snap,
       state: 'normal',
       offsetSticked: 0,
       offsetStucked: 0,
+      oppositeState: 'sticked',
+      oppositeOffsetSticked: 0,
+      oppositeOffsetStucked: 5,
       viewportTop: 0,
     });
 
@@ -355,6 +390,9 @@ describe('determineStickyState', () => {
       state: 'sticked',
       offsetSticked: 0,
       offsetStucked: 4,
+      oppositeState: 'sticked',
+      oppositeOffsetSticked: 0,
+      oppositeOffsetStucked: 5,
       viewportTop: 15,
     });
 
@@ -363,6 +401,9 @@ describe('determineStickyState', () => {
       state: 'stucked',
       offsetSticked: 0,
       offsetStucked: 4,
+      oppositeState: 'normal',
+      oppositeOffsetSticked: 0,
+      oppositeOffsetStucked: 0,
       viewportTop: 48,
     });
   });
@@ -403,7 +444,7 @@ describe('snapIntersection', () => {
       { top: 20, height: 2 },
     ];
 
-    const boundaryComputed = {
+    const boundaryComputed: NgxStickyBoundaryComputed = {
       height: 50,
       left: 0,
       offsetBottom: 10,
@@ -413,7 +454,7 @@ describe('snapIntersection', () => {
       width: 100,
     };
 
-    const enterStickyComputed = {
+    const enterStickyComputed: NgxStickyComputed = {
       boundary: {
         top: 9,
         height: 2,
@@ -432,7 +473,7 @@ describe('snapIntersection', () => {
       top: 9,
     };
 
-    const exitStickyComputed = {
+    const exitStickyComputed: NgxStickyComputed = {
       boundary: {
         top: 10,
         height: 1,
@@ -451,11 +492,12 @@ describe('snapIntersection', () => {
       top: 10,
     };
 
-    const snap = {
+    const snap: NgxIntersectionSnap = {
       container,
       enter: {
         boundaries: { '0,50': boundaryComputed },
         container,
+        oppositeStickies: [],
         stickies: [
           {
             boundary: boundaryComputed,
@@ -483,6 +525,18 @@ describe('snapIntersection', () => {
       exit: {
         boundaries: { '0,50': boundaryComputed },
         container,
+        oppositeStickies: [
+          {
+            boundary: boundaryComputed,
+            directionDown: true,
+            disabled: false,
+            height: 2,
+            positionBottom: true,
+            sortPoint: 2,
+            sticked: { top: -2, height: 42 },
+            top: 6,
+          },
+        ],
         stickies: [
           {
             boundary: boundaryComputed,
@@ -518,7 +572,7 @@ describe('snapIntersection', () => {
         viewportHeight: 10,
       },
       intersection: {
-        disabled: undefined,
+        disabled: undefined!,
         height: 2,
         thresholds: [ 0, 1 ],
         top: 10,
@@ -544,7 +598,7 @@ describe('snapSticky', () => {
       { top: 20, height: 2 },
     ];
 
-    const boundaryComputed = {
+    const boundaryComputed: NgxStickyBoundaryComputed = {
       height: 50,
       left: 0,
       offsetBottom: 10,
@@ -554,7 +608,7 @@ describe('snapSticky', () => {
       width: 100,
     };
 
-    const stickyComputed = {
+    const stickyComputed: NgxStickyComputed = {
       boundary: boundaryComputed,
       directionDown: true,
       disabled: false,
@@ -565,9 +619,21 @@ describe('snapSticky', () => {
       top: 15,
     };
 
-    const snap = {
+    const snap: NgxStickySnap = {
       boundaries: { '0,50': boundaryComputed },
       container,
+      oppositeStickies: [
+        {
+          boundary: boundaryComputed,
+          directionDown: true,
+          disabled: false,
+          height: 2,
+          positionBottom: true,
+          sortPoint: 2,
+          sticked: { top: -2, height: 42 },
+          top: 6,
+        },
+      ],
       stickies: [
         {
           boundary: boundaryComputed,

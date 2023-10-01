@@ -1,11 +1,18 @@
 import {
   coerceStickyDirection,
   coerceStickyPosition,
+  compareStickiesComputed,
   getStuckedPositionTop,
   isStickyDirectionDown,
   isStickyPositionBottom,
 } from '../../src/lib/sticky.helpers';
-import { NgxStickyComputation, NgxStickyDirection, NgxStickyPosition } from '../../src/lib/sticky.types';
+import {
+  NgxStickyComputation,
+  NgxStickyComputed,
+  NgxStickyDirection,
+  NgxStickyLine,
+  NgxStickyPosition,
+} from '../../src/lib/sticky.types';
 
 
 describe('coerceStickyDirection', () => {
@@ -26,10 +33,49 @@ describe('coerceStickyPosition', () => {
 });
 
 
+describe('compareStickiesComputed', () => {
+  const viewportHeight = 0;
+  const mockStickyComputed = (
+    top: number,
+    height: number,
+    positionBottom: boolean,
+    directionDown: boolean,
+  ): NgxStickyComputed => ({
+    boundary: {
+      top,
+      height,
+    },
+    positionBottom,
+    directionDown,
+    sortPoint: positionBottom
+      ? directionDown
+        ? -top - height + viewportHeight
+        : top + height - viewportHeight
+      : directionDown
+        ? -top
+        : top
+      ,
+  } as NgxStickyComputed);
+  const a = mockStickyComputed(0, 10, false, true);
+  const b = mockStickyComputed(20, 5, false, true);
+  const c = mockStickyComputed(60, 25, true, true);
+  const d = mockStickyComputed(160, 10, false, false);
+  const e = mockStickyComputed(200, 5, true, false);
+
+  it('should sort given stickies computed', () => {
+    expect([a, b, d].sort(compareStickiesComputed)).toEqual([d, a, b]);
+    expect([c, e].sort(compareStickiesComputed)).toEqual([e, c]);
+  });
+});
+
+
 describe('getStuckedPositionTop', () => {
   it('should returns position top relative to given computation', () => {
     const computation = {
       snap: {
+        sticky: {
+          spot: undefined,
+        },
         stickyComputed: {
           boundary: { top: 10, height: 50, offsetTop: 5, offsetBottom: 5 },
           directionDown: true,
@@ -38,7 +84,10 @@ describe('getStuckedPositionTop', () => {
           top: 15,
         },
       },
+      offsetSticked: 1,
       offsetStucked: 3,
+      oppositeOffsetSticked: 4,
+      oppositeOffsetStucked: 8,
     } as NgxStickyComputation;
 
     computation.snap.stickyComputed.directionDown = true;
@@ -60,6 +109,14 @@ describe('getStuckedPositionTop', () => {
     computation.snap.stickyComputed.positionBottom = true;
 
     expect(getStuckedPositionTop(computation)).toBe(10 + 5 - 2 - 3 /* 10 */);
+
+    computation.snap.sticky.spot = {} as NgxStickyLine;
+
+    expect(getStuckedPositionTop(computation)).toBe(10 + 5 - 2 - 3 /* 10 */ - (1 + 3 + 4 + 8/* 16 */));
+
+    computation.snap.stickyComputed.directionDown = true;
+
+    expect(getStuckedPositionTop(computation)).toBe(10 + 50 - 2 - 3 /* 55 */ + (1 + 3 + 4 + 8/* 16 */));
   });
 });
 

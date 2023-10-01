@@ -84,6 +84,9 @@ export interface NgxStickyBoundaryComputed extends NgxStickyBoundary {
 export interface NgxStickyComputation {
   offsetSticked: number;
   offsetStucked: number;
+  oppositeOffsetSticked: number;
+  oppositeOffsetStucked: number;
+  oppositeState: NgxStickyState;
   state: NgxStickyState;
   snap: NgxStickySnap;
   /** Absolute viewport */
@@ -108,8 +111,9 @@ export interface NgxStickyComputed extends NgxStickyLine {
  * Interface for a sticky snap (used to determine sticky state).
  */
 export interface NgxStickySnap {
-  boundaries: Record<number, NgxStickyBoundaryComputed>;
+  boundaries: Record<string, NgxStickyBoundaryComputed>;
   container: NgxStickyContainer;
+  oppositeStickies: NgxStickyComputed[];
   stickies: NgxStickyComputed[];
   sticky: NgxSticky;
   stickyComputed: NgxStickyComputed;

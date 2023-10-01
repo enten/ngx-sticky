@@ -648,6 +648,9 @@ describe('_getStickyElementStyle', () => {
             top: 0,
             height: 50,
           },
+          sticky: {
+            spot: undefined,
+          },
           stickyComputed: {
             boundary: {
               top: 0,
@@ -692,6 +695,9 @@ describe('_getStickyElementStyle', () => {
           container: {
             top: 0,
             height: 50,
+          },
+          sticky: {
+            spot: undefined,
           },
           stickyComputed: {
             boundary: {
