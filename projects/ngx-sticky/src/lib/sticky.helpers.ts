@@ -1,5 +1,6 @@
 import {
   NgxStickyComputation,
+  NgxStickyComputed,
   NgxStickyDirection,
   NgxStickyPosition,
 } from './sticky.types';
@@ -14,6 +15,13 @@ export function coerceStickyDirection(value: any): NgxStickyDirection {
 }
 
 
+export function compareStickiesComputed(a: NgxStickyComputed, b: NgxStickyComputed): number {
+  return a.positionBottom === b.positionBottom
+    ? a.sortPoint < b.sortPoint && a.boundary.top >= b.boundary.top ? 1 : -1
+    : -1;
+}
+
+
 export function getStuckedPositionTop(computation: NgxStickyComputation): number {
   const {
     boundary,
@@ -22,7 +30,7 @@ export function getStuckedPositionTop(computation: NgxStickyComputation): number
     positionBottom,
   } = computation.snap.stickyComputed;
 
-  return directionDown
+  let result = directionDown
     ? boundary.top
       + boundary.height
       - elementHeight
@@ -31,7 +39,22 @@ export function getStuckedPositionTop(computation: NgxStickyComputation): number
           : boundary.offsetBottom - elementHeight - computation.offsetStucked)
     : positionBottom
       ? boundary.top + boundary.offsetTop - elementHeight - computation.offsetStucked
-      : boundary.top + computation.offsetStucked;
+      : boundary.top + computation.offsetStucked
+    ;
+
+  // adjust position when sticky has spot
+  if (computation.snap.sticky.spot) {
+    result = directionDown
+      ? result
+        + computation.offsetSticked + computation.offsetStucked
+        + computation.oppositeOffsetSticked + computation.oppositeOffsetStucked
+      : result
+        - computation.offsetSticked - computation.offsetStucked
+        - computation.oppositeOffsetSticked - computation.oppositeOffsetStucked
+      ;
+  }
+
+  return result;
 }
 
 

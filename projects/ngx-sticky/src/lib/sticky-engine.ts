@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { isStickyDirectionDown, isStickyPositionBottom } from './sticky.helpers';
+import { compareStickiesComputed, isStickyDirectionDown, isStickyPositionBottom } from './sticky.helpers';
 import {
   NgxIntersection,
   NgxIntersectionComputation,
@@ -70,7 +70,7 @@ export class NgxStickyEngine {
       const beforeSpot = sticky.top < spot.top;
 
       if (beforeSpot) {
-        // when sticky direction is bottom and is before its spot
+        // when sticky direction is down and is before its spot
         if (directionDown) {
           const spotPoint = spot.top - viewportHeight;
 
@@ -80,11 +80,11 @@ export class NgxStickyEngine {
             boundaryTop = 0;
           // adjust sticky boundary height according to its spot when spot point is in base boundary
           } else if (spotPoint < boundaryTop + boundaryHeight) {
-            boundaryHeight = spotPoint - boundaryTop + sticky.height;
+            boundaryHeight = spotPoint - boundaryTop;
           }
         }
       } else {
-        // when sticky direction is top and is after its spot
+        // when sticky direction is up and is after its spot
         if (!directionDown) {
           const spotPoint = spot.top + spot.height + viewportHeight;
 
@@ -244,6 +244,9 @@ export class NgxStickyEngine {
     const computation: NgxStickyComputation = {
       offsetSticked: 0,
       offsetStucked: 0,
+      oppositeOffsetSticked: 0,
+      oppositeOffsetStucked: 0,
+      oppositeState: 'normal',
       state: 'normal',
       snap,
       viewportTop,
@@ -254,8 +257,77 @@ export class NgxStickyEngine {
       return computation;
     }
 
+    // last value stored in _stickyComputedState will be related to opposite of stickyComputed
+    let _oppositeStickyComputedState: NgxStickyState = 'normal';
     // last value stored in _stickyComputedState will be related to stickyComputed
-    let _stickyComputedState: NgxStickyState;
+    let _stickyComputedState: NgxStickyState = 'normal';
+
+    // compute state for each opposite sibling
+    for (const _oppositeStickyComputed of snap.oppositeStickies) {
+      const boundaryOffset = _oppositeStickyComputed.directionDown
+        ? _oppositeStickyComputed.boundary.offsetBottom
+        : _oppositeStickyComputed.boundary.offsetTop;
+      let {
+        top: _oppositeStickedTop,
+        height: _oppositeStickedHeight,
+      } = _oppositeStickyComputed.sticked;
+
+      // adjust _oppositeStickyComputed sticked line with previous sibling
+      if (_oppositeStickyComputed.positionBottom) {
+        if (_oppositeStickyComputed.directionDown) {
+          _oppositeStickedTop += computation.oppositeOffsetSticked + computation.oppositeOffsetStucked;
+          _oppositeStickedHeight -= computation.oppositeOffsetStucked;
+        } else {
+          _oppositeStickedTop += boundaryOffset;
+          _oppositeStickedTop += computation.oppositeOffsetSticked;
+          _oppositeStickedHeight -= boundaryOffset - computation.oppositeOffsetStucked;
+          _oppositeStickedHeight += _oppositeStickyComputed.height;
+        }
+      } else {
+        if (_oppositeStickyComputed.directionDown) {
+          _oppositeStickedTop -= computation.oppositeOffsetSticked + computation.oppositeOffsetStucked;
+          _oppositeStickedHeight += computation.oppositeOffsetStucked;
+          _oppositeStickedHeight -= boundaryOffset;
+        } else {
+          _oppositeStickedTop -= computation.oppositeOffsetSticked;
+          _oppositeStickedHeight -= computation.oppositeOffsetStucked;
+        }
+      }
+
+      // set default state to "normal"
+      _oppositeStickyComputedState = 'normal';
+
+      // determine _oppositeStickyComputed state with its sticked line adjusted
+      // if (viewportTop > _oppositeStickedTop) {
+      if (viewportTop >= _oppositeStickedTop) {
+        _oppositeStickyComputedState = 'sticked';
+
+        if (viewportTop > _oppositeStickedTop + _oppositeStickedHeight) {
+          _oppositeStickyComputedState = _oppositeStickyComputed.directionDown ? 'stucked' : 'normal';
+        }
+      } else if (!_oppositeStickyComputed.directionDown) {
+        _oppositeStickyComputedState = 'stucked';
+      }
+
+      // cumulate opposite sibling height to the right offset
+      if (
+        // and state determined is "sticked" or "stucked"
+        _oppositeStickyComputedState !== 'normal'
+        // and _oppositeStickyComputed is stacked
+        && !_oppositeStickyComputed.boundary.unstacked
+      ) {
+        if (
+          _oppositeStickyComputed.boundary.top === snap.stickyComputed.boundary.top
+            && _oppositeStickyComputed.boundary.height === snap.stickyComputed.boundary.height
+        ) {
+          computation.oppositeOffsetStucked += _oppositeStickyComputed.height;
+        } else if (_oppositeStickyComputedState === 'sticked') {
+          computation.oppositeOffsetSticked += _oppositeStickyComputed.height;
+        }
+      }
+    }
+
+    computation.oppositeState = _oppositeStickyComputedState;
 
     // compute state for each sibling and stickyComputed in last
     for (const _stickyComputed of snap.stickies) {
@@ -286,6 +358,20 @@ export class NgxStickyEngine {
         } else {
           _stickedTop -= computation.offsetSticked;
           _stickedHeight -= computation.offsetStucked;
+        }
+      }
+
+      // adjust the current _stickyComputed sticked line with previous and opposite siblings when sticky has spot
+      if (snap.sticky.spot && _stickyComputed === snap.stickyComputed) {
+        const sumOfCurrentAndOppositeOffsets = computation.offsetSticked + computation.offsetStucked
+          + computation.oppositeOffsetSticked + computation.oppositeOffsetStucked;
+
+        // increase sticked line height with sum of sticked and stucked offsets from previous and opposite siblings
+        _stickedHeight += sumOfCurrentAndOppositeOffsets;
+
+        // substract sum of sticked and stucked offsets from previous and opposite siblings when direction is up
+        if (!_stickyComputed.directionDown) {
+          _stickedTop -= sumOfCurrentAndOppositeOffsets;
         }
       }
 
@@ -322,10 +408,9 @@ export class NgxStickyEngine {
           computation.offsetSticked += _stickyComputed.height;
         }
       }
-      // (computation as { _state: NgxStickyState })._state = _stickyComputedState;
     }
 
-    computation.state = _stickyComputedState!;
+    computation.state = _stickyComputedState;
 
     return computation;
   }
@@ -352,7 +437,7 @@ export class NgxStickyEngine {
     let stickedOffset = 0;
 
     for (const _sticky of stickies) {
-      // skip sticky when is position bottom
+      // skip sticky which have different position than the given
       if (isStickyPositionBottom(_sticky.position!) !== positionBottom) {
         continue;
       }
@@ -370,7 +455,7 @@ export class NgxStickyEngine {
       if (computation.state === 'sticked') {
         const _elementHeight = snap.stickyComputed.height;
 
-        // substract height when sticy is stacked
+        // substract height when sticky is stacked
         if (!snap.stickyComputed.boundary.unstacked) {
           stickedOffset += _elementHeight;
         // or update the biggest sticky unstacked
@@ -491,9 +576,15 @@ export class NgxStickyEngine {
     };
 
     if (
+      // disable when sticky's container is disabled
       container.disabled
+      // disable when sticky is disabled
       || sticky.disabled
+      // disable when sticky has zero height
       || !sticky.height
+      // disable when sticky has height equal or greater than viewport height
+      // || sticky.height >= viewportHeight
+      // disable when sticky is outside its boundary
       || sticky.top < stickyComputed.boundary.top
       || sticky.top > stickyComputed.boundary.top + stickyComputed.boundary.height
     ) {
@@ -510,12 +601,15 @@ export class NgxStickyEngine {
     }
 
     const stickiesComputed: NgxStickyComputed[] = [];
+    const oppositeStickiesComputed: NgxStickyComputed[] = [];
     let offsetSpacer: NgxSticky;
+    let oppositeOffsetSpacer: NgxSticky;
 
     if (sticky.disabled) {
       return {
         boundaries: boundariesMap,
         container,
+        oppositeStickies: oppositeStickiesComputed,
         stickies: stickiesComputed,
         sticky,
         stickyComputed,
@@ -524,31 +618,53 @@ export class NgxStickyEngine {
     }
 
     // insert fake sticky which represent container offset top
-    if (container.offsetTop && !stickyComputed.positionBottom) {
-      offsetSpacer = {
-        boundary: container,
-        direction: 'down',
-        height: container.offsetTop,
-        position: 'top',
-        disabled: false,
-        top: container.top,
-      };
-
-      stickies = [ offsetSpacer, ...stickies ];
+    if (container.offsetTop) {
+      if (!stickyComputed.positionBottom) {
+        offsetSpacer = {
+          boundary: container,
+          direction: 'down',
+          height: container.offsetTop,
+          position: 'top',
+          disabled: false,
+          top: container.top,
+        };
+        stickies = [ offsetSpacer, ...stickies ];
+      } else {
+        oppositeOffsetSpacer = {
+          boundary: container,
+          direction: 'up',
+          height: container.offsetTop,
+          position: 'bottom',
+          disabled: false,
+          top: container.top + container.height - container.offsetTop,
+        };
+        stickies = [ oppositeOffsetSpacer, ...stickies ];
+      }
     }
 
     // insert fake sticky which represent container offset bottom
-    if (container.offsetBottom && stickyComputed.positionBottom) {
-      offsetSpacer = {
-        boundary: container,
-        direction: 'up',
-        height: container.offsetBottom,
-        position: 'bottom',
-        disabled: false,
-        top: container.top + container.height - container.offsetBottom,
-      };
-
-      stickies = [ offsetSpacer, ...stickies ];
+    if (container.offsetBottom) {
+      if (stickyComputed.positionBottom) {
+        offsetSpacer = {
+          boundary: container,
+          direction: 'up',
+          height: container.offsetBottom,
+          position: 'bottom',
+          disabled: false,
+          top: container.top + container.height - container.offsetBottom,
+        };
+        stickies = [ offsetSpacer, ...stickies ];
+      } else {
+        oppositeOffsetSpacer = {
+          boundary: container,
+          direction: 'down',
+          height: container.offsetBottom,
+          position: 'top',
+          disabled: false,
+          top: container.top,
+        };
+        stickies = [ oppositeOffsetSpacer, ...stickies ];
+      }
     }
 
     // remove 1px to fix round sizes (offsetLeft and offsetWidth)
@@ -592,8 +708,12 @@ export class NgxStickyEngine {
         _stickyComputedBoundaryRight = _stickyComputed.boundary.left + _stickyComputed.boundary.width - 1;
 
         if (
+          // skip sticky which is disabled
           _sticky.disabled
+          // skip sticky which has zero height
           || !_sticky.height
+          // skip sticky which has height equal or greater than viewport height
+          // || _sticky.height >= viewportHeight
           // skip sticky which isn't in its boundary
           || _sticky.top < _stickyComputed.boundary.top
           || _sticky.top > _stickyComputed.boundary.top + _stickyComputed.boundary.height
@@ -652,7 +772,12 @@ export class NgxStickyEngine {
       // pushforce offset spacer as sticky siblings
       if (_sticky === offsetSpacer!) {
         stickiesComputed.push(_stickyComputed);
+        continue;
+      }
 
+      // pushforce opposite offset spacer as opposite sticky siblings
+      if (_sticky === oppositeOffsetSpacer!) {
+        oppositeStickiesComputed.push(_stickyComputed);
         continue;
       }
 
@@ -660,8 +785,6 @@ export class NgxStickyEngine {
       if (
         // when _stickyComputed isn't stickyComputed
         _stickyComputed !== stickyComputed
-        // and its position equals to stickyComputed position
-        && _stickyComputed.positionBottom === stickyComputed.positionBottom
         // and its sticked line intersects top of stickyComputed sticked line
         && stickyComputed.sticked.top >= _stickyComputed.sticked.top
         && stickyComputed.sticked.top <= _stickyComputed.sticked.top + _stickyComputed.sticked.height
@@ -672,16 +795,21 @@ export class NgxStickyEngine {
             : _stickyComputed.top > stickyComputed.top
         )
       ) {
-        stickiesComputed.push(_stickyComputed);
+        // and its position equals to stickyComputed position
+        if (_stickyComputed.positionBottom === stickyComputed.positionBottom) {
+          stickiesComputed.push(_stickyComputed);
+        // else _stickyComputed is an opposite sibling
+        } else {
+          oppositeStickiesComputed.push(_stickyComputed);
+        }
       }
     }
 
-    // sort stickyComputed siblings according to their respective sortPoint and boundary top
-    stickiesComputed.sort((a, b) => {
-      return a.positionBottom === stickyComputed.positionBottom
-        ? a.sortPoint < b.sortPoint && a.boundary.top >= b.boundary.top ? 1 : -1
-        : -1;
-    });
+    // sort opposite siblings according to their respective sortPoint and boundary top
+    oppositeStickiesComputed.sort(compareStickiesComputed);
+
+    // sort siblings according to their respective sortPoint and boundary top
+    stickiesComputed.sort(compareStickiesComputed);
 
     // add stickyComputed in last position
     stickiesComputed.push(stickyComputed);
@@ -689,6 +817,7 @@ export class NgxStickyEngine {
     return {
       container,
       boundaries: boundariesMap,
+      oppositeStickies: oppositeStickiesComputed,
       stickies: stickiesComputed,
       sticky,
       stickyComputed,
