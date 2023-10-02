@@ -138,7 +138,7 @@ export class NgxStickyBoundaryDirective extends NgxStickyBaseBoundaryController 
       const paddingTop = parseFloat(boundaryStyle.paddingTop) || 0;
       const paddingBottom = parseFloat(boundaryStyle.paddingBottom) || 0;
 
-      // substract paddings from computed boundary line
+      // subtract paddings from computed boundary line
       boundary.top += paddingTop;
       boundary.height -= paddingTop + paddingBottom;
     }

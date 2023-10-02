@@ -23,11 +23,12 @@ jest.mock('../../src/lib/utils/collections', () => ({
 
 
 class NgxStickyEngineMock extends NgxStickyEngine {
-  override getStickedOffset = jest.fn();
+  override determineStickedOffset = jest.fn();
   override snapIntersection = jest.fn();
   override snapSticky = jest.fn();
   override determineIntersectionState = jest.fn();
   override determineStickyState = jest.fn();
+  override _collectStickySnaps = jest.fn();
 }
 
 
@@ -95,12 +96,20 @@ describe('getStickedOffset', () => {
     const containerInstance = {} as NgxStickyContainer;
     const viewportHeight = 200;
     const stickedOffset = 11;
-    const stickies: NgxSticky[] = [ {} as NgxSticky, {} as NgxSticky ];
+    const stickies: NgxSticky[] = [
+      { height: 1 } as NgxSticky,
+      { height: 2 } as NgxSticky,
+    ];
+    const stickySnaps: NgxStickySnap[] = [
+      { sticky: stickies[0] } as NgxStickySnap,
+      { sticky: stickies[1] } as NgxStickySnap,
+    ];
     const container = new NgxStickyTestContainerController();
 
     container.getContainer.mockImplementation(() => containerInstance);
     container.getViewportHeight.mockImplementation(() => viewportHeight);
-    container.stickyEngine.getStickedOffset.mockImplementation(() => stickedOffset);
+    container.stickyEngine._collectStickySnaps.mockImplementation(() => stickySnaps);
+    container.stickyEngine.determineStickedOffset.mockImplementation(() => stickedOffset);
 
     container.stickies.push(
       { getSticky: jest.fn(() => stickies[0]) as NgxStickyController['getSticky'] } as NgxStickyController,
@@ -108,11 +117,16 @@ describe('getStickedOffset', () => {
     );
 
     expect(container.getStickedOffset('top', 42)).toBe(11);
-    expect(container.stickyEngine.getStickedOffset).toBeCalledWith(
+    expect(container.stickyEngine._collectStickySnaps).toBeCalledWith(
       containerInstance,
       stickies,
       'top',
       viewportHeight,
+    );
+    expect(container.stickyEngine.determineStickedOffset).toBeCalledWith(
+      containerInstance,
+      stickySnaps,
+      'top',
       42,
     );
   });
@@ -120,14 +134,18 @@ describe('getStickedOffset', () => {
 
 
 describe('fixViewportTop', () => {
-  it('should fix given viewport top with getStickedOffset', () => {
+  it('should fix given viewport top', () => {
+    const containerInstance = { top: 7, offsetTop: 10 } as NgxStickyContainer;
+    const viewportHeight = 15;
+    const stickedOffset = 11;
     const container = new NgxStickyTestContainerController();
 
     container.containerParent = {} as NgxStickyContainerController;
-    container.getContainer.mockImplementation(() => ({ top: 10 }) as NgxStickyContainer);
-    container.getStickedOffset = () => 15;
+    container.getContainer.mockImplementation(() => containerInstance);
+    container.getViewportHeight.mockImplementation(() => viewportHeight);
+    container.stickyEngine.determineStickedOffset.mockImplementation(() => stickedOffset);
 
-    expect(container.fixViewportTop(50, 5)).toBe(50 - 5 - 15 - 10);
+    expect(container.fixViewportTop(50, 5)).toBe(50 - 11 - 5 - 7);
   });
 });
 

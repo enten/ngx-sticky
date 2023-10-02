@@ -188,7 +188,7 @@ export interface NgxStickyContainerController {
   ): NgxScrollPlan;
 
   /**
-   * Fix given viewport top by substract sticked offset top.
+   * Fix given viewport top by subtract sticked offset top.
    *
    * @param viewportTop Viewport top value to fix
    * @param extraOffsetTop Additional offset top
@@ -196,7 +196,7 @@ export interface NgxStickyContainerController {
    */
   fixViewportTop(viewportTop: number, extraOffsetTop: number): number;
   /**
-   * Fix given viewport top by substract sticked offset top.
+   * Fix given viewport top by subtract sticked offset top.
    *
    * @param viewportTop Viewport top value to fix
    * @param options
@@ -207,9 +207,11 @@ export interface NgxStickyContainerController {
   ): number;
 
   /**
-   * Returns offset top reserved for stickies sticked at given viewport top position.
+   * Returns offset height used by sticked stickies for a given side and viewport position.
    *
-   * @param viewportTop Viewport top position
+   * @param position Position `"top"` or `"bottom"`
+   * @param viewportTop Viewport top
+   * @returns Offset height used by sticked stickies.
    */
   getStickedOffset(position: NgxStickyPosition, viewportTop: number): number;
 
