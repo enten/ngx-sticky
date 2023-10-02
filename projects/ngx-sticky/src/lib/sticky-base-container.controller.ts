@@ -78,13 +78,9 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
   getStickedOffset(position: NgxStickyPosition, viewportTop: number): number {
     const container = this.getContainer();
     const viewportHeight = this.getViewportHeight();
-    const stickies: NgxSticky[] = [];
-
-    for (const stickyController of this.stickies) {
-      stickies.push(stickyController.getSticky());
-    }
-
-    return this.stickyEngine.getStickedOffset(container, stickies, position, viewportHeight, viewportTop);
+    const stickies = this.stickies.map(stickyController => stickyController.getSticky());
+    const stickySnaps = this.stickyEngine._collectStickySnaps(container, stickies, position, viewportHeight);
+    return this.stickyEngine.determineStickedOffset(container, stickySnaps, position, viewportTop);
   }
 
   fixViewportTop(
@@ -92,11 +88,43 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
     optionsOrExtraOffsetTop?: { excludeStickies?: boolean; extraOffsetTop?: number; } | number,
   ): number {
     const options = typeof optionsOrExtraOffsetTop === 'number' ? { extraOffsetTop: optionsOrExtraOffsetTop } : optionsOrExtraOffsetTop;
-    // const container = this.getContainer();
+    const viewportHeight = this.getViewportHeight();
     const viewportTopOffsetless = viewportTop - (options?.extraOffsetTop || 0);
-    const stickedOffsetTop = options?.excludeStickies ? 0 : this.getStickedOffset('top', viewportTopOffsetless);
+    let stickedOffsetTop = 0;
 
-    let viewportTopFixed = viewportTopOffsetless /* - container.offsetTop*/ - stickedOffsetTop;
+    if (!options?.excludeStickies) {
+      const container = this.getContainer();
+      const stickies = this.stickies.map(stickyController => stickyController.getSticky());
+      const stickySnaps = this.stickyEngine._collectStickySnaps(container, stickies, 'top', viewportHeight);
+      // determine offset top height for the given viewport top
+      const initialViewportTop = viewportTopOffsetless;
+      const initialStickedOffset = this.stickyEngine.determineStickedOffset(container, stickySnaps, 'top', initialViewportTop);
+      // determine offset top height for the given viewport subtracted by the offset top height
+      let lastViewportTop = initialViewportTop - initialStickedOffset;
+      let lastStickedOffset = initialStickedOffset && this.stickyEngine.determineStickedOffset(container, stickySnaps, 'top', lastViewportTop);
+
+      // if both calculated heights are equal means that subtracting offset top height from
+      // the given viewport is enought
+      if (lastStickedOffset === initialStickedOffset) {
+        stickedOffsetTop = lastStickedOffset;
+      } else {
+        // else we have to scroll up pixel by pixel to compute the best viewport top position
+        const initialStickedOffsetMinusViewportHeight = initialViewportTop - viewportHeight;
+        for (
+          lastViewportTop = initialViewportTop - 1;
+          lastViewportTop >= initialStickedOffsetMinusViewportHeight;
+          lastViewportTop--
+        ) {
+          lastStickedOffset = this.stickyEngine.determineStickedOffset(container, stickySnaps, 'top', lastViewportTop);
+          if (initialViewportTop - lastViewportTop - lastStickedOffset >= 0) {
+            stickedOffsetTop = initialViewportTop - lastViewportTop;
+            break;
+          }
+        }
+      }
+    }
+
+    let viewportTopFixed = viewportTopOffsetless - stickedOffsetTop;
 
     if (this.containerParent) {
       viewportTopFixed -= this.getContainer().top;

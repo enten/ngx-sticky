@@ -410,9 +410,10 @@ describe('determineStickyState', () => {
 });
 
 
-describe('getStickedOffset', () => {
+describe('determineStickedOffset', () => {
   it('should returns sticked offset for given position', () => {
     const container = { top: 0, height: 50, left: 0, width: 100 };
+    const viewportHeight = 10;
     const stickies: NgxSticky[] = [
       { top: 2, height: 2 },
       { top: 4, height: 2, disabled: true },
@@ -421,12 +422,13 @@ describe('getStickedOffset', () => {
       { top: 15, height: 2 },
       { top: 20, height: 2 },
     ];
+    const snaps = stickies.map(sticky => engine.snapSticky(container, stickies, sticky, viewportHeight));
 
-    expect(engine.getStickedOffset(container, stickies, 'top', 10, 0)).toBe(0);
-    expect(engine.getStickedOffset(container, stickies, 'top', 10, 5)).toBe(2);
-    expect(engine.getStickedOffset(container, stickies, 'top', 10, 10)).toBe(9);
-    expect(engine.getStickedOffset(container, stickies, 'top', 10, 20)).toBe(11);
-    expect(engine.getStickedOffset(container, stickies, 'bottom', 10, 20)).toBe(2);
+    expect(engine.determineStickedOffset(container, snaps, 'top', 0)).toBe(0);
+    expect(engine.determineStickedOffset(container, snaps, 'top', 5)).toBe(2 + 0 + 0 + 0 + 0 + 0);
+    expect(engine.determineStickedOffset(container, snaps, 'top', 10)).toBe(2 + 0 + 0 + 5 + 2 + 0);
+    expect(engine.determineStickedOffset(container, snaps, 'top', 20)).toBe(2 + 0 + 0 + 5 + 2 + 2);
+    expect(engine.determineStickedOffset(container, snaps, 'bottom', 20)).toBe(0 + 0 + 2 + 0 + 0 + 0);
   });
 });
 

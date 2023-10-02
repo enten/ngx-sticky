@@ -662,13 +662,13 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
     let ghostHeight = element.offsetHeight;
     // const ghostWidth = elementStyle.width;
 
-    // substract borders and paddings when element isn't border-boxed
+    // subtract borders and paddings when element isn't border-boxed
     if (!elementnBorderBox) {
       ghostHeight +=
-        // substract vertical borders
+        // subtract vertical borders
         - (parseFloat(elementStyle.borderTopWidth) || 0)
         - (parseFloat(elementStyle.borderBottomWidth) || 0)
-        // substract vertical paddings
+        // subtract vertical paddings
         - (parseFloat(elementStyle.paddingTop) || 0)
         - (parseFloat(elementStyle.paddingBottom) || 0);
     }

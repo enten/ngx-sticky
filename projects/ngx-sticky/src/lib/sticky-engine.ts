@@ -369,7 +369,7 @@ export class NgxStickyEngine {
         // increase sticked line height with sum of sticked and stucked offsets from previous and opposite siblings
         _stickedHeight += sumOfCurrentAndOppositeOffsets;
 
-        // substract sum of sticked and stucked offsets from previous and opposite siblings when direction is up
+        // subtract sum of sticked and stucked offsets from previous and opposite siblings when direction is up
         if (!_stickyComputed.directionDown) {
           _stickedTop -= sumOfCurrentAndOppositeOffsets;
         }
@@ -416,64 +416,53 @@ export class NgxStickyEngine {
   }
 
   /**
-   * Returns scroll top offset height used by stickies for a given viewport position.
+   * Returns offset height used by sticked stickies for a given side and viewport position.
    *
    * @param container Container
-   * @param stickies Stickies
+   * @param stickySnaps Array of sticky snaps
    * @param position Position `"top"` or `"bottom"`
-   * @param viewportHeight Viewport height
-   * @param offsetTop Viewport top
-   * @returns Top offset height used by stickies.
+   * @param viewportTop Viewport/scroll top position
    */
-  getStickedOffset(
+  determineStickedOffset(
     container: NgxStickyContainer,
-    stickies: NgxSticky[],
+    stickySnaps: NgxStickySnap[],
     position: NgxStickyPosition,
-    viewportHeight: number,
     viewportTop: number,
   ): number {
     const positionBottom = isStickyPositionBottom(position);
-    let maxStickyUnstackedHeight = 0;
+    const containerOffset = positionBottom ? container.offsetBottom || 0 : container.offsetTop || 0;
     let stickedOffset = 0;
+    let heightOfStickyUnstackedWithMaxHeight = 0;
 
-    for (const _sticky of stickies) {
-      // skip sticky which have different position than the given
-      if (isStickyPositionBottom(_sticky.position!) !== positionBottom) {
+    for (const stickySnap of stickySnaps) {
+      const { stickyComputed } = stickySnap;
+
+      if (
+        // skip sticky which have different container reference than the given
+        stickySnap.container !== container
+        // skip sticky which have different position than the given
+        || stickyComputed.positionBottom !== positionBottom
+        // skip sticky when is disabled
+        || stickyComputed.disabled
+      ) {
         continue;
       }
 
-      const snap = this.snapSticky(container, stickies, _sticky, viewportHeight);
+      const computation = this.determineStickyState(stickySnap, viewportTop);
 
-      // skip sticky when is disabled
-      if (snap.sticky.disabled) {
-        continue;
-      }
-
-      const computation = this.determineStickyState(snap, viewportTop);
-
-      // add sticky height to offset top when state is sticked
+      // add sticky height to sticked offset when state is sticked
       if (computation.state === 'sticked') {
-        const _elementHeight = snap.stickyComputed.height;
-
-        // substract height when sticky is stacked
-        if (!snap.stickyComputed.boundary.unstacked) {
-          stickedOffset += _elementHeight;
-        // or update the biggest sticky unstacked
-        } else if (_elementHeight > maxStickyUnstackedHeight) {
-          maxStickyUnstackedHeight = _elementHeight;
+        // add height when sticky is stacked
+        if (!stickyComputed.boundary.unstacked) {
+          stickedOffset += stickyComputed.height;
+        // or update the height of sticky unstacked with max height
+        } else if (stickyComputed.height > heightOfStickyUnstackedWithMaxHeight) {
+          heightOfStickyUnstackedWithMaxHeight = stickyComputed.height;
         }
       }
     }
 
-    stickedOffset += maxStickyUnstackedHeight;
-
-    if (positionBottom) {
-      stickedOffset += container.offsetBottom || 0;
-    } else {
-      stickedOffset += container.offsetTop || 0;
-    }
-
-    return stickedOffset;
+    return containerOffset + stickedOffset + heightOfStickyUnstackedWithMaxHeight;
   }
 
   /**
@@ -823,5 +812,28 @@ export class NgxStickyEngine {
       stickyComputed,
       viewportHeight,
     };
+  }
+
+  _collectStickySnaps(
+    container: NgxStickyContainer,
+    stickies: NgxSticky[],
+    position: 'both' | NgxStickyPosition,
+    viewportHeight: number,
+  ): NgxStickySnap[] {
+    const stickySnaps: NgxStickySnap[] = [];
+
+    if (position !== 'both') {
+      const positionBottom = isStickyPositionBottom(position);
+      stickies = stickies.filter(sticky => isStickyPositionBottom(sticky.position!) === positionBottom);
+    }
+
+    for (const sticky of stickies) {
+      const stickySnap = this.snapSticky(container, stickies, sticky, viewportHeight);
+      if (!stickySnap.stickyComputed.disabled) {
+        stickySnaps.push(stickySnap);
+      }
+    }
+    
+    return stickySnaps;
   }
 }
