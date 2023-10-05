@@ -2,6 +2,9 @@
   "private": true,
   "name": "ngx-sticky-app",
   "version": "0.0.0",
+  "engines": {
+    "node": "^14.15.0 || >=16.10.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -15,20 +18,21 @@
     "dev-app:watch": "ng run ngx-sticky-app:build --watch --configuration development",
     "lib:build": "ng run ngx-sticky:build",
     "lib:build:prod": "ng run ngx-sticky:build:production",
+    "postlib:build:prod": "cp README.md LICENSE ./dist/ngx-sticky",
     "lib:lint": "ng lint ngx-sticky",
     "lib:test": "jest --selectProjects ngx-sticky",
     "lib:watch": "ng run ngx-sticky:build --watch --configuration development"
   },
   "dependencies": {
-    "@angular/animations": "~14.2.12",
-    "@angular/common": "~14.2.12",
-    "@angular/compiler": "~14.2.12",
-    "@angular/core": "~14.2.12",
-    "@angular/forms": "~14.2.12",
-    "@angular/platform-browser": "~14.2.12",
-    "@angular/platform-browser-dynamic": "~14.2.12",
-    "@angular/router": "~14.2.12",
-    "rxjs": "~6.6.7",
+    "@angular/animations": "~14.3.0",
+    "@angular/common": "~14.3.0",
+    "@angular/compiler": "~14.3.0",
+    "@angular/core": "~14.3.0",
+    "@angular/forms": "~14.3.0",
+    "@angular/platform-browser": "~14.3.0",
+    "@angular/platform-browser-dynamic": "~14.3.0",
+    "@angular/router": "~14.3.0",
+    "rxjs": "6.5.3",
     "tslib": "~2.4.0",
     "zone.js": "~0.11.8"
   },
@@ -40,7 +44,7 @@
     "@angular-eslint/schematics": "14.4.0",
     "@angular-eslint/template-parser": "14.4.0",
     "@angular/cli": "~14.2.7",
-    "@angular/compiler-cli": "~14.2.7",
+    "@angular/compiler-cli": "~14.3.0",
     "@types/jest": "~28.1.1",
     "@types/node": "~14.18.0",
     "@typescript-eslint/eslint-plugin": "5.41.0",
@@ -52,7 +56,8 @@
     "ng-packagr": "^14.2.2",
     "normalize.css": "~8.0.1",
     "ts-jest": "~28.0.5",
-    "typescript": "~4.7.2"
+    "ts-node": "~10.9.1",
+    "typescript": "4.6.2"
   },
   "repository": {
     "type": "git",
