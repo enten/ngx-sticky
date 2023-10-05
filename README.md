@@ -63,6 +63,22 @@ export class SomeModule { }
 </div>
 ```
 
+## Showcases
+
+| @enten/ngx-sticky | @angular/core | rxjs |
+|-|-|-|
+| [`16.0.0`](https://enten.github.io/ngx-sticky/v/16.0.0) | `^16.0.0` | `^6.5.3 \|\| ^7.4.0` |
+| [`15.0.0`](https://enten.github.io/ngx-sticky/v/15.0.0) | `^15.0.0` | `^6.5.3 \|\| ^7.4.0` |
+| [`14.0.0`](https://enten.github.io/ngx-sticky/v/14.0.0) | `^14.0.0` | `^6.5.3 \|\| ^7.4.0` |
+| [`13.0.0`](https://enten.github.io/ngx-sticky/v/13.0.0) | `^13.0.0` | `^6.5.3 \|\| ^7.4.0` |
+| [`12.0.0`](https://enten.github.io/ngx-sticky/v/12.0.0) | `^12.0.0` | `^6.5.3 \|\| ^7.0.0` |
+| [`11.0.0`](https://enten.github.io/ngx-sticky/v/11.0.0) | `^11.0.0` | `^6.5.3` |
+| [`10.0.0`](https://enten.github.io/ngx-sticky/v/10.0.0) | `^10.0.0` | `^6.5.3` |
+| [`9.0.0`](https://enten.github.io/ngx-sticky/v/9.0.0) | `^9.0.0` | `^6.5.3` |
+| [`8.0.0`](https://enten.github.io/ngx-sticky/v/8.0.0) | `^8.0.0` | `^6.4.0` |
+| [`7.0.0`](https://enten.github.io/ngx-sticky/v/7.0.0) | `^7.0.0` | `>=6.0.0 <6.4.0` |
+| [`6.0.0`](https://enten.github.io/ngx-sticky/v/6.0.0) | `^6.0.0` | `>=6.0.0 <6.4.0` |
+
 ## Thanks to
 
 * [@w11k/angular-sticky-things](https://github.com/w11k/angular-sticky-things)
