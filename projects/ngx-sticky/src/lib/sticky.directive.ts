@@ -66,32 +66,32 @@ export interface NgxStickyElementStyle extends Partial<Record<keyof CSSStyleDecl
  */
 export interface NgxStickyGhostStyle extends Partial<Record<keyof CSSStyleDeclaration, string>> {
   // [prop: string]: string;
+  height: string;
+  maxHeight: string;
+  minHeight: string;
   width: string;
+  maxWidth: string;
+  minWidth: string;
+  boxSizing: string;
+  cssFloat: string;
   position: string;
   top: string;
   right: string;
   bottom: string;
   left: string;
-  cssFloat: string;
-  marginTop: string;
-  marginRight: string;
-  marginBottom: string;
-  marginLeft: string;
-
-  height: string;
-  maxHeight: string;
-  minHeight: string;
-  boxSizing: string;
   borderTop: string;
   borderBottom: string;
   borderLeft: string;
   borderRight: string;
+  marginTop: string;
+  marginRight: string;
+  marginBottom: string;
+  marginLeft: string;
   paddingTop: string;
   paddingBottom: string;
   paddingLeft: string;
   paddingRight: string;
 }
-
 
 export interface NgxStickyConfig {
   classes: boolean;
@@ -660,7 +660,6 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
     const elementnBorderBox = elementStyle.boxSizing === 'border-box';
 
     let ghostHeight = element.offsetHeight;
-    // const ghostWidth = elementStyle.width;
 
     // subtract borders and paddings when element isn't border-boxed
     if (!elementnBorderBox) {
@@ -674,24 +673,25 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
     }
 
     const styles: NgxStickyGhostStyle = {
-      boxSizing: elementStyle.boxSizing,
+      // width: element.style.width || elementStyle.width,
+      width: elementStyle.width,
+      maxWidth: elementStyle.maxWidth,
+      minWidth: elementStyle.minWidth,
+      height: `${ghostHeight}px`,
+      maxHeight: `${ghostHeight}px`,
+      minHeight: `${ghostHeight}px`,
       position: elementStyle.position,
+      boxSizing: elementStyle.boxSizing,
+      cssFloat: elementStyle.cssFloat,
       top: elementStyle.top,
       right: elementStyle.right,
       bottom: elementStyle.bottom,
       left: elementStyle.left,
-      width: element.style.width,
-      // width: element.style.width || elementStyle.width,
-      // width: `${ghostWidth}px`,
-      height: `${ghostHeight}px`,
-      maxHeight: `${ghostHeight}px`,
-      minHeight: `${ghostHeight}px`,
       borderTop: elementStyle.borderTop,
       borderBottom: elementStyle.borderBottom,
       borderLeft: elementStyle.borderLeft,
       borderRight: elementStyle.borderRight,
       // borderColor: 'transparent',
-      cssFloat: elementStyle.cssFloat,
       marginTop: elementStyle.marginTop,
       marginBottom: elementStyle.marginBottom,
       marginLeft: elementStyle.marginLeft,
@@ -704,7 +704,8 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
 
     // if (this.config.orbit) {
     //   styles.position = 'absolute';
-    //   styles.width = element.style.width || elementStyle.width;
+    //   // styles.width = element.style.width || elementStyle.width;
+    //   styles.width = elementStyle.width;
     // }
 
     return styles;
