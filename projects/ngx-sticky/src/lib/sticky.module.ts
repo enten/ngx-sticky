@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { NgxInViewportDirective } from './in-viewport.directive';
@@ -39,6 +38,5 @@ import { NgxStickyDirective } from './sticky.directive';
     NgxStickyDirective,
     NgxStickySpotDirective,
   ],
-  imports: [ CommonModule ],
 })
 export class NgxStickyModule { }
