@@ -9,6 +9,7 @@ import {
   getWindowViewportLeft,
   getWindowViewportTop,
   isElementScrollableY,
+  scrollToFactory,
   setElementStyles,
 } from '../../../src/lib/utils/dom';
 
@@ -261,6 +262,160 @@ describe('setElementStyles', () => {
     expect(renderer.removeStyle).toBeCalledTimes(2);
     expect(renderer.removeStyle).toHaveBeenNthCalledWith(1, element, 'foo');
     expect(renderer.removeStyle).toHaveBeenNthCalledWith(2, element, 'bar');
+  });
+});
+
+
+describe('scrollToFactory', () => {
+  it('should return function which calls native scrollTo with options as object', () => {
+    const win: Window = {
+      document: {
+        body: {},
+        documentElement: {
+          style: { scrollBehavior: '' },
+          scrollLeft: 0,
+          scrollTop: 0,
+          getBoundingClientRect: jest.fn(() => ({} as DOMRect)) as Element['getBoundingClientRect'],
+        },
+      },
+      scrollTo: jest.fn() as Window['scrollTo'],
+    } as Window;
+
+    const scrollToFn = scrollToFactory(win, null);
+
+    scrollToFn();
+    expect(win.scrollTo).not.toBeCalled();
+
+    scrollToFn({});
+    expect(win.scrollTo).not.toBeCalled();
+
+    scrollToFn({ behavior: 'smooth' });
+    expect(win.scrollTo).not.toBeCalled();
+
+    scrollToFn({ behavior: 'smooth', left: 1 });
+    expect(win.scrollTo).toBeCalledTimes(1);
+    expect(win.scrollTo).toBeCalledWith({ behavior: 'smooth', left: 1, top: 0 });
+
+    scrollToFn({ behavior: 'smooth', top: 101 });
+    expect(win.scrollTo).toBeCalledTimes(2);
+    expect(win.scrollTo).toBeCalledWith({ behavior: 'smooth', left: 0, top: 101 });
+
+    scrollToFn({ behavior: 'smooth', left: 1, top: 101 });
+    expect(win.scrollTo).toBeCalledTimes(3);
+    expect(win.scrollTo).toBeCalledWith({ behavior: 'smooth', left: 1, top: 101 });
+
+    scrollToFn(2, NaN);
+    expect(win.scrollTo).toBeCalledTimes(4);
+    expect(win.scrollTo).toBeCalledWith({ left: 2, top: 0 });
+
+    scrollToFn(NaN, 102);
+    expect(win.scrollTo).toBeCalledTimes(5);
+    expect(win.scrollTo).toBeCalledWith({ left: 0, top: 102 });
+
+    scrollToFn(3, 103);
+    expect(win.scrollTo).toBeCalledTimes(6);
+    expect(win.scrollTo).toBeCalledWith({ left: 3, top: 103 });
+  });
+
+  it('should return function which calls native scrollTo with flatten options', () => {
+    const win: Window = {
+      document: {
+        body: {},
+        documentElement: {
+          scrollLeft: 0,
+          scrollTop: 0,
+          getBoundingClientRect: jest.fn(() => ({} as DOMRect)) as Element['getBoundingClientRect'],
+        },
+      },
+      scrollTo: jest.fn() as Window['scrollTo'],
+    } as Window;
+
+    const scrollToFn = scrollToFactory(win, null);
+
+    scrollToFn();
+    expect(win.scrollTo).not.toBeCalled();
+
+    scrollToFn({});
+    expect(win.scrollTo).not.toBeCalled();
+
+    scrollToFn({ behavior: 'smooth' });
+    expect(win.scrollTo).not.toBeCalled();
+
+    scrollToFn({ behavior: 'smooth', left: 1 });
+    expect(win.scrollTo).toBeCalledTimes(1);
+    expect(win.scrollTo).toBeCalledWith(1, 0);
+
+    scrollToFn({ behavior: 'smooth', top: 101 });
+    expect(win.scrollTo).toBeCalledTimes(2);
+    expect(win.scrollTo).toBeCalledWith(0, 101);
+
+    scrollToFn({ behavior: 'smooth', left: 1, top: 101 });
+    expect(win.scrollTo).toBeCalledTimes(3);
+    expect(win.scrollTo).toBeCalledWith(1, 101);
+
+    scrollToFn(2, NaN);
+    expect(win.scrollTo).toBeCalledTimes(4);
+    expect(win.scrollTo).toBeCalledWith(2, 0);
+
+    scrollToFn(NaN, 102);
+    expect(win.scrollTo).toBeCalledTimes(5);
+    expect(win.scrollTo).toBeCalledWith(0, 102);
+
+    scrollToFn(3, 103);
+    expect(win.scrollTo).toBeCalledTimes(6);
+    expect(win.scrollTo).toBeCalledWith(3, 103);
+  });
+
+  it('should return function which polyfills native scrollTo', () => {
+    const win: Window = {
+      document: { body: {} },
+      scrollTo: jest.fn() as Window['scrollTo'],
+    } as Window;
+    const container: Element = {
+      scrollLeft: 0,
+      scrollTop: 0,
+    } as Element;
+
+    const scrollToFn = scrollToFactory(win, container);
+
+    scrollToFn();
+    expect(win.scrollTo).not.toBeCalled();
+
+    scrollToFn({});
+    expect(win.scrollTo).not.toBeCalled();
+
+    scrollToFn({ behavior: 'smooth' });
+    expect(win.scrollTo).not.toBeCalled();
+
+    scrollToFn({ behavior: 'smooth', left: 1 });
+    expect(win.scrollTo).not.toBeCalled();
+    expect(container.scrollLeft).toBe(1);
+    expect(container.scrollTop).toBe(0);
+
+    scrollToFn({ behavior: 'smooth', top: 101 });
+    expect(win.scrollTo).not.toBeCalled();
+    expect(container.scrollLeft).toBe(1);
+    expect(container.scrollTop).toBe(101);
+
+    scrollToFn({ behavior: 'smooth', left: 2, top: 102 });
+    expect(win.scrollTo).not.toBeCalled();
+    expect(container.scrollLeft).toBe(2);
+    expect(container.scrollTop).toBe(102);
+
+    scrollToFn(3, NaN);
+    expect(win.scrollTo).not.toBeCalled();
+    expect(container.scrollLeft).toBe(3);
+    expect(container.scrollTop).toBe(102);
+
+    scrollToFn(NaN, 103);
+    expect(win.scrollTo).not.toBeCalled();
+    expect(container.scrollLeft).toBe(3);
+    expect(container.scrollTop).toBe(103);
+
+    scrollToFn(4, 104);
+    expect(win.scrollTo).not.toBeCalled();
+    expect(container.scrollLeft).toBe(4);
+    expect(container.scrollTop).toBe(104);
   });
 });
 

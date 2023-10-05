@@ -243,3 +243,76 @@ export function setElementStyles(
   }
 }
 
+
+export function isSmoothScrollSupported(win: Window): boolean {
+  return win
+    && win.document
+    && win.document.documentElement
+    && win.document.documentElement.style
+    && 'scrollBehavior' in win.document.documentElement.style
+    ;
+}
+
+
+export function scrollToFactory(win: Window, container: Element | null): Element['scrollTo'];
+export function scrollToFactory(win: Window, container: Element | null): Element['scrollTo'];
+/** @internal */
+export function scrollToFactory(win: Window, container: Element | null): Element['scrollTo'] {
+  if (!win) {
+    return () => {};
+  }
+  const smoothScrollSupported = isSmoothScrollSupported(win);
+  const nativeScrollToFn = container ? container.scrollTo : win.scrollTo;
+  const scrollThisArg = container ? container : win;
+  const scrollTarget = container ? container : win.document.documentElement;
+  const getViewportLeft: () => number = container ? () => container.scrollLeft : () => getWindowViewportLeft(win);
+  const getViewportTop: () => number = container ? () => container.scrollTop : () => getWindowViewportTop(win);
+  const parseOptions = (
+    optionsOrX: ScrollToOptions | number,
+    mayY?: number,
+  ): ScrollToOptions | null => {
+    return optionsOrX != null && typeof optionsOrX !== 'object'
+      // scrollTo(x: number, y: number): void
+      ? {
+          left: !isNaN(+optionsOrX) ? +optionsOrX : getViewportLeft(),
+          top: mayY != null && !isNaN(+mayY) ? +mayY : getViewportTop(),
+        }
+      // scrollTo(options: ScrollToOptions): void
+      : optionsOrX != null && typeof optionsOrX === 'object' && ('top' in optionsOrX || 'left' in optionsOrX)
+        ? {
+            ...optionsOrX as object,
+            left: optionsOrX.left != null && !isNaN(+optionsOrX.left) ? +optionsOrX.left : getViewportLeft(),
+            top: optionsOrX.top != null && !isNaN(+optionsOrX.top) ? +optionsOrX.top : getViewportTop(),
+          }
+        
+        : null
+      ;
+  };
+  const scrollToFn: (options: ScrollToOptions) => void =
+    nativeScrollToFn
+      ? smoothScrollSupported
+        // function which calls native scrollTo with options as object
+        ? options => {
+            (nativeScrollToFn as (options: ScrollToOptions) => void).call(scrollThisArg, options);
+          }
+        // function which calls native scrollTo with flatten options because options as object is not supported
+        : options => {
+            (nativeScrollToFn as (x: number, y: number) => void).call(scrollThisArg, options.left as number, options.top as number);
+          }
+      // function which polyfills native scrollTo
+      : options => {
+          if (options.left !== scrollTarget.scrollLeft) {
+            scrollTarget.scrollLeft = options.left as number;
+          }
+          if (options.top !== scrollTarget.scrollTop) {
+            scrollTarget.scrollTop = options.top as number;
+          }
+        }
+      ;
+  return ((optionsOrX: ScrollToOptions | number, mayY?: number) => {
+    const options: ScrollToOptions | null = parseOptions(optionsOrX, mayY);
+    if (options) {
+      scrollToFn(options);
+    }
+  }) as Element['scrollTo'];
+}

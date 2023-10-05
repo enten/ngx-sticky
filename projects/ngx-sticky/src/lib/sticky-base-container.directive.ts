@@ -4,7 +4,7 @@ import { debounceTime, filter, map, startWith, switchMap, takeUntil, throttleTim
 
 import { NgxStickyBaseContainerController } from './sticky-base-container.controller';
 import { NgxStickyEngine } from './sticky-engine';
-import { NgxScrollPlan, NgxStickyContainer, NgxStickyContainerController, NgxStickyController } from './sticky.types';
+import { NgxScrollPlan, NgxScrollPlanStep, NgxStickyContainer, NgxStickyContainerController, NgxStickyController } from './sticky.types';
 import { coerceBooleanProperty, coerceNumberProperty } from './utils/coercion';
 import { ConfigSubject, ConfigSubjectSchema } from './utils/config-subject';
 import {
@@ -15,6 +15,7 @@ import {
   getWindowViewportLeft,
   getWindowViewportTop,
   isElementScrollableY,
+  scrollToFactory,
 } from './utils/dom';
 
 
@@ -121,6 +122,9 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
   /** Getter for document width */
   readonly _getDocumentWidth: () => number;
 
+  /** Scrolling function lazily created */
+  _scrollToFn?: NgxScrollPlanStep['scrollToFn'];
+
   constructor(
     readonly containerParent: NgxStickyContainerController,
     readonly stickyEngine: NgxStickyEngine,
@@ -172,10 +176,11 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
       return scrollPlan;
     }
 
-    const scrollToFn = this.element
-      ? this.element.scrollTo.bind(this.element)
-      : this._win.scrollTo.bind(this._win);
+    if (!this._scrollToFn) {
+      this._scrollToFn = scrollToFactory(this._win, this.element) as NgxScrollPlanStep['scrollToFn'];
+    }
 
+    const scrollToFn = this._scrollToFn;
     let containsElement = false;
 
     if (typeof target === 'string') {
