@@ -20,7 +20,9 @@
             "outputPath": "dist/ngx-sticky-app",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "src/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
