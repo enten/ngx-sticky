@@ -4,11 +4,11 @@
     "baseUrl": ".",
     "rootDir": ".",
     "outDir": "./dist/out-tsc/workspace",
-    "target": "ES2020",
-    "module": "ES2020",
+    "target": "ES2022",
+    "module": "ES2022",
     "moduleResolution": "node",
     "lib": [
-      "ES2020",
+      "ES2022",
       "dom"
     ],
     "declaration": false,
