@@ -1,6 +1,4 @@
-import { Config } from 'jest';
-
-export default <Config>{
+export default {
   displayName: 'ngx-sticky-app',
   preset: '../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
