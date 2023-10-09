@@ -13,7 +13,7 @@ let mediaQueryStyleNode: HTMLStyleElement | undefined;
  * @param query Media query
  * @returns Observable on media query events
  */
-export function fromMediaQuery(win: Window, query: string, nonce?: string): Observable<MediaQueryListEvent> {
+export function fromMediaQuery(win: any/*Window*/, query: string, nonce?: string): Observable<MediaQueryListEvent> {
   return new Observable(subscriber => {
     if (!win?.matchMedia) {
       return;
@@ -56,7 +56,7 @@ function hasEmptyStyleRule(query: string): boolean {
  * targeting the `body`. See https://github.com/angular/components/issues/23546.
  * @see https://github.com/angular/components/blob/16.2.6/src/cdk/layout/media-matcher.ts#L49-L82
  */
-function createEmptyStyleRule(win: Window, query: string, nonce: string | undefined | null) {
+function createEmptyStyleRule(win: any/*Window*/, query: string, nonce: string | undefined | null) {
   if (mediaQueriesForWebkitCompatibility.has(query)) {
     return;
   }
@@ -66,15 +66,15 @@ function createEmptyStyleRule(win: Window, query: string, nonce: string | undefi
       mediaQueryStyleNode = win.document.createElement('style');
 
       if (nonce) {
-        mediaQueryStyleNode.nonce = nonce;
+        (mediaQueryStyleNode as any).nonce = nonce;
       }
 
-      mediaQueryStyleNode.setAttribute('type', 'text/css');
+      (mediaQueryStyleNode as HTMLStyleElement).setAttribute('type', 'text/css');
       win.document.head!.appendChild(mediaQueryStyleNode);
     }
 
-    if (mediaQueryStyleNode.sheet) {
-      mediaQueryStyleNode.sheet.insertRule(`@media ${query} {body{ }}`, 0);
+    if ((mediaQueryStyleNode as HTMLStyleElement).sheet) {
+      (mediaQueryStyleNode as any).sheet.insertRule(`@media ${query} {body{ }}`, 0);
       mediaQueriesForWebkitCompatibility.add(query);
     }
   } catch (e) {
@@ -83,7 +83,7 @@ function createEmptyStyleRule(win: Window, query: string, nonce: string | undefi
 }
 
 // @see https://github.com/angular/components/blob/16.2.6/src/cdk/platform/platform.ts#L33-L64
-export function isEmptyStyleRuleNeeded(win: Window): boolean {
+export function isEmptyStyleRuleNeeded(win: any/*Window*/): boolean {
   if (!win?.navigator?.userAgent) {
     return false;
   }

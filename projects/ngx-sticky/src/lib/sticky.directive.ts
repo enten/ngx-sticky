@@ -361,7 +361,7 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
     // readonly changeDetectorRef: ChangeDetectorRef,
     readonly ngZone: NgZone,
     @Inject(NGX_STICKY_WINDOW)
-    readonly _win: Window,
+    readonly _win: any/*Window*/,
   ) {
     super();
 

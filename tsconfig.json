@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "outDir": "./dist/out-tsc/workspace",
-    "target": "ES2017",
+    "target": "ES2015",
     "module": "ES2020",
     "moduleResolution": "node",
     "lib": [
@@ -18,7 +18,6 @@
     "importHelpers": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
     "sourceMap": true,
     "strict": true,
     "resolveJsonModule": true,

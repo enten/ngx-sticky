@@ -30,7 +30,7 @@ export class NgxStickyContainerDirective extends NgxStickyBaseContainerDirective
     ngZone: NgZone,
     readonly elementRef: ElementRef<HTMLElement>,
     @Inject(NGX_STICKY_WINDOW)
-    _win: Window,
+    _win: any/*Window*/,
   ) {
     // use root container when boundary isn't in container
     super(stickyContainerParent || rootContainer, stickyEngine, ngZone, _win);

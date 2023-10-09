@@ -22,7 +22,7 @@ export class NgxStickyRootContainerController extends NgxStickyBaseContainerDire
     stickyEngine: NgxStickyEngine,
     ngZone: NgZone,
     @Inject(NGX_STICKY_WINDOW)
-    _win: Window,
+    _win: any/*Window*/,
   ) {
     super(null!, stickyEngine, ngZone, _win);
 

@@ -129,7 +129,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     readonly containerParent: NgxStickyContainerController,
     readonly stickyEngine: NgxStickyEngine,
     readonly ngZone: NgZone,
-    readonly _win: Window,
+    readonly _win: any/*Window*/,
   ) {
     super();
 
@@ -192,7 +192,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
         if (this.element) {
           target = this.element.querySelector<HTMLElement>(target)!;
         } else {
-          target = this._win.document.querySelector<HTMLElement>(target)!;
+          target = this._win.document.querySelector/*<HTMLElement>*/(target)!;
         }
 
         if (target) {

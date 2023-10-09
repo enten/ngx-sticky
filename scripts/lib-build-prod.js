@@ -60,7 +60,7 @@ async function main(proc, {
       declarationMap: true,
     },
     angularCompilerOptions: {
-      compilationMode: 'partial',
+      enableIvy: false,
     },
   };
   await writeJson(p.join(stagingOutputPath, 'tsconfig.lib.json'), tsconfigLibJson);
@@ -113,7 +113,8 @@ async function main(proc, {
   await $('mkdir', ['-p', p.dirname(stableOutputPath)]);
   await $('mv', [stagingOutputPath, stableOutputPath]);
   await $('mkdir', ['-p', libPacksDir]);
-  await npm(proc, ['pack', stableOutputPath, '--pack-destination', libPacksDir]);
+  await npm(proc, ['pack', stableOutputPath]);
+  await $('mv', [`${libPkgNameDashed}-${libPkgVersion}.tgz`, libPacksDir]);
 
   logSuccess(`${libPkgName} ${libPkgVersion}`);
 }

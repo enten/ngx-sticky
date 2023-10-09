@@ -86,7 +86,7 @@ export class NgxStickyBoundaryDirective extends NgxStickyBaseBoundaryController 
     readonly elementRef: ElementRef<HTMLElement>,
     readonly ngZone: NgZone,
     @Inject(NGX_STICKY_WINDOW)
-    readonly _win: Window,
+    readonly _win: any/*Window*/,
   ) {
     super();
 

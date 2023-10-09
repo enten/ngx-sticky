@@ -22,7 +22,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -38,13 +38,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ],
               "fileReplacements": [
@@ -65,20 +65,18 @@
               "sourceMap": true,
               "namedChunks": true
             }
-          },
-          "defaultConfiguration": "production"
+          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ngx-sticky-app:build:development"
+          },
           "configurations": {
             "production": {
               "browserTarget": "ngx-sticky-app:build:production"
-            },
-            "development": {
-              "browserTarget": "ngx-sticky-app:build:development"
             }
-          },
-          "defaultConfiguration": "development"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -106,17 +104,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/ngx-sticky/ng-package.json"
+            "project": "projects/ngx-sticky/ng-package.json",
+            "tsConfig": "projects/ngx-sticky/tsconfig.lib.json"
           },
           "configurations": {
             "production": {
               "tsConfig": "projects/ngx-sticky/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/ngx-sticky/tsconfig.lib.json"
             }
-          },
-          "defaultConfiguration": "production"
+          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",

@@ -7,7 +7,7 @@ import { Renderer2 } from '@angular/core';
  * @param win Window reference
  * @returns Getter for document height.
  */
-export function getDocumentHeightFactory(win: Window): () => number {
+export function getDocumentHeightFactory(win: any/*Window*/): () => number {
   if (!win) {
     return () => 0;
   }
@@ -43,7 +43,7 @@ export function getDocumentHeightFactory(win: Window): () => number {
  * @param win Window reference
  * @returns Getter for document width.
  */
-export function getDocumentWidthFactory(win: Window): () => number {
+export function getDocumentWidthFactory(win: any/*Window*/): () => number {
   if (!win) {
     return () => 0;
   }
@@ -107,7 +107,7 @@ export function getElementAbsoluteRect(element: HTMLElement) {
  * @param element Element
  * @returns Element relative rect.
  */
-export function getElementRelativeRect(win: Window, element: HTMLElement) {
+export function getElementRelativeRect(win: any/*Window*/, element: HTMLElement) {
   const rect = {
     height: element.offsetHeight,
     width: element.offsetWidth,
@@ -143,7 +143,7 @@ export function getElementRelativeRect(win: Window, element: HTMLElement) {
  * @param win Window reference
  * @returns Window viewport height
  */
-export function getWindowViewportHeight(win: Window): number {
+export function getWindowViewportHeight(win: any/*Window*/): number {
   return win && win.innerHeight || 0;
 }
 
@@ -154,7 +154,7 @@ export function getWindowViewportHeight(win: Window): number {
  * @param win Window reference
  * @returns Window scroll left position
  */
-export function getWindowViewportLeft(win: Window): number {
+export function getWindowViewportLeft(win: any/*Window*/): number {
   if (!win) {
     return 0;
   }
@@ -181,7 +181,7 @@ export function getWindowViewportLeft(win: Window): number {
  * @param win Window reference
  * @returns Window scroll top position
  */
-export function getWindowViewportTop(win: Window): number {
+export function getWindowViewportTop(win: any/*Window*/): number {
   if (!win) {
     return 0;
   }
@@ -209,7 +209,7 @@ export function getWindowViewportTop(win: Window): number {
  * @param element Element
  * @returns `true` when element is scrollable
  */
-export function isElementScrollableY(win: Window, element: HTMLElement): boolean {
+export function isElementScrollableY(win: any/*Window*/, element: HTMLElement): boolean {
   return element.offsetHeight < element.scrollHeight && win.getComputedStyle(element).overflowY === 'auto';
 }
 
@@ -244,7 +244,7 @@ export function setElementStyles(
 }
 
 
-export function isSmoothScrollSupported(win: Window): boolean {
+export function isSmoothScrollSupported(win: any/*Window*/): boolean {
   return win
     && win.document
     && win.document.documentElement
@@ -254,10 +254,10 @@ export function isSmoothScrollSupported(win: Window): boolean {
 }
 
 
-export function scrollToFactory(win: Window, container: Element | null): Element['scrollTo'];
-export function scrollToFactory(win: Window, container: Element | null): Element['scrollTo'];
+export function scrollToFactory(win: any/*Window*/, container: Element | null): Element['scrollTo'];
+export function scrollToFactory(win: any/*Window*/, container: Element | null): Element['scrollTo'];
 /** @internal */
-export function scrollToFactory(win: Window, container: Element | null): Element['scrollTo'] {
+export function scrollToFactory(win: any/*Window*/, container: Element | null): Element['scrollTo'] {
   if (!win) {
     return () => {};
   }

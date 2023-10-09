@@ -157,7 +157,7 @@ export class NgxInViewportDirective implements NgxIntersectionController, AfterV
     readonly elementRef: ElementRef<HTMLElement>,
     readonly ngZone: NgZone,
     @Inject(NGX_STICKY_WINDOW)
-    readonly _win: Window,
+    readonly _win: any/*Window*/,
   ) {
     // use root container when sticky isn't in container
     this._container = stickyContainer || rootContainer;
