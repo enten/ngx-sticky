@@ -88,7 +88,7 @@ export class ConfigSubject<T extends object> extends Subject<T> {
    * @param partialConfig Partial next config
    * @param options Options to skip coercion
    */
-  override next(partialConfig: T, options?: InputSubjectNextOptions): void {
+  next(partialConfig: T, options?: InputSubjectNextOptions): void {
     const inputKeys = Object.keys(partialConfig as Partial<T>) as (keyof T)[];
 
     for (const key of inputKeys) {
@@ -135,7 +135,7 @@ export class ConfigSubject<T extends object> extends Subject<T> {
     const config: Partial<T> = {};
 
     for (const inputKey of changeKeys) {
-      config[inputKey] = changes[inputKey as K].currentValue;
+      config[inputKey] = (changes as any)[inputKey].currentValue as T[K];
     }
 
     this.next(config as T);

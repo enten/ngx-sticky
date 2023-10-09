@@ -70,7 +70,7 @@ async function main(proc, {
 
   // run ng cli
   await exec(proc, 'node', [
-    './node_modules/@angular/cli/bin/ng.js',
+    './node_modules/@angular/cli/bin/ng',
     'run', appBuildTarget,
     '--output-path', stagingOutputPath,
     '--base-href', baseHref,

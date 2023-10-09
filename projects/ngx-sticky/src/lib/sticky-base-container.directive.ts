@@ -286,7 +286,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     return getWindowViewportTop(this._win);
   }
 
-  override registerSticky(sticky: NgxStickyController): void {
+  registerSticky(sticky: NgxStickyController): void {
     super.registerSticky(sticky);
 
     if (this.stickies.length) {
@@ -294,7 +294,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     }
   }
 
-  override unregisterSticky(sticky: NgxStickyController): void {
+  unregisterSticky(sticky: NgxStickyController): void {
     super.unregisterSticky(sticky);
 
     if (!this.stickies.length) {
@@ -315,7 +315,7 @@ export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseConta
     }
   }
 
-  override updateStickies(fastUpdate?: boolean): void {
+  updateStickies(fastUpdate?: boolean): void {
     // intercept update stickies to throttle calls
     this._updateStickies$.next(!!fastUpdate);
   }

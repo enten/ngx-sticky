@@ -14,7 +14,7 @@ import { NgxStickyContainerController } from './sticky.types';
 })
 export class NgxStickyRootContainerController extends NgxStickyBaseContainerDirective {
   // root container never has parent container
-  override readonly containerParent: NgxStickyContainerController = null!;
+  readonly containerParent: NgxStickyContainerController = null!;
   // root container never has element
   readonly element: HTMLElement = null!;
 

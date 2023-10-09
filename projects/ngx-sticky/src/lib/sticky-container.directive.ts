@@ -36,15 +36,15 @@ export class NgxStickyContainerDirective extends NgxStickyBaseContainerDirective
     super(stickyContainerParent || rootContainer, stickyEngine, ngZone, _win);
   }
 
-  override getViewportHeight(): number {
+  getViewportHeight(): number {
     return this.element.offsetHeight;
   }
 
-  override getViewportLeft(): number {
+  getViewportLeft(): number {
     return this.element.scrollLeft;
   }
 
-  override getViewportTop(): number {
+  getViewportTop(): number {
     return this.element.scrollTop;
   }
 }

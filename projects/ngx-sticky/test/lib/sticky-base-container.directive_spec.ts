@@ -490,8 +490,9 @@ describe('_createMonitoringObservable', () => {
     expect(monitoringSubscriber).toBeCalledWith(false);
     expect(monitoringSubscriber).not.toBeCalledWith(true);
 
+    expect(winAddEventListener).toBeCalledTimes(8);
     expect(winAddEventListener).toBeCalledWith('scroll', expect.any(Function), { passive: true });
-    const scrollHandler = winAddEventListener.mock.lastCall[1];
+    const scrollHandler = winAddEventListener.mock.calls[7][1];
     scrollHandler();
     await timer(0, animationFrameScheduler).toPromise();
     expect(monitoringSubscriber).toBeCalledTimes(5);

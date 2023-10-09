@@ -47,7 +47,7 @@ export class InputSubject<T> extends Subject<T> {
    * @param value Next value
    * @param options Options to skip coercion
    */
-  override next(value?: T, options?: InputSubjectNextOptions): void {
+  next(value?: T, options?: InputSubjectNextOptions): void {
     if (!options || !options.skipCoercion) {
       if (value === this._valueSetted) {
         return;

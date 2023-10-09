@@ -1,12 +1,12 @@
 {
   "name": "@enten/ngx-sticky",
-  "version": "13.0.0",
+  "version": "12.0.0",
   "peerDependencies": {
-    "@angular/core": "^13.0.0",
+    "@angular/core": "^12.0.0",
     "rxjs": "^6.5.3 || ^7.4.0"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.1.0"
   },
   "author": "Steven Enten <steven@enten.fr>",
   "keywords": [
