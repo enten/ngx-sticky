@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "outDir": "./dist/out-tsc/workspace",
-    "target": "ES2020",
+    "target": "ES2017",
     "module": "ES2020",
     "moduleResolution": "node",
     "lib": [
