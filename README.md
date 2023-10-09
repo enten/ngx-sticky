@@ -1,3 +1,11 @@
+# DON'T FORK THIS BRANCH!
+
+## ITS MUST BE USED FOR BACKWARD PURPOSES ONLY. IT CAN BE REBASED AND PUSH FORCED.
+
+---
+---
+---
+
 # @enten/ngx-sticky
 
 [![NPM Version](https://img.shields.io/npm/v/@enten/ngx-sticky.svg)](https://npmjs.com/package/@enten/ngx-sticky)
