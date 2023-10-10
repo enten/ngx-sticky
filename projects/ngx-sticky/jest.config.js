@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   displayName: 'ngx-sticky',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/test/test-setup.ts'],

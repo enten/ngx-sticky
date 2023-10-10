@@ -2,6 +2,7 @@ import { ElementRef, NgZone, Renderer2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Subject, Subscription } from 'rxjs';
 
+import { NgxStickyEngine } from '../../src/lib/sticky-engine';
 import { NgxStickyRootContainerController } from '../../src/lib/sticky-root-container.controller';
 import { NgxStickyConfig, NgxStickyDirective, NgxStickyElementStyle, NgxStickyGhostStyle } from '../../src/lib/sticky.directive';
 import {
@@ -38,6 +39,7 @@ class RendererMock extends Renderer2 {
 
 let sticky: NgxStickyDirective;
 let rootContainer: NgxStickyRootContainerController;
+let stickyEngine: NgxStickyEngine;
 let stickyBoundary: NgxStickyBoundaryController;
 let stickyContainer: NgxStickyContainerController;
 let stickyParent: NgxStickyDirective;
@@ -47,9 +49,9 @@ let ngZone: NgZone;
 let win: Window;
 
 const setup = (overrides: Record<string, any> = {}) => {
-  rootContainer = 'rootContainer' in overrides
-    ? overrides['rootContainer']
-    : TestBed.get(NgxStickyRootContainerController);
+  stickyEngine = 'stickyEngine' in overrides
+    ? overrides['stickyEngine']
+    : TestBed.get(NgxStickyEngine);
   stickyContainer = 'stickyContainer' in overrides
     ? overrides['stickyContainer']
     : null;
@@ -74,6 +76,9 @@ const setup = (overrides: Record<string, any> = {}) => {
   win = 'win' in overrides
     ? overrides['win']
     : null;
+  rootContainer = 'rootContainer' in overrides
+    ? overrides['rootContainer']
+    : new NgxStickyRootContainerController(stickyEngine, ngZone, win);
 
   sticky = new NgxStickyDirective(
     rootContainer,
@@ -481,7 +486,14 @@ describe('_getStickyElementStyle', () => {
 
       expect(sticky._getStickyElementStyle(null!)).toBe(null);
 
-      setup({ win: {} });
+      setup({
+        win: {
+          document: {
+            body: {},
+            documentElement: {},
+          },
+        },
+      });
 
       expect(sticky._getStickyElementStyle(null!)).toBe(null);
     });
@@ -731,7 +743,14 @@ describe('_getStickyGhostStyle', () => {
 
     expect(sticky._getStickyGhostStyle()).toBe(null);
 
-    setup({ win: {} });
+    setup({
+      win: {
+        document: {
+          body: {},
+          documentElement: {},
+        },
+      },
+    });
 
     expect(sticky._getStickyGhostStyle()).toBe(null);
   });
@@ -739,6 +758,10 @@ describe('_getStickyGhostStyle', () => {
   it('should returns ghost style base on sticky element', () => {
     setup({
       win: {
+        document: {
+          body: {},
+          documentElement: {},
+        },
         getComputedStyle: (_element: HTMLElement) => _element.style,
       },
     });
@@ -834,7 +857,12 @@ describe('_initMonitoring', () => {
 
     setup({
       ngZone: { runOutsideAngular },
-      win: {},
+      win: {
+        document: {
+          body: {},
+          documentElement: {},
+        },
+      },
     });
 
     sticky._createMonitoringObservable = jest.fn(() => monitoring$);
@@ -945,7 +973,14 @@ describe('_refreshStickyElement', () => {
   });
 
   it('should hide ghost and restore sticky element style when state is null', () => {
-    setup({ win: {} });
+    setup({
+      win: {
+        document: {
+          body: {},
+          documentElement: {},
+        },
+      },
+    });
 
     sticky._hideStickyGhost = jest.fn();
     sticky._restoreStickyElementStyle = jest.fn();
@@ -958,7 +993,14 @@ describe('_refreshStickyElement', () => {
   });
 
   it('should save sticky element style and show ghost when state is not null', () => {
-    setup({ win: {} });
+    setup({
+      win: {
+        document: {
+          body: {},
+          documentElement: {},
+        },
+      },
+    });
 
     sticky._getStickyElementStyle = jest.fn(() => ({ top: '42px' }));
     sticky._saveStickyElementStyle = jest.fn();

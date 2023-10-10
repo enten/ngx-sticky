@@ -3,21 +3,23 @@ import { TestBed } from '@angular/core/testing';
 import { Subject, Subscription } from 'rxjs';
 
 import { NgxStickyBoundaryDirective } from '../../src/lib/sticky-boundary.directive';
+import { NgxStickyEngine } from '../../src/lib/sticky-engine';
 import { NgxStickyRootContainerController } from '../../src/lib/sticky-root-container.controller';
 import { NgxStickyBoundary, NgxStickyContainerController } from '../../src/lib/sticky.types';
 
 
 let boundary: NgxStickyBoundaryDirective;
 let rootContainer: NgxStickyRootContainerController;
+let stickyEngine: NgxStickyEngine;
 let stickyContainer: NgxStickyContainerController;
 let elementRef: ElementRef;
 let ngZone: NgZone;
 let win: Window;
 
 const setup = (overrides: Record<string, any> = {}) => {
-  rootContainer = 'rootContainer' in overrides
-    ? overrides['rootContainer']
-    : TestBed.get(NgxStickyRootContainerController);
+  stickyEngine = 'stickyEngine' in overrides
+    ? overrides['stickyEngine']
+    : TestBed.get(NgxStickyEngine);
   stickyContainer = 'stickyContainer' in overrides
     ? overrides['stickyContainer']
     : null;
@@ -33,6 +35,9 @@ const setup = (overrides: Record<string, any> = {}) => {
   win = 'win' in overrides
     ? overrides['win']
     : null;
+  rootContainer = 'rootContainer' in overrides
+    ? overrides['rootContainer']
+    : new NgxStickyRootContainerController(stickyEngine, ngZone, win);
 
   boundary = new NgxStickyBoundaryDirective(rootContainer, stickyContainer, elementRef, ngZone, win);
 };
@@ -151,7 +156,13 @@ describe('getBoundary', () => {
 describe('_computeBoundary', () => {
   it('should returns boundary instance', () => {
     setup({
-      win: { getComputedStyle: (element: HTMLElement) => element.style },
+      win: {
+        document: {
+          body: {},
+          documentElement: {},
+        },
+        getComputedStyle: (element: HTMLElement) => element.style,
+      },
     });
 
     boundary.config$.nextKeyValue('unstacked', true);
@@ -221,7 +232,14 @@ describe('_initMonitoring', () => {
   });
 
   it('should do nothing when monitoring is alreasy initialized', () => {
-    setup({ win: {} });
+    setup({
+      win: {
+        document: {
+          body: {},
+          documentElement: {},
+        },
+      },
+    });
 
     const monitoring = {} as Subscription;
 
@@ -238,7 +256,15 @@ describe('_initMonitoring', () => {
     const runOutsideAngular = jest.fn((fn: (...args: any[]) => any) => fn());
     const monitoring$ = new Subject<boolean>();
 
-    setup({ ngZone: { runOutsideAngular }, win: {} });
+    setup({
+      ngZone: { runOutsideAngular },
+      win: {
+        document: {
+          body: {},
+          documentElement: {},
+        },
+      },
+    });
 
     boundary._createMonitoringObservable = jest.fn(() => monitoring$);
     boundary.updateStickies = jest.fn();

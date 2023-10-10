@@ -66,7 +66,7 @@ async function main(proc, {
   await $('mkdir', ['-p', stagingOutputPath]);
 
   // install right library version
-  await npm(proc, ['install', '-f', libPackPath]);
+  await npm(proc, ['install', libPackPath]);
 
   // run ng cli
   await exec(proc, 'node', [
@@ -100,7 +100,7 @@ async function main(proc, {
   await $('rm', ['-fr', stagingOutputPath]);
 
   // uninstall right library version
-  await npm(proc, ['uninstall', '-f', libPkgName]);
+  await npm(proc, ['uninstall', libPkgName]);
 
   logSuccess(`ngx-sticky-app ${libPkgVersion}`);
 }

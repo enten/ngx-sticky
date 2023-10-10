@@ -1,13 +1,25 @@
 import { TestBed } from '@angular/core/testing';
 
+import { NgxStickyEngine } from '../../src/lib/sticky-engine';
 import { NgxStickyRootContainerController } from '../../src/lib/sticky-root-container.controller';
+import { NgZone } from '@angular/core';
 
 
 let rootContainer: NgxStickyRootContainerController;
-
+let stickyEngine: NgxStickyEngine;
+let ngZone: NgZone;
+let win: Window;
 
 beforeEach(() => {
-  rootContainer = TestBed.get(NgxStickyRootContainerController);
+  stickyEngine = TestBed.get(NgxStickyEngine);
+  ngZone = new NgZone({});
+  win = {
+    document: {
+      documentElement: {},
+      body: {},
+    },
+  } as Window;
+  rootContainer = new NgxStickyRootContainerController(stickyEngine, ngZone, win);
 });
 
 

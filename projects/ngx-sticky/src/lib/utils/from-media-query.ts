@@ -15,7 +15,7 @@ let mediaQueryStyleNode: HTMLStyleElement | undefined;
  */
 export function fromMediaQuery(win: any/*Window*/, query: string, nonce?: string): Observable<MediaQueryListEvent> {
   return new Observable(subscriber => {
-    if (!win?.matchMedia) {
+    if (!win || !win.matchMedia) {
       return;
     }
 
@@ -84,7 +84,7 @@ function createEmptyStyleRule(win: any/*Window*/, query: string, nonce: string |
 
 // @see https://github.com/angular/components/blob/16.2.6/src/cdk/platform/platform.ts#L33-L64
 export function isEmptyStyleRuleNeeded(win: any/*Window*/): boolean {
-  if (!win?.navigator?.userAgent) {
+  if (!win || !win.navigator || !win.navigator.userAgent) {
     return false;
   }
 
@@ -98,7 +98,7 @@ export function isEmptyStyleRuleNeeded(win: any/*Window*/): boolean {
   // https://github.com/Microsoft/ChakraCore/issues/3189
   // https://github.com/angular/components/issues/15687
   try {
-    hasV8BreakIterator = !!((win as any).Intl?.v8BreakIterator);
+    hasV8BreakIterator = !!((win as any).Intl && (win as any).Intl.v8BreakIterator);
   } catch {
     hasV8BreakIterator = false;
   }

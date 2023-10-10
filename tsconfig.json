@@ -5,7 +5,7 @@
     "rootDir": ".",
     "outDir": "./dist/out-tsc/workspace",
     "target": "ES2015",
-    "module": "ES2020",
+    "module": "ESNext",
     "moduleResolution": "node",
     "lib": [
       "ES2018",
@@ -23,7 +23,6 @@
     "resolveJsonModule": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-    "useDefineForClassFields": false,
     "paths": {
       "@enten/ngx-sticky": [
         "projects/ngx-sticky/src/public-api.ts"

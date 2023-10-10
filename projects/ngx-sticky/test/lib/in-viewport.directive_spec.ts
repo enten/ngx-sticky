@@ -4,21 +4,23 @@ import { Subject, Subscription } from 'rxjs';
 
 import { NgxInViewportDirective } from '../../src/lib/in-viewport.directive';
 import { NgxStickyContainerDirective } from '../../src/lib/sticky-container.directive';
+import { NgxStickyEngine } from '../../src/lib/sticky-engine';
 import { NgxStickyRootContainerController } from '../../src/lib/sticky-root-container.controller';
 import { NgxIntersectionComputation, NgxSticky } from '../../src/lib/sticky.types';
 
 
 let inViewport: NgxInViewportDirective;
 let rootContainer: NgxStickyRootContainerController;
+let stickyEngine: NgxStickyEngine;
 let stickyContainer: NgxStickyContainerDirective;
 let elementRef: ElementRef;
 let ngZone: NgZone;
 let win: Window;
 
 const setup = (overrides: Record<string, any> = {}) => {
-  rootContainer = 'rootContainer' in overrides
-    ? overrides['rootContainer']
-    : TestBed.get(NgxStickyRootContainerController);
+  stickyEngine = 'stickyEngine' in overrides
+    ? overrides['stickyEngine']
+    : TestBed.get(NgxStickyEngine);
   stickyContainer = 'stickyContainer' in overrides
     ? overrides['stickyContainer']
     : null;
@@ -34,6 +36,9 @@ const setup = (overrides: Record<string, any> = {}) => {
   win = 'win' in overrides
     ? overrides['win']
     : null;
+  rootContainer = 'rootContainer' in overrides
+    ? overrides['rootContainer']
+    : new NgxStickyRootContainerController(stickyEngine, ngZone, win);
 
   inViewport = new NgxInViewportDirective(
     rootContainer,
@@ -313,7 +318,14 @@ describe('_initMonitoring', () => {
   });
 
   it('should do nothing when monitoring is alreasy initialized', () => {
-    setup({ win: {} });
+    setup({
+      win: {
+        document: {
+          documentElement: {},
+          body: {},
+        },
+      },
+    });
 
     const monitoring = {} as Subscription;
 
@@ -332,7 +344,12 @@ describe('_initMonitoring', () => {
 
     setup({
       ngZone: { runOutsideAngular },
-      win: {},
+      win: {
+        document: {
+          documentElement: {},
+          body: {},
+        },
+      },
     });
 
     inViewport._createMonitoringObservable = jest.fn(() => monitoring$);
@@ -369,7 +386,12 @@ describe('_refreshIntersection', () => {
 
     setup({
       ngZone: { run },
-      win: {},
+      win: {
+        document: {
+          documentElement: {},
+          body: {},
+        },
+      },
     });
   });
 

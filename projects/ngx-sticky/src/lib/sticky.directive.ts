@@ -877,18 +877,18 @@ export class NgxStickyDirective extends NgxStickyBaseController implements After
   _saveStickyElementStyle(): void {
     if (!this._elementOriginStyle) {
       this._elementOriginStyle = {
-        position: this.elementRef.nativeElement.style.position,
-        width: this.elementRef.nativeElement.style.width,
-        top: this.elementRef.nativeElement.style.top,
-        right: this.elementRef.nativeElement.style.right,
-        bottom: this.elementRef.nativeElement.style.bottom,
-        left: this.elementRef.nativeElement.style.left,
-        cssFloat: this.elementRef.nativeElement.style.cssFloat,
-        margin: this.elementRef.nativeElement.style.margin,
-        marginTop: this.elementRef.nativeElement.style.marginTop,
-        marginRight: this.elementRef.nativeElement.style.marginRight,
-        marginBottom: this.elementRef.nativeElement.style.marginBottom,
-        marginLeft: this.elementRef.nativeElement.style.marginLeft,
+        position: this.elementRef.nativeElement.style.position as string,
+        width: this.elementRef.nativeElement.style.width as string,
+        top: this.elementRef.nativeElement.style.top as string,
+        right: this.elementRef.nativeElement.style.right as string,
+        bottom: this.elementRef.nativeElement.style.bottom as string,
+        left: this.elementRef.nativeElement.style.left as string,
+        cssFloat: this.elementRef.nativeElement.style.cssFloat as string,
+        margin: this.elementRef.nativeElement.style.margin as string,
+        marginTop: this.elementRef.nativeElement.style.marginTop as string,
+        marginRight: this.elementRef.nativeElement.style.marginRight as string,
+        marginBottom: this.elementRef.nativeElement.style.marginBottom as string,
+        marginLeft: this.elementRef.nativeElement.style.marginLeft as string,
       };
     }
   }

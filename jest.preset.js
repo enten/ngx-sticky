@@ -3,6 +3,10 @@ module.exports = {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.(html|svg)$',
+      astTransformers: [
+        'jest-preset-angular/build/InlineFilesTransformer',
+        'jest-preset-angular/build/StripStylesTransformer',
+      ],
     },
   },
   testMatch: ['**/+(*.)+(spec|test).+(ts|js)?(x)'],
@@ -17,15 +21,19 @@ module.exports = {
     'html',
   ],
   testEnvironment: 'jsdom',
+  testPathIgnorePatterns: [
+    '/build/',
+    '/tmp/',
+  ],
   transform: {
-    '^.+\\.(ts|js|mjs|html|svg)$': 'jest-preset-angular',
+    '^.+\\.(ts|js|mjs|html|svg)$': 'ts-jest',
   },
   transformIgnorePatterns: [
     'node_modules/(?!.*\\.mjs$)',
   ],
   snapshotSerializers: [
-    'jest-preset-angular/build/serializers/html-comment',
-    'jest-preset-angular/build/serializers/ng-snapshot',
-    'jest-preset-angular/build/serializers/no-ng-attributes',
+    'jest-preset-angular/build/HTMLCommentSerializer',
+    'jest-preset-angular/build/AngularSnapshotSerializer',
+    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer',
   ],
 };

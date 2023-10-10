@@ -89,10 +89,10 @@ export abstract class NgxStickyBaseContainerController implements NgxStickyConta
   ): number {
     const options = typeof optionsOrExtraOffsetTop === 'number' ? { extraOffsetTop: optionsOrExtraOffsetTop } : optionsOrExtraOffsetTop;
     const viewportHeight = this.getViewportHeight();
-    const viewportTopOffsetless = viewportTop - (options?.extraOffsetTop || 0);
+    const viewportTopOffsetless = viewportTop - (options && options.extraOffsetTop || 0);
     let stickedOffsetTop = 0;
 
-    if (!options?.excludeStickies) {
+    if (!options || !options.excludeStickies) {
       const container = this.getContainer();
       const stickies = this.stickies.map(stickyController => stickyController.getSticky());
       const stickySnaps = this.stickyEngine._collectStickySnaps(container, stickies, 'top', viewportHeight);

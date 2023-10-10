@@ -32,8 +32,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -f
-          npm ci -f
+          npm install
+          npm ci
 
       - name: Test
         run: |

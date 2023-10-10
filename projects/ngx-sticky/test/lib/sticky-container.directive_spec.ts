@@ -16,9 +16,6 @@ let ngZone: NgZone;
 let win: Window;
 
 const setup = (overrides: Record<string, any> = {}) => {
-  rootContainer = 'rootContainer' in overrides
-    ? overrides['rootContainer']
-    : TestBed.get(NgxStickyRootContainerController);
   stickyContainerParent = 'stickyContainerParent' in overrides
     ? overrides['stickyContainerParent']
     : null;
@@ -37,6 +34,9 @@ const setup = (overrides: Record<string, any> = {}) => {
   win = 'win' in overrides
     ? overrides['win']
     : null;
+  rootContainer = 'rootContainer' in overrides
+    ? overrides['rootContainer']
+    : new NgxStickyRootContainerController(stickyEngine, ngZone, win);
 
   container = new NgxStickyContainerDirective(
     rootContainer,
