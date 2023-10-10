@@ -58,8 +58,8 @@ export const NGX_BASE_INTERSECTION_CONFIG_SCHEMA: ConfigSubjectSchema<NgxInterse
   exportAs: 'ngxInViewport',
 })
 export class NgxInViewportDirective implements NgxIntersectionController, AfterViewInit, OnChanges, OnDestroy {
-  static ngAcceptInputType_intersectionDisabled: boolean | string | null | undefined;
-  static ngAcceptInputType_intersectionThresholds: number[] | string | null | undefined;
+  // static ngAcceptInputType_intersectionDisabled: boolean | string | null | undefined;
+  // static ngAcceptInputType_intersectionThresholds: number[] | string | null | undefined;
 
   /**
    * Disable intersection.

@@ -161,12 +161,12 @@ export const NGX_STICKY_BASE_CONFIG_SCHEMA: ConfigSubjectSchema<NgxStickyConfig>
   exportAs: 'ngxSticky',
 })
 export class NgxStickyDirective extends NgxStickyBaseController implements AfterViewInit, OnChanges, OnDestroy {
-  static ngAcceptInputType_stickyClasses: boolean | string | null | undefined;
-  static ngAcceptInputType_stickyDirection: NgxStickyDirection | string | null | undefined;
-  static ngAcceptInputType_stickyDisabled: boolean | string | null | undefined;
-  static ngAcceptInputType_stickyHeight: string | number | null | undefined;
-  static ngAcceptInputType_stickyPosition: NgxStickyPosition | string | null | undefined;
-  static ngAcceptInputType_stickySpotHeight: string | number | null | undefined;
+  // static ngAcceptInputType_stickyClasses: boolean | string | null | undefined;
+  // static ngAcceptInputType_stickyDirection: NgxStickyDirection | string | null | undefined;
+  // static ngAcceptInputType_stickyDisabled: boolean | string | null | undefined;
+  // static ngAcceptInputType_stickyHeight: string | number | null | undefined;
+  // static ngAcceptInputType_stickyPosition: NgxStickyPosition | string | null | undefined;
+  // static ngAcceptInputType_stickySpotHeight: string | number | null | undefined;
 
   /**
    * Binding sticky classes.

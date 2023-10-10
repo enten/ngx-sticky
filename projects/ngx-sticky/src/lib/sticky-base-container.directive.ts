@@ -54,12 +54,11 @@ export const NGX_STICKY_BASE_CONTAINER_CONFIG_SCHEMA: ConfigSubjectSchema<NgxSti
 /**
  * Abstract sticky container directive.
  */
-@Directive()
 export abstract class NgxStickyBaseContainerDirective extends NgxStickyBaseContainerController implements OnChanges, OnDestroy {
-  static ngAcceptInputType_stickyDisabled: boolean | string | null | undefined;
-  static ngAcceptInputType_stickyOffsetBottom: number | string | null | undefined;
-  static ngAcceptInputType_stickyOffsetTop: number | string | null | undefined;
-  static ngAcceptInputType_stickyUnstacked: boolean | string | null | undefined;
+  // static ngAcceptInputType_stickyDisabled: boolean | string | null | undefined;
+  // static ngAcceptInputType_stickyOffsetBottom: number | string | null | undefined;
+  // static ngAcceptInputType_stickyOffsetTop: number | string | null | undefined;
+  // static ngAcceptInputType_stickyUnstacked: boolean | string | null | undefined;
 
   /**
    * Returns HTMLElement of the container or `null` in case of root container.

@@ -46,7 +46,7 @@ export const NGX_STICKY_BASE_BOUNDARY_CONFIG_SCHEMA: ConfigSubjectSchema<NgxStic
   exportAs: 'ngxStickyBoundary',
 })
 export class NgxStickyBoundaryDirective extends NgxStickyBaseBoundaryController implements OnChanges, OnDestroy, OnInit {
-  static ngAcceptInputType_stickyUnstacked: boolean | string | null | undefined;
+  // static ngAcceptInputType_stickyUnstacked: boolean | string | null | undefined;
 
   /**
    * Enable/disable sticky stack inside boudary.
