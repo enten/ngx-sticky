@@ -3,7 +3,7 @@
   "name": "ngx-sticky-app",
   "version": "0.0.0",
   "engines": {
-    "node": "^10.9.0"
+    "node": "^8.9.0"
   },
   "scripts": {
     "ng": "ng",
@@ -23,16 +23,16 @@
     "lib:watch": "ng run ngx-sticky:build --watch --configuration development"
   },
   "dependencies": {
-    "@angular/animations": "7.0.0",
-    "@angular/common": "7.0.0",
-    "@angular/compiler": "7.0.0",
-    "@angular/core": "7.0.0",
-    "@angular/forms": "7.0.0",
-    "@angular/platform-browser": "7.0.0",
-    "@angular/platform-browser-dynamic": "7.0.0",
-    "@angular/router": "7.0.0",
+    "@angular/animations": "6.0.0",
+    "@angular/common": "6.0.0",
+    "@angular/compiler": "6.0.0",
+    "@angular/core": "6.0.0",
+    "@angular/forms": "6.0.0",
+    "@angular/platform-browser": "6.0.0",
+    "@angular/platform-browser-dynamic": "6.0.0",
+    "@angular/router": "6.0.0",
     "rxjs": "6.0.0",
-    "tslib": "1.9.0",
+    "tslib": "1.7.1",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
