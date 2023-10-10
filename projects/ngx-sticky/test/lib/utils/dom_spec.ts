@@ -157,7 +157,7 @@ describe('getWindowViewportLeft', () => {
 
     expect(getWindowViewportLeft(win as Window)).toBe(0);
 
-    win.document.documentElement.scrollLeft = 1;
+    (win.document.documentElement as HTMLElement).scrollLeft = 1;
 
     expect(getWindowViewportLeft(win as Window)).toBe(1);
 
@@ -198,7 +198,7 @@ describe('getWindowViewportTop', () => {
 
     expect(getWindowViewportTop(win as Window)).toBe(0);
 
-    win.document.documentElement.scrollTop = 1;
+    (win.document.documentElement as HTMLElement).scrollTop = 1;
 
     expect(getWindowViewportTop(win as Window)).toBe(1);
 
@@ -270,14 +270,14 @@ describe('scrollToFactory', () => {
   it('should return function which calls native scrollTo with options as object', () => {
     const win: Window = {
       document: {
-        body: {},
+        body: {} as HTMLElement,
         documentElement: {
-          style: { scrollBehavior: '' },
+          style: { scrollBehavior: '' } as any,
           scrollLeft: 0,
           scrollTop: 0,
           getBoundingClientRect: jest.fn(() => ({} as DOMRect)) as Element['getBoundingClientRect'],
-        },
-      },
+        } as HTMLElement,
+      } as Document,
       scrollTo: jest.fn() as Window['scrollTo'],
     } as Window;
 

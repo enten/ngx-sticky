@@ -20,11 +20,11 @@ import {
 
 
 export const NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP = {
-  'sticked,normal': 'enter' as const,
-  'stucked,normal': 'entered' as const,
-  'sticked,sticked': 'entered' as const,
-  'stucked,sticked': 'exit' as const,
-  'stucked,stucked': 'exited' as const,
+  'sticked,normal': 'enter',
+  'stucked,normal': 'entered',
+  'sticked,sticked': 'entered',
+  'stucked,sticked': 'exit',
+  'stucked,stucked': 'exited',
 };
 
 
@@ -201,7 +201,7 @@ export class NgxStickyEngine {
     // - exit: when enter sticky (on bottom) is _stucked_ and exit sticky (on top) is _sticked_ ;
     // - exited: when enter (on bottom) and exit (on top) stickies are _stucked_.
     const stateKey = [ enter.state, exit.state ].join(',') as keyof typeof NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP;
-    const state: NgxIntersectionState = NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP[stateKey] || null;
+    const state: NgxIntersectionState = NGX_STICKY_ENGINE_INTERCEPTION_STATE_MAP[stateKey] as NgxIntersectionState || null;
 
     const viewportOffsetless = snap.viewportHeight - enter.offsetSticked - exit.offsetSticked;
     const maxHeightVisible = Math.min(snap.intersection.height, viewportOffsetless);

@@ -57,7 +57,7 @@ export class ConfigSubject<T extends object> extends Subject<T> {
         this._configChanged = true;
         this._configChanges[inputKey] = inputChange;
 
-        this._config = { ...this._config };
+        this._config = { ...(this._config as any) };
         this._config[inputKey] = inputChange.currentValue;
       });
 
@@ -103,7 +103,7 @@ export class ConfigSubject<T extends object> extends Subject<T> {
     }
 
     if (this._configChanged) {
-      const changes = { ...this._configChanges };
+      const changes = { ...(this._configChanges as any) };
 
       this._configChanged = false;
       this._configChanges = {} as ConfigSubjectChanges<T>;

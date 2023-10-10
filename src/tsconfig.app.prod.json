@@ -2,5 +2,8 @@
   "extends": "./tsconfig.app.json",
   "compilerOptions": {
     "paths": {}
+  },
+  "angularCompilerOptions": {
+    "enableResourceInlining": false
   }
 }

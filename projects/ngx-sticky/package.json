@@ -1,9 +1,9 @@
 {
   "name": "@enten/ngx-sticky",
-  "version": "8.0.0",
+  "version": "7.0.0",
   "peerDependencies": {
-    "@angular/core": "^8.0.0",
-    "rxjs": "^6.4.0"
+    "@angular/core": "^7.0.0",
+    "rxjs": "^6.0.0"
   },
   "dependencies": {
     "tslib": "^1.9.0"
