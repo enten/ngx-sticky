@@ -1,6 +1,6 @@
 {
   "name": "@enten/ngx-sticky",
-  "version": "17.0.0-next.0",
+  "version": "17.0.0",
   "peerDependencies": {
     "@angular/core": "^17.0.0",
     "rxjs": "^6.5.3 || ^7.4.0"
