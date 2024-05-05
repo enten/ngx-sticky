@@ -67,6 +67,7 @@ export class SomeModule { }
 
 | @enten/ngx-sticky | @angular/core | rxjs |
 |-|-|-|
+| [`17.0.0`](https://enten.github.io/ngx-sticky/v/17.0.0) | `^17.0.0` | `^6.5.3 \|\| ^7.4.0` |
 | [`16.0.0`](https://enten.github.io/ngx-sticky/v/16.0.0) | `^16.0.0` | `^6.5.3 \|\| ^7.4.0` |
 | [`15.0.0`](https://enten.github.io/ngx-sticky/v/15.0.0) | `^15.0.0` | `^6.5.3 \|\| ^7.4.0` |
 | [`14.0.0`](https://enten.github.io/ngx-sticky/v/14.0.0) | `^14.0.0` | `^6.5.3 \|\| ^7.4.0` |
